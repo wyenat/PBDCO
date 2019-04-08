@@ -5,6 +5,8 @@
  */
 package InterfaceGraphique;
 
+import Ruche.Fabrique;
+
 /**
  *
  * @author matterv
@@ -15,7 +17,11 @@ public class ApplicationClient extends javax.swing.JPanel {
      * Creates new form ApplicationClient
      */
     public ApplicationClient() {
-        initComponents();
+         java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                initComponents();
+            }
+        });
     }
 
     /**
@@ -115,6 +121,11 @@ public class ApplicationClient extends javax.swing.JPanel {
         );
 
         jButton2.setText("Ajouter");
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton2MouseClicked(evt);
+            }
+        });
 
         jButton4.setText("Supprimer");
 
@@ -386,6 +397,14 @@ public class ApplicationClient extends javax.swing.JPanel {
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    /**
+     * Ajouter des ruches
+     * @param evt 
+     */
+    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+        Fabrique.creerRuche();
+    }//GEN-LAST:event_jButton2MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

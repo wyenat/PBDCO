@@ -4,9 +4,9 @@ import oracle.jdbc.dcn.*;
 
 public class InitBDTable {
   static final String URL = "jdbc:oracle:thin:@ensioracle1.imag.fr:1521:ensioracle1";
-  static final String USERNAME = "nodelant";                            // A adapter pour votre compte Oracle
-  static final String PASSWD = "nodelant";                             // A adapter pour votre compte Oracle
-  public void ReqParam() {
+  static final String USERNAME = "matterv";                            // A adapter pour votre compte Oracle
+  static final String PASSWD = "matterv";                             // A adapter pour votre compte Oracle
+  public static void ReqParam() {
     try {
       // Chargement du driver Oracle
       System.out.print("Loading Oracle driver... ");
@@ -40,7 +40,7 @@ public class InitBDTable {
   }
 
   public static void main(String args[]) {
-    new ReqParam();
+    ReqParam();
   }
  }
 
