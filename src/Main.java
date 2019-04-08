@@ -1,4 +1,5 @@
 
+import InterfaceGraphique.ApplicationCapteurs;
 import InterfaceGraphique.ApplicationClient;
 import Ruche.Fabrique;
 
@@ -14,10 +15,6 @@ import Ruche.Fabrique;
  */
 public class Main {
     public static void main(String args[]){
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ApplicationClient().setVisible(true);
-            }
-        });
+        ApplicationCapteurs ac = new ApplicationCapteurs();
     }
 }
