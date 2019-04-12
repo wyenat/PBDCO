@@ -4,9 +4,9 @@ import InterfaceGraphique.ApplicationCapteurs;
 import java.sql.*;
 import oracle.jdbc.*;
 import oracle.jdbc.dcn.*;
-import InterfaceGraphique.ApplicationClient;
-import Ruche.Fabrique;
-import SQL.InitBDTable;
+import InterfaceGraphique.CreateurGraphique;
+import SQL.Affichage;
+import SQL.BDTable;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -18,7 +18,7 @@ public class Main {
     public static void main(String args[]){
         
         //Connection à la base de données
-        InitBDTable.connection();
+        BDTable.connection();
         
         
         //Démarrage des intefaces graphiques
@@ -30,26 +30,25 @@ public class Main {
                 }
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ApplicationClient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AppClient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-               // Supprimé, à refaire
                 ApplicationCapteurs capts = new ApplicationCapteurs();
-                capts.setVisible(true);
                 AppClient client = new AppClient();
+                client.setVisible(true);
+                //capts.setVisible(true);
                 
                  client.addWindowListener(new WindowAdapter(){
              public void windowClosing(WindowEvent e){
                  //Fermeture de la base de données
-                    InitBDTable.fermer();
+                    BDTable.fermer();
                    }
                       });
                 
-                client.setVisible(true);
+                
             }
         });
-    
-    InitBDTable.statement("SELECT * FROM RUCHES;");
+    System.out.println("REQUETE : " + BDTable.requete("SELECT couleurReine FROM RUCHES"));
     }
 }

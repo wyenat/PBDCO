@@ -2,14 +2,14 @@ package Ruche;
 
 public class Ruche {
     
-    private int idRuche;
-    
-    
+    private static int idRuche = 0;
 
     public int getIdRuche() {
-        return idRuche;
+        return idRuche++;
     }
-    
-    
+
+    public Ruche() {
+        idRuche++;
+    }
     
 }

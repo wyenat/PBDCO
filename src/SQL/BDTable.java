@@ -6,7 +6,7 @@ import java.util.logging.Logger;
 import oracle.jdbc.*;
 import oracle.jdbc.dcn.*;
 
-public class InitBDTable {
+public class BDTable {
         private static final String URL = "jdbc:oracle:thin:@ensioracle1.imag.fr:1521:ensioracle1";
         private static final String USERNAME = "matterv";                            // A adapter pour votre compte Oracle
         private static final String PASSWD = "matterv";                             // A adapter pour votre compte Oracle
@@ -35,26 +35,34 @@ public class InitBDTable {
   
   /**
    * Execute le statement SQL passé en argument
-   * @param s
+   * @param s la requete
+     * @return le résultat de la requete, en tableau.
    */
-  public static void statement(String s) {
+  public static String requete(String s) {
        // Creation de la requete
       try {
       PreparedStatement stmt = conn.prepareStatement(s);
 
       // Affichage du résultat
     // Le problème est là  
-    //ResultSet rset = stmt.executeQuery();
-      //while (rset.next ()) {
-      //  System.out.println("Cinema : " + rset.getString (1)+ " - Salle : " + rset.getString (2) + "-" + rset.getString(3) + " places");
-     // }
-      //rset.close();
-      //stmt.close();
+    String result = "";
+    ResultSet rset = stmt.executeQuery();
+    System.out.println(rset.toString());
+      while (rset.next ()) {
+          /**
+           * PAS TROP SUR À VÉRIFIER
+           */
+           result += rset.getObject (1).toString() + " ";
+
+      }
+      stmt.close();
+      rset.close();
+      return result;
       } catch (SQLException e) {
       System.err.println("failed");
       e.printStackTrace(System.err);
     }
- 
+      return null;
   }
    
   /**
@@ -65,7 +73,7 @@ public class InitBDTable {
                 conn.close();
                 System.out.println("database closed");
             } catch (SQLException ex) {
-                Logger.getLogger(InitBDTable.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(BDTable.class.getName()).log(Level.SEVERE, null, ex);
             }
   }
  }
