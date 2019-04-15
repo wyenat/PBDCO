@@ -32,6 +32,30 @@ public class AppClient extends javax.swing.JFrame {
         initComponents();
     }
 
+    
+    private void refresh(){
+        jLabel16.setText(affichage.SQLRuche("couleurReine", "idRuche=" + currentRucheId));
+        jLabel17.setText(affichage.SQLRuche("raceReine", "idRuche=" + currentRucheId));
+        jLabel18.setText(affichage.SQLRuche("AgeReine", "idRuche=" + currentRucheId));
+        jLabel6.setText("Nom Ruche : " + affichage.SQLRuche("nomRuche"));
+        
+        //new javax.swing.DefaultComboBoxModel(affichage.SQLRuche("idRuche").split(" ")));
+
+//        displayRuches.addItemListener(new java.awt.event.ItemListener() {
+//            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+//                displayRuchesItemStateChanged(evt);
+//            }
+//        });
+//        displayRuches.addActionListener(new java.awt.event.ActionListener() {
+//            public void actionPerformed(java.awt.event.ActionEvent evt) {
+//                displayRuchesActionPerformed(evt);
+//            }
+//        });
+        
+        
+    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -553,6 +577,7 @@ public class AppClient extends javax.swing.JFrame {
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
         CreateurGraphique cg = new CreateurGraphique();
         cg.creerRuche();
+        displayRuches.getModel().setSelectedItem(affichage.SQLRuche("idRuche", "idRuche="+currentRucheId).split(" "));
        // synchronized(cg) {
        //      while (cg.isOpened()) { try {
        //          cg.wait();
@@ -569,9 +594,8 @@ public class AppClient extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.currentRucheId = this.displayRuches.getSelectedItem().toString();
         System.out.println("ohohoho" + currentRucheId);
-        jLabel16.setText(affichage.SQLRuche("couleurReine", "idRuche=" + currentRucheId));
-        jLabel17.setText(affichage.SQLRuche("raceReine", "idRuche=" + currentRucheId));
-        jLabel18.setText(affichage.SQLRuche("AgeReine", "idRuche=" + currentRucheId));
+        refresh();
+        
     }//GEN-LAST:event_displayRuchesItemStateChanged
 
     private void ajouterCadresBoutonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ajouterCadresBoutonActionPerformed
