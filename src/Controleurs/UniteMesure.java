@@ -6,13 +6,10 @@
 package Controleurs;
 
 /**
- * Un capteur :)
+ *
+ * @author matterv
  */
-public abstract class Capteur {
-    private int CapId;
-    private Mesure mesure;
-    
-    public void EnregistrerMesure(){
-        
-    }
+public enum UniteMesure {
+    POIDS,
+    TEMPERATURE
 }

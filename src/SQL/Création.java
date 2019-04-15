@@ -27,7 +27,6 @@ public class Création implements FabriqueSQL{
    );
          */
         req = "INSERT INTO RUCHE VALUES ( " + req + " )"; 
-        System.out.println(req);
         String result = BDTable.requete(req);
         return result;
     }

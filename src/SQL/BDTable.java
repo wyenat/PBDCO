@@ -48,13 +48,15 @@ public class BDTable {
     String result = "";
     ResultSet rset = stmt.executeQuery();
     System.out.println(rset.toString());
-      while (rset.next ()) {
-          /**
-           * PAS TROP SUR À VÉRIFIER
-           */
-           result += rset.getObject (1).toString() + " ";
+     if (s.startsWith("SELECT")){
+        while (rset.next ()) {
+              /**
+               * PAS TROP SUR À VÉRIFIER
+               */
 
-      }
+                   result += rset.getObject (1).toString() + " ";
+          }
+     }
       stmt.close();
       rset.close();
       return result;

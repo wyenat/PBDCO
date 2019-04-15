@@ -6,14 +6,23 @@
 package Controleurs;
 
 import java.sql.Time;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  *
  */
 public class Horodateur {
-    private int sec;
+    private LocalDateTime date;
 
-    public Horodateur(int sec) {
-        this.sec = sec;
+    public Horodateur() {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
+        this.date = LocalDateTime.now();  
     }
+    
+    public LocalDateTime getDate() {
+        return date.now();
+    }
+    
+    
 }

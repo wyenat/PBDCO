@@ -1,4 +1,5 @@
 
+import Controleurs.Horodateur;
 import InterfaceGraphique.AppClient;
 import InterfaceGraphique.ApplicationCapteurs;
 import java.sql.*;
@@ -9,6 +10,9 @@ import SQL.Affichage;
 import SQL.BDTable;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import static java.lang.Thread.sleep;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Ouvre la base de données et les interfaces graphiques
@@ -16,6 +20,7 @@ import java.awt.event.WindowEvent;
  */
 public class Main {
     public static void main(String args[]){
+        
         
         //Connection à la base de données
         BDTable.connection();
