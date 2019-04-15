@@ -37,7 +37,7 @@ public class Main {
                 ApplicationCapteurs capts = new ApplicationCapteurs();
                 AppClient client = new AppClient();
                 client.setVisible(true);
-                //capts.setVisible(true);
+                capts.setVisible(true);
                 
                  client.addWindowListener(new WindowAdapter(){
              public void windowClosing(WindowEvent e){
@@ -49,6 +49,5 @@ public class Main {
                 
             }
         });
-    System.out.println("REQUETE : " + BDTable.requete("SELECT couleurReine FROM RUCHES"));
     }
 }

@@ -17,7 +17,7 @@ public interface FabriqueSQL {
     /**
      * Gère les requêtes SQL liées à la ruche
      * @param req est tous les identifiants qu'on veut récuperer de la table
-     * RUCHES
+     * RUCHE
      * @return le résultat de la requête SQL
      */
     public String SQLRuche(String req);
@@ -25,7 +25,7 @@ public interface FabriqueSQL {
     /**
      * Gère les requêtes SQL liées à la ruche
      * @param req est tous les identifiants qu'on veut récuperer de la table
-     * RUCHES 
+     * RUCHE 
      * @param cond est les conditions qu'on veut
      * @return
      */
@@ -34,5 +34,18 @@ public interface FabriqueSQL {
     /**
      * Gère les requêtes SQL liées à la hausse
      */
-    public void SQLHausse();
+    public String SQLHausse(String req);
+    
+    /**
+     * Gère les requêtes SQL liées à la Hausse avec conditions
+     * @param req est tous les identifiants qu'on veut récuperer de la table
+     * Hausse
+     * @param cond est les conditions qu'on veut
+     * @return
+     */
+    public String SQLHausse(String req, String cond);
+    
+    public String SQLMesure(String req, String cond);
+    
+    public String SQLMesure(String req);
 }

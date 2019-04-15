@@ -16,21 +16,37 @@ public class Destruction implements FabriqueSQL{
      */
     public String SQLRuche(String cond) {
         System.out.println("YOYOYO");
-       cond = "DELETE FROM RUCHES WHERE (" + cond + ")";
+       cond = "DELETE FROM RUCHE WHERE (" + cond + ")";
        System.out.println(cond);
        BDTable.requete(cond);
        
        return "Deleted";
     }
 
-    @Override
-    public void SQLHausse() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
     @Override
     public String SQLRuche(String req, String cond) {
         throw new UnsupportedOperationException("Pas de conditions en création !"); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String SQLHausse(String req) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String SQLHausse(String req, String cond) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String SQLMesure(String req, String cond) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String SQLMesure(String req) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

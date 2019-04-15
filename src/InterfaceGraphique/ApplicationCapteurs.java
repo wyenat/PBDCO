@@ -5,16 +5,24 @@
  */
 package InterfaceGraphique;
 
+import Controleurs.Capteur;
+import Controleurs.Poids.CapteurPoids;
+import Controleurs.Temperature.CapteurTemperature;
+import SQL.Affichage;
+import SQL.Création;
+
 /**
  *
  * @author matterv
  */
 public class ApplicationCapteurs extends javax.swing.JFrame {
-
+     private Affichage affichage;
+     private String currentRucheId;
     /**
      * Creates new form ApplicationCapteurs
      */
     public ApplicationCapteurs() {
+        affichage = new Affichage();
         initComponents();
     }
 
@@ -27,18 +35,18 @@ public class ApplicationCapteurs extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jComboBox1 = new javax.swing.JComboBox();
+        listDesRuches = new javax.swing.JComboBox();
         jComboBox2 = new javax.swing.JComboBox();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(2, 0), new java.awt.Dimension(2, 0), new java.awt.Dimension(2, 32767));
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jSlider2 = new javax.swing.JSlider();
+        valeurPoids = new javax.swing.JSlider();
         jCheckBox1 = new javax.swing.JCheckBox();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jCheckBox2 = new javax.swing.JCheckBox();
-        jSlider1 = new javax.swing.JSlider();
-        jButton1 = new javax.swing.JButton();
+        valeurTemp = new javax.swing.JSlider();
+        Enregistrer = new javax.swing.JButton();
         jCheckBox3 = new javax.swing.JCheckBox();
         jCheckBox4 = new javax.swing.JCheckBox();
         jLabel3 = new javax.swing.JLabel();
@@ -47,7 +55,12 @@ public class ApplicationCapteurs extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(640, 480));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Ruche 1", "Ruche 2", "Ruche3" }));
+        String[] listRuches = affichage.SQLRuche("idRuche").split(" ");
+        if (listRuches.length != 0 ){
+            currentRucheId = listRuches[0];
+        }
+        listDesRuches.setModel(new javax.swing.DefaultComboBoxModel(listRuches));
+        listDesRuches.setModel(new javax.swing.DefaultComboBoxModel(listRuches));
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Hausse 1", "Hausse 2", "Hausse 3" }));
 
@@ -65,7 +78,7 @@ public class ApplicationCapteurs extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSlider2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(valeurPoids, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -80,7 +93,7 @@ public class ApplicationCapteurs extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addComponent(jCheckBox1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSlider2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(valeurPoids, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -98,7 +111,7 @@ public class ApplicationCapteurs extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jSlider1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(valeurTemp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -113,15 +126,20 @@ public class ApplicationCapteurs extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(jCheckBox2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 6, Short.MAX_VALUE)
-                .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(valeurTemp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
-        jButton1.setText("Enregistrer");
-        jButton1.setToolTipText("");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        Enregistrer.setText("Enregistrer");
+        Enregistrer.setToolTipText("");
+        Enregistrer.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                EnregistrerMouseClicked(evt);
+            }
+        });
+        Enregistrer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                EnregistrerActionPerformed(evt);
             }
         });
 
@@ -145,9 +163,9 @@ public class ApplicationCapteurs extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(listDesRuches, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Enregistrer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -175,9 +193,9 @@ public class ApplicationCapteurs extends javax.swing.JFrame {
                     .addComponent(jCheckBox3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(listDesRuches, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(Enregistrer))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -197,13 +215,23 @@ public class ApplicationCapteurs extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void EnregistrerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EnregistrerActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_EnregistrerActionPerformed
 
     private void jCheckBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jCheckBox3ActionPerformed
+
+    private void EnregistrerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EnregistrerMouseClicked
+        // On clique sur enregistre
+        int valPoids = this.valeurPoids.getValue();
+        int valTemp = this.valeurTemp.getValue();
+        CapteurPoids capP = new CapteurPoids();
+        CapteurTemperature capT = new CapteurTemperature();
+//        EnregistrerPoids(valPoids);
+//        EnregistrerTemperature(valTemp);
+    }//GEN-LAST:event_EnregistrerMouseClicked
 
     /**
      * @param args the command line arguments
@@ -241,21 +269,46 @@ public class ApplicationCapteurs extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Enregistrer;
     private javax.swing.Box.Filler filler1;
-    private javax.swing.JButton jButton1;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JCheckBox jCheckBox3;
     private javax.swing.JCheckBox jCheckBox4;
-    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JSlider jSlider1;
-    private javax.swing.JSlider jSlider2;
     private javax.swing.JSlider jSlider3;
+    private javax.swing.JComboBox listDesRuches;
+    private javax.swing.JSlider valeurPoids;
+    private javax.swing.JSlider valeurTemp;
     // End of variables declaration//GEN-END:variables
+
+    
+// NE PAS TOUCHER : EN MODIF MAIS DEJA COMMIT 
+
+    /**
+     * Enregistre dans la base de données la valeur de poids enregistrée par ce
+     * capteur
+     * @param valPoids la valeur enregistrée
+     */
+//    private void EnregistrerPoids(int valPoids) {
+//        Création crea = new Création();
+//        String req = "";
+//        // mesure
+//        req += valPoids;
+//        //crea.SQLMesure(req, );
+//    }
+//
+//    /**
+//     * Enregistre dans la base de données la valeur de température enregistrée par ce
+//     * capteur
+//     * @param valTemp la valeur enregistrée
+//     */
+//    private void EnregistrerTemperature(int valTemp) {
+//        //crea.SQLMesure(""+valTemp, currentRucheId);
+//    }
 }

@@ -18,7 +18,7 @@ public class Création implements FabriqueSQL{
      */
     public String SQLRuche(String req) {
         /*** Si jamais besoin :
-         *  CREATE TABLE RUCHES (
+         *  CREATE TABLE RUCHE (
    idRuche INT,
    raceReine VARCHAR(255),
     ageReine INT,
@@ -26,7 +26,7 @@ public class Création implements FabriqueSQL{
    nomRuche VARCHAR(255)
    );
          */
-        req = "INSERT INTO RUCHES VALUES ( " + req + " )"; 
+        req = "INSERT INTO RUCHE VALUES ( " + req + " )"; 
         System.out.println(req);
         String result = BDTable.requete(req);
         return result;
@@ -38,10 +38,23 @@ public class Création implements FabriqueSQL{
     }
 
     @Override
-    public void SQLHausse() {
+    public String SQLHausse(String req) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-   
-    
+    @Override
+    public String SQLHausse(String req, String cond) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String SQLMesure(String req, String cond) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String SQLMesure(String req) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }
