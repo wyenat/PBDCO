@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  */
 public class AppClient extends javax.swing.JFrame {
     private Affichage affichage;
-    private String currentRucheId = "-1";
+    private String currentRucheId = "2";
 
     /**
      * Creates new form AppClient
@@ -59,6 +59,8 @@ public class AppClient extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JSeparator();
         jLabel11 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jButton7 = new javax.swing.JButton();
         jComboBox5 = new javax.swing.JComboBox();
@@ -178,7 +180,7 @@ public class AppClient extends javax.swing.JFrame {
 
         jSplitPane1.setLeftComponent(jPanel2);
 
-        jLabel6.setText("Nom Ruche : " /*+ affichage.SQLRuche("nomRuche")*/);
+        jLabel6.setText("Nom Ruche : " + affichage.SQLRuche("nomRuche"));
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -211,7 +213,11 @@ public class AppClient extends javax.swing.JFrame {
 
         jLabel11.setText("Température :");
 
-        jLabel16.setText(""/* +affichage.SQLRuche("couleurReine", "idRuche=" + currentRucheId)*/);
+        jLabel16.setText(affichage.SQLRuche("couleurReine", "idRuche=" + currentRucheId));
+
+        jLabel17.setText(affichage.SQLRuche("raceReine", "idRuche=" + currentRucheId));
+
+        jLabel18.setText(affichage.SQLRuche("ageReine", "idRuche=" + currentRucheId));
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -220,15 +226,21 @@ public class AppClient extends javax.swing.JFrame {
             .addComponent(jSeparator2)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel9)
-                    .addComponent(jLabel10)
-                    .addComponent(jLabel11))
-                .addContainerGap(276, Short.MAX_VALUE))
+                    .addComponent(jLabel11)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel10))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE))))
+                .addContainerGap(275, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -243,9 +255,13 @@ public class AppClient extends javax.swing.JFrame {
                     .addComponent(jLabel8)
                     .addComponent(jLabel16))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel9)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(jLabel17))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel10)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel18))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -423,14 +439,14 @@ public class AppClient extends javax.swing.JFrame {
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
         CreateurGraphique cg = new CreateurGraphique();
         cg.creerRuche();
-        synchronized(cg) {
-             while (cg.isOpened()) { try {
-                 cg.wait();
-                 } catch (InterruptedException ex) {
-                     Logger.getLogger(AppClient.class.getName()).log(Level.SEVERE, null, ex);
-                 }
-               }
-            }
+       // synchronized(cg) {
+       //      while (cg.isOpened()) { try {
+       //          cg.wait();
+       //          } catch (InterruptedException ex) {
+       //              Logger.getLogger(AppClient.class.getName()).log(Level.SEVERE, null, ex);
+       //          }
+        //       }
+        //    }
         System.out.println("Fenêtre création fermée!");
         repaint();
         revalidate();
@@ -526,6 +542,8 @@ public class AppClient extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

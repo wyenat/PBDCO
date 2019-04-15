@@ -25,7 +25,8 @@ public class Affichage implements FabriqueSQL{
 
     @Override
     public String SQLRuche(String req, String cond) {
-        req = "SELECT " + req + " FROM RUCHES" + "WHERE " + cond;
+        req = "SELECT " + req + " FROM RUCHES" + " WHERE " + cond;
+        System.out.println("REQ :"+ req);
         String result = BDTable.requete(req);
         return result;
     }

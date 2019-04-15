@@ -200,6 +200,7 @@ public class CreateurGraphique extends javax.swing.JFrame {
         // IdRuche :
         Ruche r = new Ruche();
         req += r.getIdRuche();
+        System.out.println("Création Ruche : id " + req);
         // raceReine :
         req += ", " + "'"+ this.raceReine.getText() +"'";
         // ageReine :
@@ -210,6 +211,7 @@ public class CreateurGraphique extends javax.swing.JFrame {
         req += ", " + "'" + this.Nom_Ruche.getText() + "'";
         crea.SQLRuche(req);
         openedWindow = false;
+                
         dispose();
     }//GEN-LAST:event_jButton2MouseClicked
 

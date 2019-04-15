@@ -1,15 +1,28 @@
 package Ruche;
 
+import SQL.Affichage;
+
 public class Ruche {
-    
-    private static int idRuche = 0;
+    private int idRuche;
 
     public int getIdRuche() {
-        return idRuche++;
+        System.out.println("On get : " + idRuche);
+        return idRuche;
     }
 
     public Ruche() {
-        idRuche++;
+        String req = "idRuche";
+        Affichage aff = new Affichage();
+        String resultat = aff.SQLRuche(req);
+        int candidat = -1;
+        for (String potentiel : resultat.split(" ")){
+            if (Integer.parseInt(potentiel) > candidat){
+                candidat = Integer.parseInt(potentiel);
+                System.out.println("Courant = " +  potentiel+ ", max = " + candidat);
+            }
+        }
+        this.idRuche = candidat + 1;
+               
     }
     
 }
