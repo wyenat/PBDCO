@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  */
 public class AppClient extends javax.swing.JFrame {
     private Affichage affichage;
-    private String currentRucheId = "2";
+    private String currentRucheId;
 
     /**
      * Creates new form AppClient
@@ -448,14 +448,16 @@ public class AppClient extends javax.swing.JFrame {
         //       }
         //    }
         System.out.println("Fenêtre création fermée!");
-        repaint();
-        revalidate();
+
     }//GEN-LAST:event_jButton2MouseClicked
 
     private void displayRuchesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_displayRuchesItemStateChanged
         // TODO add your handling code here:
-        currentRucheId = this.displayRuches.getSelectedItem().toString();
-        System.out.println(currentRucheId);
+        this.currentRucheId = this.displayRuches.getSelectedItem().toString();
+        System.out.println("ohohoho" + currentRucheId);
+        jLabel16.setText(affichage.SQLRuche("couleurReine", "idRuche=" + currentRucheId));
+        jLabel17.setText(affichage.SQLRuche("raceReine", "idRuche=" + currentRucheId));
+        jLabel18.setText(affichage.SQLRuche("AgeReine", "idRuche=" + currentRucheId));
     }//GEN-LAST:event_displayRuchesItemStateChanged
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
