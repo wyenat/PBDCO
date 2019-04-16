@@ -3,6 +3,8 @@
  */
 package SQL;
 
+import Ruche.Materiel;
+
 /**
  *
  * @author matterv
@@ -48,4 +50,17 @@ public interface FabriqueSQL {
     public String SQLMesure(String req, String cond);
     
     public String SQLMesure(String req);
+    
+    public String SQLUniteCapteur(String req);
+    
+    public String SQLUniteCapteur(String req, String cond);
+    
+    /**
+     * Permet de travailler avec tous les matériels
+     * Jointures des tables contenant idMateriel
+     * @param req
+     */
+    public String SQLMateriau(String req);
+    
+    public String SQLMateriau(String req, Class<? extends Materiel> aClass);
 }

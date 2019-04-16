@@ -6,6 +6,7 @@ import java.sql.*;
 import oracle.jdbc.*;
 import oracle.jdbc.dcn.*;
 import InterfaceGraphique.CreateurGraphique;
+import Ruche.Couleur;
 import SQL.Affichage;
 import SQL.BDTable;
 import java.awt.event.WindowAdapter;
@@ -20,7 +21,6 @@ import java.util.logging.Logger;
  */
 public class Main {
     public static void main(String args[]){
-        
         
         //Connection à la base de données
         BDTable.connection();

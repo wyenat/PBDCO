@@ -5,14 +5,50 @@
  */
 package Controleurs;
 
+import SQL.Affichage;
+import SQL.Création;
+
 /**
  * Un capteur :)
  */
 public abstract class Capteur {
-    private int CapId;
-    private Mesure mesure;
+    protected int idCapteur;
     
-    public void EnregistrerMesure(){
+    public Capteur(){
+        InitIdCapteur();
+    }
         
+        
+
+    private void InitIdCapteur() {
+        String req = "idCapteur";
+        Affichage aff = new Affichage();
+        String resultat = aff.SQLUniteCapteur(req);
+        int candidat = -1;
+        if (resultat!=""){
+            for (String potentiel : resultat.split(" ")){
+                if (Integer.parseInt(potentiel) > candidat){
+                    candidat = Integer.parseInt(potentiel);
+                    System.out.println("Courant = " +  potentiel+ ", max = " + candidat);
+                }
+            }
+        }
+        this.idCapteur = candidat + 1;
+    }
+    
+    /**
+     * Enregistre une mesure dans la base de données
+     * @param mesure Mesure à enregistrer
+     */
+    public void EnregistrerMesure(Mesure mesure){
+        Création crea = new Création();
+        String req = "";
+        // CapteurId
+        req += this.idCapteur;
+        //horodatage
+        req += "," + mesure.getHorodatage();
+        //valeur
+        req += "," + mesure.getVal();
+        crea.SQLMesure(req);
     }
 }

@@ -5,6 +5,8 @@
  */
 package SQL;
 
+import Ruche.Materiel;
+
 /**
  * Gère la destruction de lignes
  */
@@ -15,9 +17,7 @@ public class Destruction implements FabriqueSQL{
      * @param cond la condition de destruction
      */
     public String SQLRuche(String cond) {
-        System.out.println("YOYOYO");
        cond = "DELETE FROM RUCHE WHERE (" + cond + ")";
-       System.out.println(cond);
        BDTable.requete(cond);
        
        return "Deleted";
@@ -47,6 +47,34 @@ public class Destruction implements FabriqueSQL{
     @Override
     public String SQLMesure(String req) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String SQLUniteCapteur(String req) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String SQLUniteCapteur(String req, String cond) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String SQLMateriau(String cond) {
+        cond = "DELETE FROM "+"TOIT T JOIN COUVERCLE C ON T.idMATERIEL=C.idMATERIEL "+" WHERE (" + cond+ ")";
+        System.out.println(cond);
+        BDTable.requete(cond);
+       
+       return "Deleted";
+    }
+
+    @Override
+    public String SQLMateriau(String cond, Class<? extends Materiel> aClass) {
+//        String table = aClass.getName().replace("Ruche.", "");
+//        cond = "DELETE FROM "+table+" WHERE (" + cond + ")";
+//        BDTable.requete(cond);
+//       
+       return "Deleted";
     }
     
 }

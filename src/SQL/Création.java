@@ -5,6 +5,8 @@
  */
 package SQL;
 
+import Ruche.Materiel;
+
 /**
  *
  * Gère la création SQL
@@ -53,7 +55,38 @@ public class Création implements FabriqueSQL{
 
     @Override
     public String SQLMesure(String req) {
+        req = "INSERT INTO MESURE VALUES ( " + req + " )"; 
+        String result = BDTable.requete(req);
+        return result;
+    }
+
+    @Override
+    public String SQLUniteCapteur(String req) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String SQLUniteCapteur(String req, String cond) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String SQLMateriau(String req) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    /**
+     * Permet de créer une ligne de Matériau du matériau donné
+     * @param string comme pour les autres
+     * @param aClass permet de spécifier le type de matériel qu'on manipule
+     */
+    public String SQLMateriau(String req, Class<? extends Materiel> aClass) {
+        String table = aClass.getName().replace("Ruche.", "");
+        req = "INSERT INTO "+ table +" VALUES ( " + req + " )"; 
+        System.out.println(req);
+        String result = BDTable.requete(req);
+        return result;
     }
 
 }

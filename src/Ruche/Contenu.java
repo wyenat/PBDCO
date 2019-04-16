@@ -1,13 +1,18 @@
 package Ruche;
 
 public enum Contenu {
-
-  Miel,
-
-  Larve,
-
-  Saucisse//(faut arreter d essayer les ruches)
-
+    VIDE,
+    LARVES,
+    POLLEN,
+    MIEL
   ;  
 
+    public static Contenu[] getAll(){
+        return new Contenu[]{
+            VIDE,
+            LARVES,
+             POLLEN,
+             MIEL
+        };
+    }
 }

@@ -3,12 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controleurs;
+package Ruche;
+
+import SQL.Création;
 
 /**
  *
  */
-public enum UniteMesure {
-    POIDS,
-    TEMPERATURE
+public class Toit extends Materiel { 
+    public Toit(Materiau materiau) {
+        super(materiau);
+    }
+    
 }

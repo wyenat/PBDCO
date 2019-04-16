@@ -5,11 +5,26 @@
  */
 package Controleurs.Poids;
 import Controleurs.Capteur;
+import Controleurs.Mesure;
+import static Controleurs.UniteMesure.POIDS;
 
 /**
  *
  * @author matterv
  */
 public class CapteurPoids extends Capteur {
+
+    public CapteurPoids() {
+        super();
+    }
+    
+    /**
+     * 
+     * @param val est la mesure enregistrée
+     */
+    public void EnregistrerMesure(int val){
+        Mesure mesure = new Mesure(val, POIDS);
+        EnregistrerMesure(mesure);
+    }
     
 }

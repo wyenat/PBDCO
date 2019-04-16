@@ -5,6 +5,11 @@
  */
 package InterfaceGraphique;
 
+import Ruche.Couvercle;
+import Ruche.Materiau;
+import Ruche.Materiel;
+import Ruche.Plancher;
+import Ruche.Toit;
 import SQL.Affichage;
 import SQL.Destruction;
 import static java.lang.Thread.sleep;
@@ -62,7 +67,7 @@ public class AppClient extends javax.swing.JFrame {
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
-        jButton7 = new javax.swing.JButton();
+        ajouterCadresBouton = new javax.swing.JButton();
         jComboBox5 = new javax.swing.JComboBox();
         jButton8 = new javax.swing.JButton();
         jSeparator3 = new javax.swing.JSeparator();
@@ -79,6 +84,16 @@ public class AppClient extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
+        jPanel7 = new javax.swing.JPanel();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        typeMaterielCombo = new javax.swing.JComboBox<>();
+        typeMateriauCombo = new javax.swing.JComboBox<Materiau>();
+        ajoutMateriauBouton = new javax.swing.JToggleButton();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        ComboBoxidMateriel = new javax.swing.JComboBox<>();
+        ButtonSupprimerMateriel = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -140,6 +155,11 @@ public class AppClient extends javax.swing.JFrame {
         });
 
         jButton5.setText("Ajouter Hausse");
+        jButton5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton5MouseClicked(evt);
+            }
+        });
 
         jButton6.setText("Supprimer Hausse");
 
@@ -275,10 +295,15 @@ public class AppClient extends javax.swing.JFrame {
 
         jTabbedPane5.addTab("Essaim", jPanel5);
 
-        jButton7.setText("Ajouter");
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
+        ajouterCadresBouton.setText("Ajouter");
+        ajouterCadresBouton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ajouterCadresBoutonMouseClicked(evt);
+            }
+        });
+        ajouterCadresBouton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
+                ajouterCadresBoutonActionPerformed(evt);
             }
         });
 
@@ -307,7 +332,7 @@ public class AppClient extends javax.swing.JFrame {
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jComboBox5, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel6Layout.createSequentialGroup()
-                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(ajouterCadresBouton, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel6Layout.createSequentialGroup()
@@ -327,7 +352,7 @@ public class AppClient extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(ajouterCadresBouton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -414,6 +439,92 @@ public class AppClient extends javax.swing.JFrame {
 
         jTabbedPane5.addTab("Actions", jPanel3);
 
+        jLabel19.setText("Type");
+
+        jLabel20.setText("Matériau");
+
+        typeMaterielCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Toit", "Couvercle", "Plancher"}));
+
+        typeMateriauCombo.setModel(new javax.swing.DefaultComboBoxModel<Materiau>(new Materiau[] { Materiau.BOIS, Materiau.METAL, Materiau.PLASTIQUE, Materiau.POLYSTYRENE, Materiau.CRISTAL_DE_BISMUTH }));
+
+        ajoutMateriauBouton.setText("Ajouter");
+        ajoutMateriauBouton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ajoutMateriauBoutonMouseClicked(evt);
+            }
+        });
+
+        jLabel21.setText("Ajouter un matériel : pas forcément dans l'application finale");
+
+        jLabel22.setText("idMatériel");
+
+        String[] listMateriels = affichage.SQLMateriau("idMateriel").split(" ");
+        ComboBoxidMateriel.setModel(new javax.swing.DefaultComboBoxModel<>(listMateriels));
+
+        ButtonSupprimerMateriel.setText("Supprimer");
+        ButtonSupprimerMateriel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ButtonSupprimerMaterielMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel21, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGap(196, 196, 196)
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                                .addComponent(jLabel22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(ButtonSupprimerMateriel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                                        .addComponent(ComboBoxidMateriel, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(6, 6, 6))))
+                            .addGroup(jPanel7Layout.createSequentialGroup()
+                                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel20)
+                                    .addComponent(jLabel19))
+                                .addGap(38, 38, 38)
+                                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(typeMaterielCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(ajoutMateriauBouton, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(typeMateriauCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 6, Short.MAX_VALUE)))))
+                .addContainerGap())
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel21)
+                .addGap(20, 20, 20)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(typeMaterielCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel19))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel20)
+                    .addComponent(typeMateriauCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(ajoutMateriauBouton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ComboBoxidMateriel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel22))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(ButtonSupprimerMateriel)
+                .addContainerGap())
+        );
+
+        jTabbedPane5.addTab("Materiel", jPanel7);
+
         jSplitPane1.setRightComponent(jTabbedPane5);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -463,9 +574,9 @@ public class AppClient extends javax.swing.JFrame {
         jLabel18.setText(affichage.SQLRuche("AgeReine", "idRuche=" + currentRucheId));
     }//GEN-LAST:event_displayRuchesItemStateChanged
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+    private void ajouterCadresBoutonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ajouterCadresBoutonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton7ActionPerformed
+    }//GEN-LAST:event_ajouterCadresBoutonActionPerformed
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
         // TODO add your handling code here:
@@ -491,6 +602,47 @@ public class AppClient extends javax.swing.JFrame {
     private void displayRuchesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayRuchesActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_displayRuchesActionPerformed
+
+    private void ajoutMateriauBoutonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ajoutMateriauBoutonMouseClicked
+        // Fonction pour ajouter du matériel
+        Materiau materiau = (Materiau) this.typeMateriauCombo.getSelectedItem();
+        Materiel mat;
+        switch ((String) this.typeMaterielCombo.getSelectedItem()){
+            case "Toit":
+                mat = new Toit(materiau);
+                break;
+            case "Couvercle":
+                mat = new Couvercle(materiau);
+                break;
+            case "Plancher":
+                mat = new Plancher(materiau);
+                break;
+            default:
+                mat = null;
+                System.out.println("Erreur");
+                break;
+        }
+        if (mat != null) {
+            mat.create();
+        }
+    }//GEN-LAST:event_ajoutMateriauBoutonMouseClicked
+
+    private void ButtonSupprimerMaterielMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ButtonSupprimerMaterielMouseClicked
+        // Supprimer matériaux
+        int currentMaterielID = Integer.parseInt((String) this.ComboBoxidMateriel.getSelectedItem());
+        Destruction dest = new Destruction();
+        dest.SQLMateriau("idMateriel="+currentMaterielID);
+    }//GEN-LAST:event_ButtonSupprimerMaterielMouseClicked
+
+    private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseClicked
+        CreateurHausse ch = new CreateurHausse();
+        ch.creer();
+    }//GEN-LAST:event_jButton5MouseClicked
+
+    private void ajouterCadresBoutonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ajouterCadresBoutonMouseClicked
+        CreateurCadre cc = new CreateurCadre();
+        cc.creer();
+    }//GEN-LAST:event_ajouterCadresBoutonMouseClicked
 
     /**
      * @param args the command line arguments
@@ -528,13 +680,16 @@ public class AppClient extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JToggleButton ButtonSupprimerMateriel;
+    private javax.swing.JComboBox<String> ComboBoxidMateriel;
+    private javax.swing.JToggleButton ajoutMateriauBouton;
+    private javax.swing.JButton ajouterCadresBouton;
     private javax.swing.JComboBox displayRuches;
     private javax.swing.Box.Filler filler1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JComboBox jComboBox3;
     private javax.swing.JComboBox jComboBox4;
@@ -549,7 +704,11 @@ public class AppClient extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -563,6 +722,7 @@ public class AppClient extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
@@ -571,5 +731,7 @@ public class AppClient extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JButton supprimerRuche;
+    private javax.swing.JComboBox<Materiau> typeMateriauCombo;
+    private javax.swing.JComboBox<String> typeMaterielCombo;
     // End of variables declaration//GEN-END:variables
 }

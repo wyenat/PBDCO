@@ -3,12 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controleurs;
+package Ruche;
 
 /**
  *
  */
-public enum UniteMesure {
-    POIDS,
-    TEMPERATURE
+public class Couvercle extends Materiel {
+    
+    public Couvercle(Materiau materiau) {
+        super(materiau);
+    }
+    
 }

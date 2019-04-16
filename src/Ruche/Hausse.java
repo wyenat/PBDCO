@@ -1,13 +1,14 @@
 package Ruche;
 
-public class Hausse {
+public class Hausse extends Materiel {
     
     private int numeroHausse;
-    private char couleur;
+    private Couleur couleur;
 
-    public Hausse(int idMateriel, char materiau) {
-        this.numeroHausse = idMateriel;
-        this.couleur = materiau;
+    public Hausse(int numero, Materiau materiau, Couleur couleur) {
+        super(materiau);
+        this.numeroHausse = numero;
+        this.couleur = couleur;
     }
     
     
@@ -16,7 +17,7 @@ public class Hausse {
         return numeroHausse;
     }
 
-    public char getCouleur() {
+    public Couleur getCouleur() {
         return couleur;
     }
     
