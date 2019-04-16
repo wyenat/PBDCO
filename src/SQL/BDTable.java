@@ -45,16 +45,19 @@ public class BDTable {
 
       // Affichage du résultat
     // Le problème est là  
+    int len = s.split(",").length;
     String result = "";
     ResultSet rset = stmt.executeQuery();
-    System.out.println(rset.toString());
      if (s.startsWith("SELECT")){
-        while (rset.next ()) {
+        while (rset.next()) {
+            System.out.println("On passe");
               /**
-               * PAS TROP SUR À VÉRIFIER
+               * NOTE : POSE PROBLEME SI UNE SEULE ENTRÉE
                */
-
-                   result += rset.getObject (1).toString() + " ";
+                   for (int i=1; i<=len; i++){
+                
+                   result += rset.getObject (i).toString() + " ";
+                }
           }
      }
       stmt.close();

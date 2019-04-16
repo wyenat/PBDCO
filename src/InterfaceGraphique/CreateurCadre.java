@@ -65,7 +65,7 @@ public class CreateurCadre extends javax.swing.JFrame {
             }
         });
 
-        typeMateriauCombo.setModel(new javax.swing.DefaultComboBoxModel<Materiau>(new Materiau[] { Materiau.BOIS, Materiau.METAL, Materiau.PLASTIQUE, Materiau.POLYSTYRENE, Materiau.CRISTAL_DE_BISMUTH }));
+        typeMateriauCombo.setModel(new javax.swing.DefaultComboBoxModel<Materiau>(new Materiau[] { Materiau.BOIS, Materiau.PLASTIQUE}));
 
         jLabel2.setText("Matériau");
 
@@ -131,6 +131,10 @@ public class CreateurCadre extends javax.swing.JFrame {
         Contenu cont = (Contenu) this.ContenuCombo.getSelectedItem();
         Etat etat = (Etat) this.EtatCombo.getSelectedItem();
         Materiau mat = (Materiau) this.typeMateriauCombo.getSelectedItem();
+        assert(cont!=null);
+        assert(etat!=null);
+        assert(mat!=null);
+        System.out.println(cont.toString() + etat.toString() + mat.toString());
         Cadre cadre = new Cadre(cont, etat, mat);
         cadre.creer();
         dispose();

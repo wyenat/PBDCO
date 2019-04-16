@@ -63,4 +63,10 @@ public interface FabriqueSQL {
     public String SQLMateriau(String req);
     
     public String SQLMateriau(String req, Class<? extends Materiel> aClass);
+    
+    public String SQLCadre(String req);
+    
+    public String SQLCadre(String req, String cond);
+    
+    public String SQLCompositionHausse(String req);
 }

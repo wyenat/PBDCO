@@ -65,14 +65,34 @@ public class Affichage implements FabriqueSQL{
     public String SQLMateriau(String req) {
         req = "SELECT " + req + " FROM PLANCHER "
                 + "UNION SELECT " + req + " FROM COUVERCLE "
-                + "UNION SELECT " + req + " FROM TOIT ";
-        System.out.println("REQ :"+ req);
+                + "UNION SELECT " + req + " FROM TOIT "
+                + "UNION SELECT " + req + " FROM CADRE "
+                + "UNION SELECT " + req + " FROM HAUSSE";
         String result = BDTable.requete(req);
         return result;
     }
 
     @Override
     public String SQLMateriau(String req, Class<? extends Materiel> aClass) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String SQLCadre(String req) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String SQLCadre(String req, String cond) {
+        req = "SELECT " + req + " FROM CADRE JOIN COMPOSITIONHAUSSE " +
+              "ON IDMATERIEL = IDMATERIELCADRE" +
+               " WHERE " + cond;
+        String result = BDTable.requete(req);
+        return result;
+    }
+
+    @Override
+    public String SQLCompositionHausse(String req) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

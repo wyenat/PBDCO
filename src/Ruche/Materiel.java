@@ -16,9 +16,7 @@ public class Materiel {
         if (resultat!=""){
             for (String potentiel : resultat.split(" ")){
                 if (Integer.parseInt(potentiel) > candidat){
-                    System.out.println("ON PASSE ET potentiel = " + potentiel);
                     candidat = Integer.parseInt(potentiel);
-                    System.out.println("Courant = " +  potentiel+ ", max = " + candidat);
                 }
             }
         }

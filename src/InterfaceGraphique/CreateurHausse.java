@@ -5,7 +5,10 @@
  */
 package InterfaceGraphique;
 
+import Ruche.Cadre;
+import Ruche.Contenu;
 import Ruche.Couleur;
+import Ruche.Etat;
 import Ruche.Materiau;
 
 /**
@@ -41,6 +44,15 @@ public class CreateurHausse extends javax.swing.JFrame {
         CreerBouton = new javax.swing.JButton();
         AnnulerBouton = new javax.swing.JButton();
         typeMateriauCombo = new javax.swing.JComboBox<Materiau>();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        listCadresDisponibles = new javax.swing.JList<>();
+        typeMateriauCombo1 = new javax.swing.JComboBox<Materiau>();
+        jLabel6 = new javax.swing.JLabel();
+        ContenuCombo = new javax.swing.JComboBox<Contenu>();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        EtatCombo = new javax.swing.JComboBox<Etat>();
+        BoutonTrier = new javax.swing.JButton();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -76,6 +88,33 @@ public class CreateurHausse extends javax.swing.JFrame {
 
         typeMateriauCombo.setModel(new javax.swing.DefaultComboBoxModel<Materiau>(new Materiau[] { Materiau.BOIS, Materiau.METAL, Materiau.PLASTIQUE, Materiau.POLYSTYRENE, Materiau.CRISTAL_DE_BISMUTH }));
 
+        String listCadre = Cadre.getListe();
+        listCadresDisponibles.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = listCadre.split(",");
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane1.setViewportView(listCadresDisponibles);
+
+        typeMateriauCombo1.setModel(new javax.swing.DefaultComboBoxModel<Materiau>(new Materiau[] { Materiau.BOIS, Materiau.PLASTIQUE}));
+
+        jLabel6.setText("Matériau");
+
+        ContenuCombo.setModel(new javax.swing.DefaultComboBoxModel<Contenu>(Contenu.getAll()));
+
+        jLabel7.setText("Contenu");
+
+        jLabel8.setText("État");
+
+        EtatCombo.setModel(new javax.swing.DefaultComboBoxModel<Etat>(Etat.getAll()));
+
+        BoutonTrier.setText("Trier");
+        BoutonTrier.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BoutonTrierMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -95,16 +134,30 @@ public class CreateurHausse extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jSpinner1)
                                     .addComponent(CouleurCombo, 0, 192, Short.MAX_VALUE)
-                                    .addComponent(typeMateriauCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
-                        .addGap(204, 204, 204))
+                                    .addComponent(typeMateriauCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(AnnulerBouton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(CreerBouton)))
+                        .addComponent(CreerBouton))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(ContenuCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(EtatCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(typeMateriauCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(BoutonTrier, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -124,9 +177,25 @@ public class CreateurHausse extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(typeMateriauCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(11, 11, 11)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel8)
+                    .addComponent(EtatCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel7)
+                    .addComponent(ContenuCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                .addComponent(BoutonTrier)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(CreerBouton)
                     .addComponent(AnnulerBouton))
@@ -143,6 +212,10 @@ public class CreateurHausse extends javax.swing.JFrame {
     private void CreerBoutonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CreerBoutonMouseClicked
         dispose();
     }//GEN-LAST:event_CreerBoutonMouseClicked
+
+    private void BoutonTrierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BoutonTrierMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BoutonTrierMouseClicked
 
     /**
      * @param args the command line arguments
@@ -181,15 +254,24 @@ public class CreateurHausse extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AnnulerBouton;
+    private javax.swing.JButton BoutonTrier;
+    private javax.swing.JComboBox<Contenu> ContenuCombo;
     private javax.swing.JComboBox<Couleur> CouleurCombo;
     private javax.swing.JButton CreerBouton;
+    private javax.swing.JComboBox<Etat> EtatCombo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSpinner jSpinner1;
+    private javax.swing.JList<String> listCadresDisponibles;
     private javax.swing.JComboBox<Materiau> typeMateriauCombo;
+    private javax.swing.JComboBox<Materiau> typeMateriauCombo1;
     // End of variables declaration//GEN-END:variables
 }

@@ -89,4 +89,23 @@ public class Création implements FabriqueSQL{
         return result;
     }
 
+    @Override
+    public String SQLCadre(String req) {
+        req = "INSERT INTO CADRE VALUES ( " + req + " )"; 
+        String result = BDTable.requete(req);
+        return result;
+    }
+
+    @Override
+    public String SQLCadre(String req, String cond) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String SQLCompositionHausse(String req) {
+        req = "INSERT INTO COMPOSITIONHAUSSE VALUES ( " + req + " )"; 
+        String result = BDTable.requete(req);
+        return result;
+    }
+
 }
