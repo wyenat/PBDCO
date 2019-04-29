@@ -3,8 +3,8 @@ package SQL;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import oracle.jdbc.*;
-import oracle.jdbc.dcn.*;
+//import oracle.jdbc.*;
+//import oracle.jdbc.dcn.*;
 
 public class BDTable {
         private static final String URL = "jdbc:oracle:thin:@ensioracle1.imag.fr:1521:ensioracle1";
