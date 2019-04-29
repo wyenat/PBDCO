@@ -8,25 +8,19 @@ package SQL;
 import Ruche.Materiel;
 
 /**
- * Gère la destruction de lignes
+ *
+ * @author matterv
  */
-public class Destruction implements FabriqueSQL{
+public class Modification implements FabriqueSQL{
 
     @Override
-    /**
-     * @param cond la condition de destruction
-     */
-    public String SQLRuche(String cond) {
-       cond = "DELETE FROM RUCHE WHERE (" + cond + ")";
-       BDTable.requete(cond);
-       
-       return "Deleted";
+    public String SQLRuche(String req) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
 
     @Override
     public String SQLRuche(String req, String cond) {
-        throw new UnsupportedOperationException("Pas de conditions en création !"); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -60,21 +54,13 @@ public class Destruction implements FabriqueSQL{
     }
 
     @Override
-    public String SQLMateriau(String cond) {
-        cond = "DELETE FROM "+"TOIT T JOIN COUVERCLE C ON T.idMATERIEL=C.idMATERIEL "+" WHERE (" + cond+ ")";
-        System.out.println(cond);
-        BDTable.requete(cond);
-       
-       return "Deleted";
+    public String SQLMateriau(String req) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String SQLMateriau(String cond, Class<? extends Materiel> aClass) {
-//        String table = aClass.getName().replace("Ruche.", "");
-//        cond = "DELETE FROM "+table+" WHERE (" + cond + ")";
-//        BDTable.requete(cond);
-//       
-       return "Deleted";
+    public String SQLMateriau(String req, Class<? extends Materiel> aClass) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -91,10 +77,13 @@ public class Destruction implements FabriqueSQL{
     public String SQLCompositionHausse(String req) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-    @Override
+    
+     @Override
     public String SQLCompositionHausse(String req, String cond) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String result = "UPDATE COMPOSITIONHAUSSE SET IDMATERIELHAUSSE = '" 
+                + req + "' WHERE " + "IDMATERIELCADRE = '" + cond +"'";
+        BDTable.requete(result);
+        return "";
     }
     
 }

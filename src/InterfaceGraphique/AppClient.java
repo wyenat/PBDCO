@@ -15,6 +15,7 @@ import SQL.Destruction;
 import static java.lang.Thread.sleep;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static java.lang.Thread.sleep;
 
 /**
  *
@@ -119,7 +120,7 @@ public class AppClient extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jButton2.setText("Ajouter Ruche");
+        jButton2.setText("Associer Ruche");
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton2MouseClicked(evt);
@@ -131,7 +132,7 @@ public class AppClient extends javax.swing.JFrame {
             }
         });
 
-        supprimerRuche.setText("Supprimer Ruche");
+        supprimerRuche.setText("Dissocier Ruche");
         supprimerRuche.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 supprimerRucheMouseClicked(evt);
@@ -154,14 +155,14 @@ public class AppClient extends javax.swing.JFrame {
             }
         });
 
-        jButton5.setText("Ajouter Hausse");
+        jButton5.setText("Associer Hausse");
         jButton5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton5MouseClicked(evt);
             }
         });
 
-        jButton6.setText("Supprimer Hausse");
+        jButton6.setText("Dissocier Hausse");
 
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Hausse 1", "Hausse 2", "Hausse3" }));
 
@@ -295,7 +296,7 @@ public class AppClient extends javax.swing.JFrame {
 
         jTabbedPane5.addTab("Essaim", jPanel5);
 
-        ajouterCadresBouton.setText("Ajouter");
+        ajouterCadresBouton.setText("Associer");
         ajouterCadresBouton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 ajouterCadresBoutonMouseClicked(evt);
@@ -309,7 +310,7 @@ public class AppClient extends javax.swing.JFrame {
 
         jComboBox5.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Cadre 1", "Cadre 2", "Cadre 3" }));
 
-        jButton8.setText("Supprimer");
+        jButton8.setText("Dissocier");
 
         jSeparator3.setBackground(new java.awt.Color(232, 231, 231));
         jSeparator3.setForeground(new java.awt.Color(54, 46, 46));
@@ -551,7 +552,7 @@ public class AppClient extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
-        CreateurGraphique cg = new CreateurGraphique();
+        CreateurRuche cg = new CreateurRuche();
         cg.creerRuche();
        // synchronized(cg) {
        //      while (cg.isOpened()) { try {

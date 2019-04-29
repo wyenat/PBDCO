@@ -69,4 +69,6 @@ public interface FabriqueSQL {
     public String SQLCadre(String req, String cond);
     
     public String SQLCompositionHausse(String req);
+    
+    public String SQLCompositionHausse(String req, String cond);
 }

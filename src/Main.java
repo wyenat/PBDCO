@@ -1,11 +1,11 @@
 
-import Controleurs.Horodateur;
+import Capteurs.Horodateur;
 import InterfaceGraphique.AppClient;
 import InterfaceGraphique.ApplicationCapteurs;
 import java.sql.*;
 import oracle.jdbc.*;
 import oracle.jdbc.dcn.*;
-import InterfaceGraphique.CreateurGraphique;
+import InterfaceGraphique.CreateurRuche;
 import Ruche.Couleur;
 import SQL.Affichage;
 import SQL.BDTable;
@@ -14,6 +14,7 @@ import java.awt.event.WindowEvent;
 import static java.lang.Thread.sleep;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static java.lang.Thread.sleep;
 
 /**
  * Ouvre la base de données et les interfaces graphiques

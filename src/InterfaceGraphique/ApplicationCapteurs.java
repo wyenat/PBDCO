@@ -5,9 +5,9 @@
  */
 package InterfaceGraphique;
 
-import Controleurs.Capteur;
-import Controleurs.Poids.CapteurPoids;
-import Controleurs.Temperature.CapteurTemperature;
+import Capteurs.Capteur;
+import Capteurs.Poids.CapteurPoids;
+import Capteurs.Temperature.CapteurTemperature;
 import SQL.Affichage;
 import SQL.Création;
 
