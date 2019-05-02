@@ -5,6 +5,7 @@ import SQL.Affichage;
 import SQL.Création;
 import SQL.Modification;
 import java.util.List;
+import javax.swing.JList;
 
 public class Hausse extends Materiel {
 
@@ -13,10 +14,10 @@ public class Hausse extends Materiel {
      */
     public static String getListe() {
         // Récupère les hausses
-        String req = "idMateriel, materiau, couleur, numeroHausse";
+        String req = "Hausse.idMateriel, materiau, couleur, numeroHausse";
         Affichage aff = new Affichage();
         //Non assignées !
-        String res = "" + aff.SQLHausses(req, "idMaterielHausse IS NULL");
+        String res = "" + aff.SQLHausses(req, "idRuche IS NULL");
         //On remplace tous les 3 espaces par une virgule
         String resultat= "" ;
         int i = 1;
@@ -29,7 +30,6 @@ public class Hausse extends Materiel {
             i++;
         }
         resultat = resultat.substring(0, resultat.length() - 1);
-        System.out.println("Résultat = " + resultat);
         return resultat;
     }
     
@@ -70,6 +70,18 @@ public class Hausse extends Materiel {
         }
         return correct;
     }
+    
+    public static boolean verification(String type, JList<String> list){
+        int n = list.getSelectedIndices().length;
+        if (n < 2){
+             Erreur.main("Il faut au moins 2 " + type + "! \n"
+                 + n + "ont été séléctionnés !");
+             return false;
+        }
+        return true;
+    }
+    
+    
     
 
     public int getnumeroHausse() {

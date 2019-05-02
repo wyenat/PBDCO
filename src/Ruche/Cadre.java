@@ -27,7 +27,6 @@ public class Cadre extends Materiel {
             i++;
         }
         resultat = resultat.substring(0, resultat.length() - 1);
-        System.out.println("Résultat = " + resultat);
         return resultat;
     }
     
