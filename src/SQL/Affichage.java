@@ -24,7 +24,6 @@ public class Affichage implements FabriqueSQL{
     @Override
     public String SQLRuche(String req, String cond) {
         req = "SELECT " + req + " FROM RUCHE" + " WHERE " + cond;
-        //System.out.println("REQ :"+ req);
         String result = BDTable.requete(req);
         return result;
     }
@@ -51,7 +50,6 @@ public class Affichage implements FabriqueSQL{
 
     public String SQLUniteCapteur(String req) {
         req = "SELECT " + req + " FROM UniteCapteur";
-        //System.out.println("REQ :"+ req);
         String result = BDTable.requete(req);
         return result;
     }
@@ -106,7 +104,6 @@ public class Affichage implements FabriqueSQL{
                 " FROM " + mat +" WHERE idMateriel NOT IN \n" +
 "                (SELECT idMateriel\n" +
 "                FROM COMPOSITIONRUCHE)";
-            System.out.println("REQUETE : " + req);
             String result = BDTable.requete(req);
             return result;
     }
@@ -115,6 +112,7 @@ public class Affichage implements FabriqueSQL{
         req = "SELECT " + req + " FROM HAUSSE JOIN COMPOSITIONRUCHE " +
               "ON COMPOSITIONRUCHE.IDMATERIEL = HAUSSE.IDMATERIEL" +
                " WHERE " + cond;
+        System.out.println("REQUETE : " + req);
         String result = BDTable.requete(req);
         return result;
     }

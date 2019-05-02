@@ -497,13 +497,13 @@ public class CreateurRuche extends javax.swing.JFrame {
         int age = (int) this.ageReine.getValue();
         String nomRuche = this.Nom_Ruche.getText();
         String couleur = this.CouleurCombo.getSelectedItem().toString();
-        System.out.println(couleur);
+        JList<String> listH = this.listHaussesDisponibles;
         JList<String> listC = this.listCouverclesDisponibles;
         JList<String> listP = this.listPlanchersDisponibles;
         JList<String> listT = this.listToitsDisponibles;
         if (r.verifier(race, age, nomRuche)){
-            if (Couvercle.verification("Couvercle", listC) && Toit.verification("Toit", listP) && Plancher.verification("Plancher", listT)){
-                r.creer(race, age, couleur, nomRuche, listC, listP, listT);
+            if (Couvercle.verification("Couvercle", listC) && Toit.verification("Toit", listP) && Plancher.verification("Plancher", listT) && Hausse.verification("Hausse", listH)){
+                r.creer(race, age, couleur, nomRuche, listC, listP, listT, listH);
                 dispose();
             }
         }

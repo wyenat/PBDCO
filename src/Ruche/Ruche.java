@@ -3,6 +3,7 @@ package Ruche;
 import InterfaceGraphique.Erreur;
 import SQL.Affichage;
 import SQL.Création;
+import SQL.Modification;
 import javax.swing.JList;
 
 public class Ruche {
@@ -35,7 +36,6 @@ public class Ruche {
                     + age + " !");
             ret = false;
         }
-        System.out.println(nomRuche + nomRuche.equals(""));
         if (nomRuche.equals("")){
                 Erreur.main("Un nom ne peut pas être vide !");
                 ret = false;
@@ -47,8 +47,9 @@ public class Ruche {
         return ret;
     }
 
-    public void creer(String race, int age, String nomRuche, String couleur, JList<String> listC, JList<String> listP, JList<String> listT) {
+    public void creer(String race, int age, String nomRuche, String couleur, JList<String> listC, JList<String> listP, JList<String> listT, JList<String> listH) {
         Création crea = new Création();
+        Modification modif = new Modification();
         // Création de la ruche en elle-même
         String req = "";
         req += "" + idRuche;
@@ -60,20 +61,27 @@ public class Ruche {
         req += ", " + "'" + couleur + "'";
         // nomRuche :
         req += ", " + "'" + nomRuche + "'";
-//        crea.SQLRuche(req);
+        crea.SQLRuche(req);
 //        
 //        //Association
-//        String asso = listC.getSelectedValue().split(" ")[0];
-//        req = asso + ", " + idRuche;
-//        crea.SQLCompositionRuche(req);
-//        
-//        asso = listP.getSelectedValue().split(" ")[0];
-//        req = asso + ", " + idRuche;
-//        crea.SQLCompositionRuche(req);
-//        
-//        asso = listT.getSelectedValue().split(" ")[0];
-//        req = asso + ", " + idRuche;
-//        crea.SQLCompositionRuche(req);
+        String asso = listC.getSelectedValue().split(" ")[0];
+        req = asso + ", " + idRuche;
+        crea.SQLCompositionRuche(req);
+        
+        asso = listP.getSelectedValue().split(" ")[0];
+        req = asso + ", " + idRuche;
+        crea.SQLCompositionRuche(req);
+        
+        asso = listT.getSelectedValue().split(" ")[0];
+        req = asso + ", " + idRuche;
+        crea.SQLCompositionRuche(req);
+        
+        for (String s :  listH.getSelectedValuesList()){
+            asso = s.split(" ")[0];
+            req = asso;
+            modif.SQLCompositionRuche("" + idRuche, req);
+        }
+        
     }
     
 }

@@ -35,7 +35,6 @@ public class Materiel {
     }
 
     public void create() {
-        System.out.println("Création de " + this.getClass().toString());
         Création crea = new Création();
         crea.SQLMateriau("" + idMateriel +"," + "'" +this.materiau.toString()+"'", this.getClass());
     }

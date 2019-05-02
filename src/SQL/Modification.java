@@ -85,5 +85,12 @@ public class Modification implements FabriqueSQL{
         BDTable.requete(result);
         return "";
     }
+
+    public String SQLCompositionRuche(String req, String cond) {
+         String result = "UPDATE COMPOSITIONRUCHE SET IDRUCHE = '" 
+                + req + "' WHERE " + "IDMATERIEL = '" + cond +"'";
+        BDTable.requete(result);
+        return "";
+    }
     
 }
