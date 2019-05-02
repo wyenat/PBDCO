@@ -96,4 +96,27 @@ public class Affichage implements FabriqueSQL{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
+    public String SQLCompositionHausse(String req, String cond) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public String SQLMateriauLibre(String req, String mat) {
+            req = "SELECT " + req + 
+                " FROM " + mat +" WHERE idMateriel NOT IN \n" +
+"                (SELECT idMateriel\n" +
+"                FROM COMPOSITIONRUCHE)";
+            System.out.println("REQUETE : " + req);
+            String result = BDTable.requete(req);
+            return result;
+    }
+
+    public String SQLHausses(String req, String cond) {
+        req = "SELECT " + req + " FROM HAUSSE JOIN COMPOSITIONRUCHE " +
+              "ON COMPOSITIONRUCHE.IDMATERIEL = HAUSSE.IDMATERIEL" +
+               " WHERE " + cond;
+        String result = BDTable.requete(req);
+        return result;
+    }
+
 }

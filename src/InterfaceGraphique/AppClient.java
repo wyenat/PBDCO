@@ -5,6 +5,7 @@
  */
 package InterfaceGraphique;
 
+import Controleurs.ControleurPoids;
 import Ruche.Couvercle;
 import Ruche.Materiau;
 import Ruche.Materiel;
@@ -15,6 +16,7 @@ import SQL.Destruction;
 import static java.lang.Thread.sleep;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static java.lang.Thread.sleep;
 
 /**
  *
@@ -30,6 +32,9 @@ public class AppClient extends javax.swing.JFrame {
     public AppClient() {
         affichage = new Affichage();
         initComponents();
+        ControleurPoids cont = new ControleurPoids();
+        cont.controlePoids();
+        System.out.println("ON CONTROLLE");
     }
 
     
@@ -69,7 +74,7 @@ public class AppClient extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jSplitPane1 = new javax.swing.JSplitPane();
         jPanel2 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
+        associerRucheBouton = new javax.swing.JButton();
         supprimerRuche = new javax.swing.JButton();
         displayRuches = new javax.swing.JComboBox();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
@@ -143,19 +148,19 @@ public class AppClient extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jButton2.setText("Ajouter Ruche");
-        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+        associerRucheBouton.setText("Associer Ruche");
+        associerRucheBouton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton2MouseClicked(evt);
+                associerRucheBoutonMouseClicked(evt);
             }
         });
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        associerRucheBouton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                associerRucheBoutonActionPerformed(evt);
             }
         });
 
-        supprimerRuche.setText("Supprimer Ruche");
+        supprimerRuche.setText("Dissocier Ruche");
         supprimerRuche.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 supprimerRucheMouseClicked(evt);
@@ -178,14 +183,14 @@ public class AppClient extends javax.swing.JFrame {
             }
         });
 
-        jButton5.setText("Ajouter Hausse");
+        jButton5.setText("Associer Hausse");
         jButton5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton5MouseClicked(evt);
             }
         });
 
-        jButton6.setText("Supprimer Hausse");
+        jButton6.setText("Dissocier Hausse");
 
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Hausse 1", "Hausse 2", "Hausse3" }));
 
@@ -193,7 +198,7 @@ public class AppClient extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(associerRucheBouton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(supprimerRuche, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(displayRuches, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -208,7 +213,7 @@ public class AppClient extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(associerRucheBouton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(supprimerRuche, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -319,7 +324,7 @@ public class AppClient extends javax.swing.JFrame {
 
         jTabbedPane5.addTab("Essaim", jPanel5);
 
-        ajouterCadresBouton.setText("Ajouter");
+        ajouterCadresBouton.setText("Associer");
         ajouterCadresBouton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 ajouterCadresBoutonMouseClicked(evt);
@@ -333,7 +338,7 @@ public class AppClient extends javax.swing.JFrame {
 
         jComboBox5.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Cadre 1", "Cadre 2", "Cadre 3" }));
 
-        jButton8.setText("Supprimer");
+        jButton8.setText("Dissocier");
 
         jSeparator3.setBackground(new java.awt.Color(232, 231, 231));
         jSeparator3.setForeground(new java.awt.Color(54, 46, 46));
@@ -574,8 +579,8 @@ public class AppClient extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
-        CreateurGraphique cg = new CreateurGraphique();
+    private void associerRucheBoutonMouseClicked(java.awt.event.MouseEvent evt) {                                                 
+        CreateurRuche cg = new CreateurRuche();
         cg.creerRuche();
         displayRuches.getModel().setSelectedItem(affichage.SQLRuche("idRuche", "idRuche="+currentRucheId).split(" "));
        // synchronized(cg) {
@@ -588,7 +593,8 @@ public class AppClient extends javax.swing.JFrame {
         //    }
         System.out.println("Fenêtre création fermée!");
 
-    }//GEN-LAST:event_jButton2MouseClicked
+    }                                     
+
 
     private void displayRuchesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_displayRuchesItemStateChanged
         // TODO add your handling code here:
@@ -606,9 +612,9 @@ public class AppClient extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void associerRucheBoutonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_associerRucheBoutonActionPerformed
        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_associerRucheBoutonActionPerformed
 
     private void supprimerRucheMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_supprimerRucheMouseClicked
         // Destruction de la ruche
@@ -708,10 +714,10 @@ public class AppClient extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> ComboBoxidMateriel;
     private javax.swing.JToggleButton ajoutMateriauBouton;
     private javax.swing.JButton ajouterCadresBouton;
+    private javax.swing.JButton associerRucheBouton;
     private javax.swing.JComboBox displayRuches;
     private javax.swing.Box.Filler filler1;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton8;

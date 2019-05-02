@@ -40,7 +40,10 @@ public class Création implements FabriqueSQL{
 
     @Override
     public String SQLHausse(String req) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        req = "INSERT INTO HAUSSE VALUES ( " + req + " )"; 
+        System.out.println(req);
+        String result = BDTable.requete(req);
+        return result;
     }
 
     @Override
@@ -104,6 +107,17 @@ public class Création implements FabriqueSQL{
     @Override
     public String SQLCompositionHausse(String req) {
         req = "INSERT INTO COMPOSITIONHAUSSE VALUES ( " + req + " )"; 
+        String result = BDTable.requete(req);
+        return result;
+    }
+
+    @Override
+    public String SQLCompositionHausse(String req, String cond) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public String SQLCompositionRuche(String req) {
+        req = "INSERT INTO COMPOSITIONRUCHE VALUES ( " + req + " )"; 
         String result = BDTable.requete(req);
         return result;
     }

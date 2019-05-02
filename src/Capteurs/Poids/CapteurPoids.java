@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controleurs.Poids;
-import Controleurs.Capteur;
-import Controleurs.Mesure;
-import static Controleurs.UniteMesure.POIDS;
+package Capteurs.Poids;
+import Capteurs.Capteur;
+import Capteurs.Mesure;
+import static Capteurs.UniteMesure.POIDS;
 
 /**
  *

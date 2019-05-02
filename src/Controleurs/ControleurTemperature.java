@@ -13,14 +13,14 @@ import SQL.BDTable;
 /**
  * Un controlleur de Poids :)
  */
-public class ControleurPoids {
+public class ControleurTemperature {
 
-    public ControleurPoids() {
+    public ControleurTemperature() {
     }
     
     
     
-    public void controlePoids(){
+    public void controleTemperature(){
         String hausses =  "SELECT Hausse.IDMATERIEL, AVG(Mesure.VALEUR) as moy FROM HAUSSE"
                 + " JOIN CompositionHausse ON hausse.idMateriel=CompositionHausse.IDMATERIELHAUSSE"
                 + " JOIN EmplacementCapteur ON CompositionHausse.idMaterielCadre=EmplacementCapteur.idMateriel"
@@ -28,15 +28,15 @@ public class ControleurPoids {
                 + " JOIN Capteur ON Mesure.IDCAPTEUR=Capteur.idCapteur"
                 + " JOIN (SELECT idCapteur, MAX(horodatage)AS maxDate FROM MESURE GROUP BY idCapteur) dates "
                 + " ON Mesure.horodatage = dates.maxdate AND dates.idCapteur = EmplacementCapteur.IDCAPTEUR"
-                + " WHERE Capteur.type='poids'"
+                + " WHERE Capteur.type='temperature'"
                 + " GROUP BY Hausse.IDMATERIEL";
         
        String res = BDTable.requete(hausses);
        System.out.println(res);
        
-       if (res!=null){
-            Erreur.main("les Ruches " + res + " ont besoin d'une intervention");
-       }
+      if (res!=null){
+            Erreur.main("les Hausses " + res + " ont besoin d'une intervention");
+      }
        
         
     }

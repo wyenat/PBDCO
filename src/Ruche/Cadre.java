@@ -12,22 +12,22 @@ public class Cadre extends Materiel {
      */
     public static String getListe() {
         //Récupère les cadres
-        String req = "materiau ," + "etat, " + "contenu";
+        String req = "idMateriel, materiau ," + "etat, " + "contenu";
         Affichage aff = new Affichage();
         String res = "" + aff.SQLCadre(req, "idMaterielHausse IS NULL");
         //On remplace tous les 3 espaces par une virgule
         String resultat= "" ;
         int i = 1;
         for (String s : res.split(" ")){
-            if (i%3 != 0){
+            if (i%4 != 0){
                 resultat+=s +" ";
             } else {
                 resultat+=s  + ",";
             }
             i++;
         }
-        resultat = resultat.substring(0, resultat.length() - 2);
-        System.out.println(resultat);
+        resultat = resultat.substring(0, resultat.length() - 1);
+        System.out.println("Résultat = " + resultat);
         return resultat;
     }
     
@@ -35,7 +35,9 @@ public class Cadre extends Materiel {
     private Contenu contenu;    
 
     public Cadre(Contenu cont, Etat etat, Materiau mat) {
+        
         super(mat);
+        assert(mat == Materiau.BOIS || mat == Materiau.PLASTIQUE);
         this.contenu = cont;
         this.etat = etat;
     }
