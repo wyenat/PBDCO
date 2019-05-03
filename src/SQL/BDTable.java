@@ -53,7 +53,7 @@ public class BDTable {
                */
                    for (int i=1; i<=len; i++){
                 
-                   result += rset.getObject (i).toString() + " ";
+                   result += rset.getObject(i).toString() + " ";
                 }
           }
      }
@@ -67,6 +67,38 @@ public class BDTable {
       return null;
   }
    
+   public static String requeteDouble(String s) {
+       // Creation de la requete
+      try {
+      PreparedStatement stmt = conn.prepareStatement(s);
+
+      // Affichage du résultat
+    // Le problème est là  
+    int len = s.split(",").length;
+    String result = "";
+    ResultSet rset = stmt.executeQuery();
+     if (s.startsWith("SELECT")){
+        while (rset.next()) {
+              /**
+               * NOTE : POSE PROBLEME SI UNE SEULE ENTRÉE
+               */
+                   for (int i=1; i<len; i++){
+                
+                   result += rset.getObject(i).toString() + " ";
+                }
+          }
+     }
+      stmt.close();
+      rset.close();
+      return result;
+      } catch (SQLException e) {
+      System.err.println("failed");
+      e.printStackTrace(System.err);
+    }
+      return null;
+  }
+  
+  
   /**
    * Ferme la base de donner
    */

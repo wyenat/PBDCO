@@ -21,6 +21,7 @@ public class ControleurPoids {
     
     
     public void controlePoids(){
+        
         String hausses =  "SELECT Hausse.IDMATERIEL, AVG(Mesure.VALEUR) as moy FROM HAUSSE"
                 + " JOIN CompositionHausse ON hausse.idMateriel=CompositionHausse.IDMATERIELHAUSSE"
                 + " JOIN EmplacementCapteur ON CompositionHausse.idMaterielCadre=EmplacementCapteur.idMateriel"
@@ -31,11 +32,32 @@ public class ControleurPoids {
                 + " WHERE Capteur.type='poids'"
                 + " GROUP BY Hausse.IDMATERIEL";
         
-       String res = BDTable.requete(hausses);
-       System.out.println(res);
+       String res = BDTable.requeteDouble(hausses);
+       String[] separated = res.split(" ");
+       res ="";
+       for (int i = 1; i+1<=separated.length; i+=2){
+           if (Float.parseFloat(separated[i])>1.5){
+               res+=separated[i-1];
+           }
+       }
+       
+       
        
        if (res!=null){
-            Erreur.main("les Ruches " + res + " ont besoin d'une intervention");
+            String ruche = "";
+            String numeros = "";
+            for (int i =0; i<res.split(" ").length; i++){
+                String idRuche =  "SELECT idRuche FROM compositionRuche WHERE idMateriel= " + res.split(" ")[i];
+                String id = BDTable.requete(idRuche);
+                ruche += id + " ";
+                
+                String hausse =  "SELECT numeroHausse FROM Hausse WHERE idMateriel= " + res.split(" ")[i];
+                String numero = BDTable.requete(hausse);
+                numeros += numero + " ";
+                
+            }
+        
+            Erreur.main("Les ruches " + ruche + " ont besoin d'une intervention respectivement sur leurs hausses numéro " + numeros);
        }
        
         
