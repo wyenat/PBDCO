@@ -6,6 +6,7 @@
 package InterfaceGraphique;
 
 import Ruche.Cadre;
+import Controleurs.ControleurPoids;
 import Ruche.Couvercle;
 import Ruche.Hausse;
 import Ruche.Materiau;
@@ -38,8 +39,35 @@ public class AppClient extends javax.swing.JFrame {
     public AppClient() {
         affichage = new Affichage();
         initComponents();
+        ControleurPoids cont = new ControleurPoids();
+        cont.controlePoids();
+        System.out.println("ON CONTROLLE");
     }
 
+    
+    private void refresh(){
+        jLabel16.setText(affichage.SQLRuche("couleurReine", "idRuche=" + currentRucheId));
+        jLabel17.setText(affichage.SQLRuche("raceReine", "idRuche=" + currentRucheId));
+        jLabel18.setText(affichage.SQLRuche("AgeReine", "idRuche=" + currentRucheId));
+        jLabel6.setText("Nom Ruche : " + affichage.SQLRuche("nomRuche"));
+        
+        //new javax.swing.DefaultComboBoxModel(affichage.SQLRuche("idRuche").split(" ")));
+
+//        displayRuches.addItemListener(new java.awt.event.ItemListener() {
+//            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+//                displayRuchesItemStateChanged(evt);
+//            }
+//        });
+//        displayRuches.addActionListener(new java.awt.event.ActionListener() {
+//            public void actionPerformed(java.awt.event.ActionEvent evt) {
+//                displayRuchesActionPerformed(evt);
+//            }
+//        });
+        
+        
+    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -118,8 +146,9 @@ public class AppClient extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 0));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
 
-        jLabel1.setFont(new java.awt.Font("Cantarell", 0, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Open Sans Extrabold", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Abeillix2000");
         jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.CROSSHAIR_CURSOR));
@@ -129,16 +158,14 @@ public class AppClient extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addContainerGap())
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
         );
 
+        associerRucheBouton.setBackground(new java.awt.Color(255, 255, 153));
         associerRucheBouton.setText("Associer Ruche");
         associerRucheBouton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -151,6 +178,7 @@ public class AppClient extends javax.swing.JFrame {
             }
         });
 
+        supprimerRuche.setBackground(new java.awt.Color(255, 255, 153));
         supprimerRuche.setText("Dissocier Ruche");
         supprimerRuche.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -174,6 +202,7 @@ public class AppClient extends javax.swing.JFrame {
             }
         });
 
+        jButton5.setBackground(new java.awt.Color(255, 255, 153));
         jButton5.setText("Associer Hausse");
         jButton5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -181,6 +210,7 @@ public class AppClient extends javax.swing.JFrame {
             }
         });
 
+        jButton6.setBackground(new java.awt.Color(255, 255, 153));
         jButton6.setText("Dissocier Hausse");
 
         String[] listH = ("Ruches" + Hausse.getListe("idRuche = " + (String) this.displayRuches.getSelectedItem())).split(" ");
@@ -229,6 +259,9 @@ public class AppClient extends javax.swing.JFrame {
         );
 
         jSplitPane1.setLeftComponent(jPanel2);
+
+        jTabbedPane5.setBackground(new java.awt.Color(255, 255, 153));
+        jTabbedPane5.setForeground(new java.awt.Color(0, 0, 0));
 
         nomRucheAffichage.setText("Nom Ruche : " + affichage.SQLRuche("nomRuche", "idRuche=" + currentRucheId));
 
@@ -324,6 +357,7 @@ public class AppClient extends javax.swing.JFrame {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Intervention");
 
+        actionEnregistrerBouton.setBackground(new java.awt.Color(255, 255, 153));
         actionEnregistrerBouton.setText("Enregistrer");
         actionEnregistrerBouton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         actionEnregistrerBouton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -387,6 +421,7 @@ public class AppClient extends javax.swing.JFrame {
 
         jTabbedPane5.addTab("Actions", jPanel3);
 
+        ajouterCadresBouton.setBackground(new java.awt.Color(255, 255, 153));
         ajouterCadresBouton.setText("Associer");
         ajouterCadresBouton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -406,6 +441,7 @@ public class AppClient extends javax.swing.JFrame {
             }
         });
 
+        jButton8.setBackground(new java.awt.Color(255, 255, 153));
         jButton8.setText("Dissocier");
 
         jSeparator3.setBackground(new java.awt.Color(232, 231, 231));
@@ -547,6 +583,7 @@ public class AppClient extends javax.swing.JFrame {
 
         typeMateriauCombo.setModel(new javax.swing.DefaultComboBoxModel<Materiau>(new Materiau[] { Materiau.BOIS, Materiau.METAL, Materiau.PLASTIQUE, Materiau.POLYSTYRENE, Materiau.CRISTAL_DE_BISMUTH }));
 
+        ajoutMateriauBouton.setBackground(new java.awt.Color(255, 255, 204));
         ajoutMateriauBouton.setText("Ajouter");
         ajoutMateriauBouton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -603,6 +640,7 @@ public class AppClient extends javax.swing.JFrame {
         String[] listMateriels = affichage.SQLMateriau("idMateriel").split(" ");
         stockCombo.setModel(new javax.swing.DefaultComboBoxModel<>(listMateriels));
 
+        ButtonSupprimerMateriel.setBackground(new java.awt.Color(255, 255, 204));
         ButtonSupprimerMateriel.setText("Supprimer");
         ButtonSupprimerMateriel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -693,8 +731,10 @@ public class AppClient extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jSplitPane1)))
+                    .addComponent(jSplitPane1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -709,10 +749,22 @@ public class AppClient extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void associerRucheBoutonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_associerRucheBoutonMouseClicked
+    private void associerRucheBoutonMouseClicked(java.awt.event.MouseEvent evt) {                                                 
         CreateurRuche cg = new CreateurRuche();
         cg.creerRuche();
-    }//GEN-LAST:event_associerRucheBoutonMouseClicked
+        displayRuches.getModel().setSelectedItem(affichage.SQLRuche("idRuche", "idRuche="+currentRucheId).split(" "));
+       // synchronized(cg) {
+       //      while (cg.isOpened()) { try {
+       //          cg.wait();
+       //          } catch (InterruptedException ex) {
+       //              Logger.getLogger(AppClient.class.getName()).log(Level.SEVERE, null, ex);
+       //          }
+        //       }
+        //    }
+        System.out.println("Fenêtre création fermée!");
+
+    }                                     
+
 
     private void displayRuchesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_displayRuchesItemStateChanged
         // TODO add your handling code here:
@@ -914,7 +966,7 @@ public class AppClient extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Metal".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
