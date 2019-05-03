@@ -405,7 +405,7 @@
                 </Property>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="String listHausse = Hausse.getListe();"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="String listHausse = Hausse.getListe(&quot;idRuche IS NULL&quot;);"/>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
             </Component>

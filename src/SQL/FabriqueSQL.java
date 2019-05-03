@@ -71,4 +71,8 @@ public interface FabriqueSQL {
     public String SQLCompositionHausse(String req);
     
     public String SQLCompositionHausse(String req, String cond);
+    
+    public String SQLCompositionRuche(String req);
+    
+    public String SQLCompositionRuche(String req, String cond);
 }

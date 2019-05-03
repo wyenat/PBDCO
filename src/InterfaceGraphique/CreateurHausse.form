@@ -201,7 +201,7 @@
             </Property>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="String listCadre = Cadre.getListe();"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="String listCadre = Cadre.getListe(&quot;idMaterielHausse IS NULL&quot;);"/>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
         </Component>

@@ -12,12 +12,12 @@ public class Hausse extends Materiel {
     /**
      * cf Cadre.getListe();
      */
-    public static String getListe() {
+    public static String getListe(String cond) {
         // Récupère les hausses
         String req = "Hausse.idMateriel, materiau, couleur, numeroHausse";
         Affichage aff = new Affichage();
         //Non assignées !
-        String res = "" + aff.SQLHausses(req, "idRuche IS NULL");
+        String res = "" + aff.SQLHausses(req, cond);
         //On remplace tous les 3 espaces par une virgule
         String resultat= "" ;
         int i = 1;

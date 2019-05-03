@@ -47,7 +47,7 @@ public class Ruche {
         return ret;
     }
 
-    public void creer(String race, int age, String nomRuche, String couleur, JList<String> listC, JList<String> listP, JList<String> listT, JList<String> listH) {
+    public void creer(String race, int age,String couleur, String nomRuche, JList<String> listC, JList<String> listP, JList<String> listT, JList<String> listH) {
         Création crea = new Création();
         Modification modif = new Modification();
         // Création de la ruche en elle-même

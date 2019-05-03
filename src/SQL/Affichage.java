@@ -24,6 +24,7 @@ public class Affichage implements FabriqueSQL{
     @Override
     public String SQLRuche(String req, String cond) {
         req = "SELECT " + req + " FROM RUCHE" + " WHERE " + cond;
+        System.out.println(req);
         String result = BDTable.requete(req);
         return result;
     }
@@ -91,12 +92,16 @@ public class Affichage implements FabriqueSQL{
 
     @Override
     public String SQLCompositionHausse(String req) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         req = "SELECT " + req +
+                " FROM COMPOSITIONHAUSSE";
+        return BDTable.requete(req);
     }
 
     @Override
     public String SQLCompositionHausse(String req, String cond) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        req = "SELECT " + req +
+                " FROM COMPOSITIONHAUSSE WHERE " + cond;
+        return BDTable.requete(req);
     }
 
     public String SQLMateriauLibre(String req, String mat) {
@@ -115,6 +120,20 @@ public class Affichage implements FabriqueSQL{
         System.out.println("REQUETE : " + req);
         String result = BDTable.requete(req);
         return result;
+    }
+
+    @Override
+    public String SQLCompositionRuche(String req) {
+          req = "SELECT " + req +
+                " FROM COMPOSITIONRUCHE";
+        return BDTable.requete(req);
+    }
+
+    @Override
+    public String SQLCompositionRuche(String req, String cond) {
+         req = "SELECT " + req +
+                " FROM COMPOSITIONRUCHE WHERE " + cond;
+        return BDTable.requete(req);
     }
 
 }
