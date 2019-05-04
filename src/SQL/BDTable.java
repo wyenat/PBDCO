@@ -86,13 +86,15 @@ public class BDTable {
     int len = s.split(",").length;
     String result = "";
     ResultSet rset = stmt.executeQuery();
-     if (s.startsWith("SELECT")){
+        System.out.println(" caca " + len);
+
+    if (s.startsWith("SELECT")){
         while (rset.next()) {
               /**
                * NOTE : POSE PROBLEME SI UNE SEULE ENTRÉE
                */
-                   for (int i=1; i<len; i++){
-                
+                   for (int i=1; i<=len/2; i++){
+                   
                    result += rset.getObject(i).toString() + " ";
                 }
           }
@@ -130,7 +132,7 @@ public class BDTable {
   
    // Méthode ajoutant le listener (dans une connexion indépendante)
    //
-   
+//   
 //  public static void addListener() throws SQLException {
 //     // Connexion à la BD
 //     connSurveille = BDTable.connectDur();

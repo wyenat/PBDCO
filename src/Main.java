@@ -45,6 +45,9 @@ public class Main {
                 client.setVisible(true);
                 ControleurPoids cont = new ControleurPoids();
                 cont.controlePoids();
+                ControleurTemperature contT = new ControleurTemperature();
+                contT.controleTemperature();
+                
                 
                  client.addWindowListener(new WindowAdapter(){
              public void windowClosing(WindowEvent e){
