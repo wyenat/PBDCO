@@ -5,32 +5,32 @@ import SQL.Affichage;
 import SQL.Création;
 import SQL.Modification;
 import java.util.List;
+import javax.swing.JList;
 
 public class Hausse extends Materiel {
 
     /**
      * cf Cadre.getListe();
      */
-    public static String getListe() {
-         //Récupère les hausses
-//        String req = "idMateriel, materiau, couleur, numeroHausse";
-//        Affichage aff = new Affichage();
-//        //Non assignées !
-//        String res = "" + aff.SQLHausses(req, "idMaterielHausse IS NULL");
-//        //On remplace tous les 3 espaces par une virgule
-//        String resultat= "" ;
-//        int i = 1;
-//        for (String s : res.split(" ")){
-//            if (i%4 != 0){
-//                resultat+=s +" ";
-//            } else {
-//                resultat+=s  + ",";
-//            }
-//            i++;
-//        }
-//        resultat = resultat.substring(0, resultat.length() - 1);
-//        System.out.println("Résultat = " + resultat);
-        return "";//resultat;
+    public static String getListe(String cond) {
+        // Récupère les hausses
+        String req = "Hausse.idMateriel, materiau, couleur, numeroHausse";
+        Affichage aff = new Affichage();
+        //Non assignées !
+        String res = "" + aff.SQLHausses(req, cond);
+        //On remplace tous les 3 espaces par une virgule
+        String resultat= "" ;
+        int i = 1;
+        for (String s : res.split(" ")){
+            if (i%4 != 0){
+                resultat+=s +" ";
+            } else {
+                resultat+=s  + ",";
+            }
+            i++;
+        }
+        resultat = resultat.substring(0, resultat.length() - 1);
+        return resultat;
     }
     
     private int numeroHausse;
@@ -71,6 +71,18 @@ public class Hausse extends Materiel {
         return correct;
     }
     
+    public static boolean verification(String type, JList<String> list){
+        int n = list.getSelectedIndices().length;
+        if (n < 2){
+             Erreur.main("Il faut au moins 2 " + type + "! \n"
+                 + n + "ont été séléctionnés !");
+             return false;
+        }
+        return true;
+    }
+    
+    
+    
 
     public int getnumeroHausse() {
         return numeroHausse;
@@ -88,9 +100,15 @@ public class Hausse extends Materiel {
                 String idCadre = cadre.split(" ")[0];
                 modif.SQLCompositionHausse("" + this.idMateriel, idCadre);
         }
+        
         // Création de la hausse dans la table, associée à aucune ruche
         Création crea = new Création();
         String req = "" + this.idMateriel + ", null";
         crea.SQLCompositionRuche(req);
+        
+        // Création de la hausse dans la table de la hausse
+        req = idMateriel + ", '" + this.materiau.toString() + "', '" + this.couleur.toString() +"', " + this.numeroHausse;
+        crea.SQLHausse(req);
+
     }
 }

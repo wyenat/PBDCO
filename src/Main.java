@@ -1,5 +1,6 @@
 
 import Capteurs.Horodateur;
+import Controleurs.*;
 import InterfaceGraphique.AppClient;
 import InterfaceGraphique.ApplicationCapteurs;
 import java.sql.*;
@@ -40,10 +41,10 @@ public class Main {
         }
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                ApplicationCapteurs capts = new ApplicationCapteurs();
                 AppClient client = new AppClient();
                 client.setVisible(true);
-                capts.setVisible(true);
+                ControleurPoids cont = new ControleurPoids();
+                cont.controlePoids();
                 
                  client.addWindowListener(new WindowAdapter(){
              public void windowClosing(WindowEvent e){

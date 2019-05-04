@@ -10,11 +10,11 @@ public class Cadre extends Materiel {
     /**
      * Permet d'afficher une liste qui résume les cadres disponibles
      */
-    public static String getListe() {
+    public static String getListe(String cond) {
         //Récupère les cadres
         String req = "idMateriel, materiau ," + "etat, " + "contenu";
         Affichage aff = new Affichage();
-        String res = "" + aff.SQLCadre(req, "idMaterielHausse IS NULL");
+        String res = "" + aff.SQLCadre(req, cond);
         //On remplace tous les 3 espaces par une virgule
         String resultat= "" ;
         int i = 1;
@@ -27,7 +27,6 @@ public class Cadre extends Materiel {
             i++;
         }
         resultat = resultat.substring(0, resultat.length() - 1);
-        System.out.println("Résultat = " + resultat);
         return resultat;
     }
     

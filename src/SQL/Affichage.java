@@ -24,7 +24,7 @@ public class Affichage implements FabriqueSQL{
     @Override
     public String SQLRuche(String req, String cond) {
         req = "SELECT " + req + " FROM RUCHE" + " WHERE " + cond;
-        //System.out.println("REQ :"+ req);
+        System.out.println(req);
         String result = BDTable.requete(req);
         return result;
     }
@@ -51,7 +51,6 @@ public class Affichage implements FabriqueSQL{
 
     public String SQLUniteCapteur(String req) {
         req = "SELECT " + req + " FROM UniteCapteur";
-        //System.out.println("REQ :"+ req);
         String result = BDTable.requete(req);
         return result;
     }
@@ -93,12 +92,48 @@ public class Affichage implements FabriqueSQL{
 
     @Override
     public String SQLCompositionHausse(String req) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         req = "SELECT " + req +
+                " FROM COMPOSITIONHAUSSE";
+        return BDTable.requete(req);
     }
 
     @Override
     public String SQLCompositionHausse(String req, String cond) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        req = "SELECT " + req +
+                " FROM COMPOSITIONHAUSSE WHERE " + cond;
+        return BDTable.requete(req);
+    }
+
+    public String SQLMateriauLibre(String req, String mat) {
+            req = "SELECT " + req + 
+                " FROM " + mat +" WHERE idMateriel NOT IN \n" +
+"                (SELECT idMateriel\n" +
+"                FROM COMPOSITIONRUCHE)";
+            String result = BDTable.requete(req);
+            return result;
+    }
+
+    public String SQLHausses(String req, String cond) {
+        req = "SELECT " + req + " FROM HAUSSE JOIN COMPOSITIONRUCHE " +
+              "ON COMPOSITIONRUCHE.IDMATERIEL = HAUSSE.IDMATERIEL" +
+               " WHERE " + cond;
+        System.out.println("REQUETE : " + req);
+        String result = BDTable.requete(req);
+        return result;
+    }
+
+    @Override
+    public String SQLCompositionRuche(String req) {
+          req = "SELECT " + req +
+                " FROM COMPOSITIONRUCHE";
+        return BDTable.requete(req);
+    }
+
+    @Override
+    public String SQLCompositionRuche(String req, String cond) {
+         req = "SELECT " + req +
+                " FROM COMPOSITIONRUCHE WHERE " + cond;
+        return BDTable.requete(req);
     }
 
 }

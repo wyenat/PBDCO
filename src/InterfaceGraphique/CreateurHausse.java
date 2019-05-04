@@ -88,7 +88,7 @@ public class CreateurHausse extends javax.swing.JFrame {
 
         typeMateriauCombo.setModel(new javax.swing.DefaultComboBoxModel<Materiau>(new Materiau[] { Materiau.BOIS, Materiau.METAL, Materiau.PLASTIQUE, Materiau.POLYSTYRENE, Materiau.CRISTAL_DE_BISMUTH }));
 
-        String listCadre = Cadre.getListe();
+        String listCadre = Cadre.getListe("idMaterielHausse IS NULL");
         listCadresDisponibles.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = listCadre.split(",");
             public int getSize() { return strings.length; }

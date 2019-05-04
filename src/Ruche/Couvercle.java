@@ -5,11 +5,17 @@
  */
 package Ruche;
 
+import javax.swing.JList;
+
 /**
  *
  */
 public class Couvercle extends Materiel {
-    
+
+    public static String getListe() {
+        return Materiel.getListe("COUVERCLE");
+    }
+
     public Couvercle(Materiau materiau) {
         super(materiau);
     }
