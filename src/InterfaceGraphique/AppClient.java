@@ -5,8 +5,10 @@
  */
 package InterfaceGraphique;
 
+
 import Ruche.Cadre;
 import Controleurs.ControleurPoids;
+import Controleurs.ControleurInterface;
 import Ruche.Couvercle;
 import Ruche.Hausse;
 import Ruche.Materiau;
@@ -15,8 +17,11 @@ import Ruche.Plancher;
 import Ruche.Ruche;
 import Ruche.Toit;
 import SQL.Affichage;
+import SQL.BDTable;
 import SQL.Destruction;
 import SQL.Modification;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import static java.lang.Thread.sleep;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,26 +41,25 @@ public class AppClient extends javax.swing.JFrame {
     private String currentHausseId;
     private String currentCadreId;
     private String currentStockId;
+    private ControleurInterface contI;
 
     /**
      * Creates new form AppClient
      */
     public AppClient() {
         affichage = new Affichage();
+        contI = new ControleurInterface();
         initComponents();
         this.panelDeuxième.setVisible(false);
-        ControleurPoids cont = new ControleurPoids();
-        cont.controlePoids();
-        System.out.println("ON CONTROLLE");
+
     }
 
-    
     private void refresh(){
         jLabel16.setText(affichage.SQLRuche("couleurReine", "idRuche=" + currentRucheId));
         jLabel17.setText(affichage.SQLRuche("raceReine", "idRuche=" + currentRucheId));
         jLabel18.setText(affichage.SQLRuche("AgeReine", "idRuche=" + currentRucheId));
         jLabel6.setText("Nom Ruche : " + affichage.SQLRuche("nomRuche"));
-        
+
         //new javax.swing.DefaultComboBoxModel(affichage.SQLRuche("idRuche").split(" ")));
 
 //        displayRuches.addItemListener(new java.awt.event.ItemListener() {
@@ -68,11 +72,10 @@ public class AppClient extends javax.swing.JFrame {
 //                displayRuchesActionPerformed(evt);
 //            }
 //        });
-        
-        
+
+
     }
-    
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -174,7 +177,7 @@ public class AppClient extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Open Sans Extrabold", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Abeillix2000");
-        jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.CROSSHAIR_CURSOR));
+        jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jLabel1.setDebugGraphicsOptions(javax.swing.DebugGraphics.LOG_OPTION);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -303,7 +306,6 @@ public class AppClient extends javax.swing.JFrame {
         jSplitPane1.setLeftComponent(jPanel2);
 
         jTabbedPane5.setBackground(new java.awt.Color(255, 255, 153));
-        jTabbedPane5.setForeground(new java.awt.Color(0, 0, 0));
 
         jPanel11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -816,7 +818,7 @@ public class AppClient extends javax.swing.JFrame {
                 .addGroup(jPanel9Layout.createSequentialGroup()
                     .addGap(36, 36, 36)
                     .addComponent(typeMateriauCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                     .addComponent(ajoutMateriauBouton)
                     .addContainerGap())
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -912,7 +914,7 @@ public class AppClient extends javax.swing.JFrame {
                     .addContainerGap()
                     .addComponent(jLabel21)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(18, 18, 18)
                     .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap())
@@ -941,15 +943,14 @@ public class AppClient extends javax.swing.JFrame {
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                     .addComponent(jSplitPane1)
-                    .addContainerGap())
+                    .addGap(31, 31, 31))
             );
 
             pack();
         }// </editor-fold>//GEN-END:initComponents
 
-    private void associerRucheBoutonMouseClicked(java.awt.event.MouseEvent evt) {                                                 
-        CreateurRuche cg = new CreateurRuche();
-        cg.creerRuche();
+    private void associerRucheBoutonMouseClicked(java.awt.event.MouseEvent evt) {
+        contI.creerNouvelleRuche();
         displayRuches.getModel().setSelectedItem(affichage.SQLRuche("idRuche", "idRuche="+currentRucheId).split(" "));
        // synchronized(cg) {
        //      while (cg.isOpened()) { try {
@@ -960,9 +961,7 @@ public class AppClient extends javax.swing.JFrame {
         //       }
         //    }
         System.out.println("Fenêtre création fermée!");
-
-    }                                     
-
+    }
 
     private void displayRuchesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_displayRuchesItemStateChanged
         // TODO add your handling code here:
@@ -973,7 +972,7 @@ public class AppClient extends javax.swing.JFrame {
         this.textAgeAfficher.setText(affichage.SQLRuche("AgeReine", "idRuche=" + currentRucheId));
         majComboHausse();
     }//GEN-LAST:event_displayRuchesItemStateChanged
-    
+
     /**
      * Affiche les Hausses associée à la ruche rentrée
      */
@@ -988,7 +987,7 @@ public class AppClient extends javax.swing.JFrame {
             this.displayHausse.addItem(s.split(" ")[0]);
         }
     }
-    
+
     public void majComboCadre(){
         this.displayCadre.removeAllItems();
         int compteur = 0;
@@ -998,17 +997,17 @@ public class AppClient extends javax.swing.JFrame {
             }
             this.displayCadre.addItem(s.split(" ")[0]);
         }
-        String coul = affichage.SQLHausses("Hausse.couleur", "CompositionRuche.idRuche=" 
+        String coul = affichage.SQLHausses("Hausse.couleur", "CompositionRuche.idRuche="
                 + currentRucheId + " AND Hausse.idMateriel = " + currentHausseId);
-        String num = affichage.SQLHausses("Hausse.numeroHausse", "CompositionRuche.idRuche=" 
+        String num = affichage.SQLHausses("Hausse.numeroHausse", "CompositionRuche.idRuche="
                 + currentRucheId + " AND Hausse.idMateriel = " + currentHausseId);
-        String mat = affichage.SQLHausses("Hausse.materiau", "CompositionRuche.idRuche=" 
+        String mat = affichage.SQLHausses("Hausse.materiau", "CompositionRuche.idRuche="
                 + currentRucheId + " AND Hausse.idMateriel = " + currentHausseId);
         this.textHausseCouleur.setText(coul);
         this.textHausseMateriau.setText(mat);
         this.textHausseNumero.setText(num);
     }
-    
+
     private void associerRucheBoutonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_associerRucheBoutonActionPerformed
        // TODO add your handling code here:
     }//GEN-LAST:event_associerRucheBoutonActionPerformed
@@ -1023,27 +1022,8 @@ public class AppClient extends javax.swing.JFrame {
     }//GEN-LAST:event_displayRuchesActionPerformed
 
     private void ajoutMateriauBoutonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ajoutMateriauBoutonMouseClicked
-        // Fonction pour ajouter du matériel
         Materiau materiau = (Materiau) this.typeMateriauCombo.getSelectedItem();
-        Materiel mat;
-        switch ((String) this.typeMaterielCombo.getSelectedItem()){
-            case "Toit":
-                mat = new Toit(materiau);
-                break;
-            case "Couvercle":
-                mat = new Couvercle(materiau);
-                break;
-            case "Plancher":
-                mat = new Plancher(materiau);
-                break;
-            default:
-                mat = null;
-                System.out.println("Erreur");
-                break;
-        }
-        if (mat != null) {
-            mat.create();
-        }
+        contI.creerNouveauMateriau(materiau);
     }//GEN-LAST:event_ajoutMateriauBoutonMouseClicked
 
     private void ButtonSupprimerMaterielMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ButtonSupprimerMaterielMouseClicked
@@ -1060,7 +1040,7 @@ public class AppClient extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5MouseClicked
 
     private void displayHausseItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_displayHausseItemStateChanged
-       
+
         if (this.displayHausse.getItemCount() > 1 ){
             this.currentHausseId = this.displayHausse.getSelectedItem().toString();
             majComboCadre();
@@ -1102,16 +1082,16 @@ public class AppClient extends javax.swing.JFrame {
         if (this.typeIntervention.getItemCount() == 6){
             this.typeIntervention.removeItemAt(0);
         }
-        
+
         String sel = this.typeIntervention.getSelectedItem().toString();
         String[] combo;
         this.detailCombo.removeAllItems();
         this.detailCombo.setVisible(true);
         this.actionEnregistrerBouton.setText("Enregistrer");
         switch(sel){
-            
-            
-            
+
+
+
             case  "Récolte d'une hausse":
                 this.detailsText.setText("Hausse récoltée :");
                 combo = Hausse.getListe("idRuche=" + currentRucheId).split(",");
@@ -1124,9 +1104,9 @@ public class AppClient extends javax.swing.JFrame {
                     this.panelDeuxième.setVisible(false);
                 }
                 break;
-                
-                
-                
+
+
+
             case "Pose d'une nouvelle hausse de récolte":
                 this.detailsText.setText("Hausse posée :");
                 this.detailCombo.setVisible(true);
@@ -1135,19 +1115,19 @@ public class AppClient extends javax.swing.JFrame {
                     this.detailCombo.addItem(s);
                 }
                 break;
-                
-                
+
+
             case "Mise à jour des informations d'état et de contenu des cadres":
                 this.detailsText.setText("");
                 this.detailCombo.setVisible(false);
                 this.actionEnregistrerBouton.setText("Ouvrir l'éditeur");
                 break;
-                
-                
-                
+
+
+
             case "Extraction d'un cadre d'une hausse":
-                // Conservation de l'intégrité 
-               
+                // Conservation de l'intégrité
+
                 this.deuxiemeIntervention.setText("Insertion d'un cadre dans une hausse");
                 this.detailsText1.setText("Cadre ajouté :");
                 combo = Cadre.getListe("idMaterielHausse is NULL").split(",");
@@ -1163,11 +1143,11 @@ public class AppClient extends javax.swing.JFrame {
                 }
                 this.panelDeuxième.setVisible(true);
                 break;
-                
-                
-                
+
+
+
             case "Insertion d'un cadre dans une hausse":
-                // Conservation de l'intégrité 
+                // Conservation de l'intégrité
                 this.deuxiemeIntervention.setText("Extraction d'un cadre d'une hausse");
                 this.detailsText1.setText("Cadre extrait :");
                 combo = Cadre.getListe("idMaterielHausse = " + currentHausseId).split(",");
@@ -1176,15 +1156,15 @@ public class AppClient extends javax.swing.JFrame {
                     this.detailCombo1.addItem(s);
                 }
                 // ComboBox
-                this.detailsText.setText("Cadre ajouté :"); 
+                this.detailsText.setText("Cadre ajouté :");
                 combo = Cadre.getListe("idMaterielHausse is NULL").split(",");
                 for (String s: combo){
                     this.detailCombo.addItem(s);
                 }
                 this.panelDeuxième.setVisible(true);
                 break;
-                
-                
+
+
             default:
                 break;
         }
@@ -1194,8 +1174,8 @@ public class AppClient extends javax.swing.JFrame {
         Modification modif = new Modification();
         if (this.actionEnregistrerBouton.getText().equals("Enregistrer")){
             switch( this.typeIntervention.getSelectedItem().toString()){
-                
-                
+
+
                 case "Récolte d'une hausse":
                     String idPrems = this.detailCombo.getSelectedItem().toString().split(" ")[0];
                     String valPrems = this.detailCombo.getSelectedItem().toString().split(" ")[3];
@@ -1206,7 +1186,7 @@ public class AppClient extends javax.swing.JFrame {
                             modif.SQLCompositionRuche("", idPrems);
                             modif.SQLCompositionRuche(this.currentRucheId, idDeuz);
                         } else {
-                            Erreur.main("Il faut remplacer une hausse " + valPrems 
+                            Erreur.main("Il faut remplacer une hausse " + valPrems
                                    + " et pas par une " + valDeuz + " ! "
                                     + "\n ( La hausse fait partie du corps de ruche )");
                         }
@@ -1214,29 +1194,29 @@ public class AppClient extends javax.swing.JFrame {
                         modif.SQLCompositionRuche("", idPrems);
                     }
                     break;
-            
+
                 case "Pose d'une nouvelle hausse de récolte":
                     idPrems = this.detailCombo.getSelectedItem().toString().split(" ")[0];
                     modif.SQLCompositionRuche("", idPrems);
                     if (this.panelDeuxième.isVisible()){
                         String idDeuz = this.detailCombo1.getSelectedItem().toString().split(" ")[0];
                         modif.SQLCompositionRuche(this.currentRucheId, idDeuz);
-                    } 
+                    }
                     break;
-                    
+
                 case "Insertion d'un cadre dans une hausse":
                     String premierCadre = this.detailCombo.getSelectedItem().toString();
                     String secondCadre = this.detailCombo1.getSelectedItem().toString();
-                    modif.SQLCompositionHausse("idMaterielHausse = null", 
+                    modif.SQLCompositionHausse("idMaterielHausse = null",
                             "idMaterielCadre = '" + secondCadre.split(" ")[0] +"'");
                     modif.SQLCompositionHausse("idMaterielHausse = '" + this.currentHausseId + "'",
                             "idMaterielCadre = '" + premierCadre.split(" ")[0] +"'");
                     break;
-                    
-                case "Extraction d'un cadre d'une hausse":   
+
+                case "Extraction d'un cadre d'une hausse":
                     premierCadre = this.detailCombo.getSelectedItem().toString();
                     secondCadre = this.detailCombo1.getSelectedItem().toString();
-                    modif.SQLCompositionHausse("idMaterielHausse = null", 
+                    modif.SQLCompositionHausse("idMaterielHausse = null",
                             "idMaterielCadre = '" + premierCadre.split(" ")[0] +"'");
                     modif.SQLCompositionHausse("idMaterielHausse = '" + this.currentHausseId + "'",
                             "idMaterielCadre = '" + secondCadre.split(" ")[0] +"'");
@@ -1252,8 +1232,8 @@ public class AppClient extends javax.swing.JFrame {
             this.panelDeuxième.setVisible(false);
             if (this.detailCombo.getComponentCount() >= 1){
             switch (this.typeIntervention.getSelectedItem().toString()){
-            
-                
+
+
                 case "Récolte d'une hausse":
                      if (Integer.parseInt(this.detailCombo.getSelectedItem().toString().split(" ")[3]) < 3){
                          this.panelDeuxième.setVisible(true);
@@ -1265,16 +1245,16 @@ public class AppClient extends javax.swing.JFrame {
                     this.panelDeuxième.setVisible(false);
                 }
                 break;
-            
-            
+
+
                 case "Pose d'une nouvelle hausse de récolte":
                     int id = Integer.parseInt(this.detailCombo.getSelectedItem().toString().split(" ")[3]);
-                    
+
                     String[] listIDs = Hausse.getListe("idRuche =" + this.currentRucheId).split(",");
                     for (String s : listIDs){
                         System.out.println("id = " + id + ", test = " + s);
                        if (Integer.parseInt(s.split(" ")[3]) == id){
-                           
+
                            this.panelDeuxième.setVisible(true);
                            this.deuxiemeIntervention.setText("Récolte d'une hausse");
                            this.detailCombo1.removeAllItems();
@@ -1285,20 +1265,20 @@ public class AppClient extends javax.swing.JFrame {
                        }
                     }
                     break;
-            
+
                 default:
                    this.panelDeuxième.setVisible(true);
-            }   
+            }
             } else {
                 this.detailsText.setText("Pas assez de trucs voulus !");
             }
         }
         catch(Exception e){
-            
+
         }
     }//GEN-LAST:event_detailComboItemStateChanged
 
-    
+
     /**
      * @param args the command line arguments
      */
@@ -1306,7 +1286,7 @@ public class AppClient extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -1354,6 +1334,7 @@ public class AppClient extends javax.swing.JFrame {
     private javax.swing.JComboBox displayRuches;
     private javax.swing.Box.Filler filler1;
     private javax.swing.JLabel interventionDeux;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

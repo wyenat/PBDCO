@@ -29,7 +29,6 @@ public abstract class Capteur {
             for (String potentiel : resultat.split(" ")){
                 if (Integer.parseInt(potentiel) > candidat){
                     candidat = Integer.parseInt(potentiel);
-                    System.out.println("Courant = " +  potentiel+ ", max = " + candidat);
                 }
             }
         }

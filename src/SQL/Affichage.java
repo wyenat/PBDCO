@@ -24,7 +24,6 @@ public class Affichage implements FabriqueSQL{
     @Override
     public String SQLRuche(String req, String cond) {
         req = "SELECT " + req + " FROM RUCHE" + " WHERE " + cond;
-        System.out.println(req);
         String result = BDTable.requete(req);
         return result;
     }
@@ -43,12 +42,16 @@ public class Affichage implements FabriqueSQL{
 
     @Override
     public String SQLMesure(String req, String cond) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        req = "SELECT " + req + " FROM Mesure" + " WHERE " + cond;
+        String result = BDTable.requete(req);
+        return result;
     }
 
     @Override
     public String SQLMesure(String req) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        req = "SELECT " + req + " FROM Mesure";
+        String result = BDTable.requete(req);
+        return result;
     }
 
     public String SQLUniteCapteur(String req) {
@@ -135,6 +138,18 @@ public class Affichage implements FabriqueSQL{
          req = "SELECT " + req +
                 " FROM COMPOSITIONRUCHE WHERE " + cond;
         return BDTable.requete(req);
+    }
+
+    @Override
+    public String SQLCapteurs(String req, String cond) {
+        req = "SELECT " + req + " FROM Capteur WHERE " + cond;
+        String result = BDTable.requete(req);
+        return result;
+    }
+
+    @Override
+    public String SQLCapteurs(String req) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

@@ -5,13 +5,13 @@
  */
 package Controleurs;
 
-import InterfaceGraphique.Erreur;
+import InterfaceGraphique.*;
 import SQL.BDTable;
 
 
 
 /**
- * Un controlleur de Poids :)
+ * Un controleur de Poids :)
  */
 public class ControleurPoids {
 
@@ -21,21 +21,39 @@ public class ControleurPoids {
     
     
     public void controlePoids(){
-        String hausses =  "SELECT Hausse.IDMATERIEL, AVG(Mesure.VALEUR) as moy FROM HAUSSE"
-                + " JOIN CompositionHausse ON hausse.idMateriel=CompositionHausse.IDMATERIELHAUSSE"
-                + " JOIN EmplacementCapteur ON CompositionHausse.idMaterielCadre=EmplacementCapteur.idMateriel"
-                + " JOIN Mesure ON EmplacementCapteur.IDCAPTEUR=Mesure.IDCAPTEUR"
-                + " JOIN Capteur ON Mesure.IDCAPTEUR=Capteur.idCapteur"
-                + " JOIN (SELECT idCapteur, MAX(horodatage)AS maxDate FROM MESURE GROUP BY idCapteur) dates "
-                + " ON Mesure.horodatage = dates.maxdate AND dates.idCapteur = EmplacementCapteur.IDCAPTEUR"
-                + " WHERE Capteur.type='poids'"
-                + " GROUP BY Hausse.IDMATERIEL";
+        String idHausse ="SELECT Hausse.idMateriel FROM HAUSSE"
+        +" JOIN CompositionHausse ON hausse.idMateriel=CompositionHausse.IDMATERIELHAUSSE"
+        +" JOIN EmplacementCapteur ON CompositionHausse.idMaterielCadre=EmplacementCapteur.idMateriel"
+        +" JOIN Mesure ON EmplacementCapteur.IDCAPTEUR=Mesure.IDCAPTEUR"
+        +" JOIN Capteur ON Mesure.IDCAPTEUR=Capteur.idCapteur"
+        +" JOIN (SELECT idCapteur, MAX(horodatage)AS maxDate FROM MESURE GROUP BY idCapteur) dates"
+        +" ON Mesure.horodatage = dates.maxdate AND dates.idCapteur = EmplacementCapteur.IDCAPTEUR"
+        +" WHERE Capteur.type='poids'"
+        +" GROUP BY Hausse.IDMATERIEL"
+        +" HAVING AVG(Mesure.VALEUR)<1.5";
         
-       String res = BDTable.requete(hausses);
-       System.out.println(res);
+        
+       String res = BDTable.requeteDouble(idHausse);
+       String[] separated = res.split(" ");
        
-       if (res!=null){
-            Erreur.main("les Ruches " + res + " ont besoin d'une intervention");
+       
+       
+       if (res!="" && res!=null){
+            String ruche = "";
+            String numeros = "";
+            for (int i =0; i<separated.length; i+=2){
+                String idRuche =  "SELECT nomRuche, Ruche.idRuche FROM Ruche"
+                        + " JOIN CompositionRuche ON compositionRuche.IDRUCHE=Ruche.IDRUCHE "
+                        + "WHERE compositionRuche.idMateriel= " + separated[i];
+                String id = BDTable.requete(idRuche);
+                String[] idSepare = id.split(" ");
+                ruche += idSepare[0] + " (id: " + idSepare[1] + ") ";
+                
+                String hausse =  "SELECT numeroHausse FROM Hausse WHERE idMateriel= " + separated[i];
+                String numero = BDTable.requete(hausse);
+                numeros += numero + " ";
+            }
+            Alerte.main("L.a.es ruche.s " + ruche + "a.ont besoin d'une intervention à cause de leur poids trop faible respectivement sur leur.s hausse.s numéro " + numeros);
        }
        
         
