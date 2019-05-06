@@ -15,12 +15,17 @@ import oracle.jdbc.dcn.*;
 public class ChangeListener implements DatabaseChangeListener
 {
    // Quel objet doit être notifié de modifications de la BD ?
-   private BDTable BD;
+   private BDSurveille BD;
+   private ControleurPoids poids;
+   private ControleurTemperature temperature;
+   
    
    // Constructeur
 
-    public ChangeListener(BDTable BD) {
+    public ChangeListener(BDSurveille BD) {
         this.BD = BD;
+        poids = new ControleurPoids();
+        temperature = new ControleurTemperature();
     }
    
    
@@ -28,6 +33,7 @@ public class ChangeListener implements DatabaseChangeListener
    public void  onDatabaseChangeNotification(DatabaseChangeEvent e)
    {
         BD.refresh(e);           // N'importe quelle méthde peut être appelée
-        
+        poids.controlePoids();
+        temperature.controleTemperature();
     }
 }
