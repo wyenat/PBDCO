@@ -5,8 +5,10 @@
  */
 package InterfaceGraphique;
 
+
 import Ruche.Cadre;
 import Controleurs.ControleurPoids;
+import Controleurs.ControleurInterface;
 import Ruche.Couvercle;
 import Ruche.Hausse;
 import Ruche.Materiau;
@@ -36,17 +38,18 @@ public class AppClient extends javax.swing.JFrame {
     private String currentHausseId;
     private String currentCadreId;
     private String currentStockId;
-
+    private ControleurInterface contI;
+    
     /**
      * Creates new form AppClient
      */
     public AppClient() {
         affichage = new Affichage();
+        contI = new ControleurInterface();
         initComponents();
         this.panelDeuxième.setVisible(false);
         
     }
-
     
     private void refresh(){
         jLabel16.setText(affichage.SQLRuche("couleurReine", "idRuche=" + currentRucheId));
@@ -69,8 +72,7 @@ public class AppClient extends javax.swing.JFrame {
         
         
     }
-    
-    
+        
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -837,9 +839,8 @@ public class AppClient extends javax.swing.JFrame {
             pack();
         }// </editor-fold>//GEN-END:initComponents
 
-    private void associerRucheBoutonMouseClicked(java.awt.event.MouseEvent evt) {                                                 
-        CreateurRuche cg = new CreateurRuche();
-        cg.creerRuche();
+    private void associerRucheBoutonMouseClicked(java.awt.event.MouseEvent evt) {           
+        contI.creerNouvelleRuche();
         displayRuches.getModel().setSelectedItem(affichage.SQLRuche("idRuche", "idRuche="+currentRucheId).split(" "));
        // synchronized(cg) {
        //      while (cg.isOpened()) { try {
@@ -850,9 +851,7 @@ public class AppClient extends javax.swing.JFrame {
         //       }
         //    }
         System.out.println("Fenêtre création fermée!");
-
     }                                     
-
 
     private void displayRuchesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_displayRuchesItemStateChanged
         // TODO add your handling code here:
@@ -895,16 +894,7 @@ public class AppClient extends javax.swing.JFrame {
     }//GEN-LAST:event_associerRucheBoutonActionPerformed
 
     private void supprimerRucheMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_supprimerRucheMouseClicked
-        // Destruction de la ruche
-        Avertissement aver = new Avertissement();
-        aver.avertir();
-        if (!aver.getAnswer()){
-            Destruction destru = new Destruction();
-            destru.SQLRuche("idRuche="+currentRucheId);
-            System.out.println("Ruche d'id : " + currentRucheId + " supprimée");
-        } else {
-            System.out.println("Ruche non supprimée");
-        }
+        contI.supprimerRuche(currentRucheId);
     }//GEN-LAST:event_supprimerRucheMouseClicked
 
     private void displayRuchesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayRuchesActionPerformed
@@ -912,27 +902,8 @@ public class AppClient extends javax.swing.JFrame {
     }//GEN-LAST:event_displayRuchesActionPerformed
 
     private void ajoutMateriauBoutonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ajoutMateriauBoutonMouseClicked
-        // Fonction pour ajouter du matériel
-        Materiau materiau = (Materiau) this.typeMateriauCombo.getSelectedItem();
-        Materiel mat;
-        switch ((String) this.typeMaterielCombo.getSelectedItem()){
-            case "Toit":
-                mat = new Toit(materiau);
-                break;
-            case "Couvercle":
-                mat = new Couvercle(materiau);
-                break;
-            case "Plancher":
-                mat = new Plancher(materiau);
-                break;
-            default:
-                mat = null;
-                System.out.println("Erreur");
-                break;
-        }
-        if (mat != null) {
-            mat.create();
-        }
+        Object materiau = this.typeMateriauCombo.getSelectedItem();
+        contI.creerNouveauMateriau(materiau);
     }//GEN-LAST:event_ajoutMateriauBoutonMouseClicked
 
     private void ButtonSupprimerMaterielMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ButtonSupprimerMaterielMouseClicked
