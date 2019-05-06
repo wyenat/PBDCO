@@ -44,7 +44,7 @@ public class ApplicationCapteurs extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(640, 480));
-        getContentPane().add(filler1);
+        getContentPane().add(filler1, java.awt.BorderLayout.CENTER);
 
         Enregistrer.setText("Generer");
         Enregistrer.setToolTipText("");
@@ -58,7 +58,7 @@ public class ApplicationCapteurs extends javax.swing.JFrame {
                 EnregistrerActionPerformed(evt);
             }
         });
-        getContentPane().add(Enregistrer);
+        getContentPane().add(Enregistrer, java.awt.BorderLayout.LINE_START);
 
         jButton1.setText("Fermer");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -71,7 +71,7 @@ public class ApplicationCapteurs extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1);
+        getContentPane().add(jButton1, java.awt.BorderLayout.LINE_END);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
