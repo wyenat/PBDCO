@@ -3,8 +3,11 @@ package Ruche;
 import InterfaceGraphique.Erreur;
 import SQL.Affichage;
 import SQL.Création;
+import SQL.Destruction;
 import SQL.Modification;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.swing.JList;
 
 public class Hausse extends Materiel {
@@ -31,6 +34,16 @@ public class Hausse extends Materiel {
         }
         resultat = resultat.substring(0, resultat.length() - 1);
         return resultat;
+    }
+
+    /**
+     * Dissocie la hausse de sa ruche
+     * @param currentHausseId 
+     */
+    public static void dissocier(String currentHausseId) {
+        Destruction destru = new Destruction();
+        // On dissocie la hausse de la ruche
+        destru.SQLCompositionHausse("idMateriel = " +currentHausseId);
     }
     
     private int numeroHausse;
@@ -72,11 +85,26 @@ public class Hausse extends Materiel {
     }
     
     public static boolean verification(String type, JList<String> list){
+        HashSet<Integer> present = new HashSet<Integer>();
         int n = list.getSelectedIndices().length;
         if (n < 2){
              Erreur.main("Il faut au moins 2 " + type + "! \n"
                  + n + "ont été séléctionnés !");
              return false;
+        }
+        int num;
+        for (String s : list.getSelectedValuesList()){
+            num = Integer.parseInt(s.split(" ")[3]);
+            if (!present.contains(num)){
+                 present.add(num);
+            } else {
+                Erreur.main("Deux hausses portent le numéro " + num);
+                return false;
+            }
+        }
+        if (!present.contains(1) || !present.contains(2)){
+            Erreur.main("Il n'y a pas une hausse 1 et une hausse 2 !");
+            return false;
         }
         return true;
     }
