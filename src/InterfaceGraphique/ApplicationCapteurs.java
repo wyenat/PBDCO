@@ -8,6 +8,7 @@ package InterfaceGraphique;
 import Capteurs.Capteur;
 import Capteurs.Poids.CapteurPoids;
 import Capteurs.Temperature.CapteurTemperature;
+import Controleurs.ControleurCapteurs;
 import SQL.Affichage;
 import SQL.Création;
 
@@ -18,11 +19,13 @@ import SQL.Création;
 public class ApplicationCapteurs extends javax.swing.JFrame {
      private Affichage affichage;
      private String currentRucheId;
+     private ControleurCapteurs controleurCapt;
     /**
      * Creates new form ApplicationCapteurs
      */
     public ApplicationCapteurs() {
         affichage = new Affichage();
+        controleurCapt = new ControleurCapteurs();
         initComponents();
     }
 
@@ -131,7 +134,7 @@ public class ApplicationCapteurs extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        Enregistrer.setText("Enregistrer");
+        Enregistrer.setText("Generer");
         Enregistrer.setToolTipText("");
         Enregistrer.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -236,6 +239,7 @@ public class ApplicationCapteurs extends javax.swing.JFrame {
 
     private void EnregistrerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EnregistrerActionPerformed
         // TODO add your handling code here:
+        this.controleurCapt.ajouterMesures();
     }//GEN-LAST:event_EnregistrerActionPerformed
 
     private void jCheckBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox3ActionPerformed
@@ -317,27 +321,7 @@ public class ApplicationCapteurs extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     
-// NE PAS TOUCHER : EN MODIF MAIS DEJA COMMIT 
 
-    /**
-     * Enregistre dans la base de données la valeur de poids enregistrée par ce
-     * capteur
-     * @param valPoids la valeur enregistrée
-     */
-//    private void EnregistrerPoids(int valPoids) {
-//        Création crea = new Création();
-//        String req = "";
-//        // mesure
-//        req += valPoids;
-//        //crea.SQLMesure(req, );
-//    }
-//
-//    /**
-//     * Enregistre dans la base de données la valeur de température enregistrée par ce
-//     * capteur
-//     * @param valTemp la valeur enregistrée
-//     */
-//    private void EnregistrerTemperature(int valTemp) {
-//        //crea.SQLMesure(""+valTemp, currentRucheId);
-//    }
+
+
 }

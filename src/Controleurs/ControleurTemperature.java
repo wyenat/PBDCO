@@ -37,11 +37,12 @@ public class ControleurTemperature {
             String ruche = "";
             String numeros = "";
             for (int i =0; i<separated.length; i+=2){
-                String idRuche =  "SELECT nomRuche FROM Ruche"
+                String idRuche =  "SELECT nomRuche, Ruche.idRuche FROM Ruche"
                         + " JOIN CompositionRuche ON compositionRuche.IDRUCHE=Ruche.IDRUCHE "
                         + "WHERE compositionRuche.idMateriel= " + separated[i];
                 String id = BDTable.requete(idRuche);
-                ruche += id + " ";
+                String[] idSepare = id.split(" ");
+                ruche += idSepare[0] + " (id: " + idSepare[1] + ") ";
                 
                 String hausse =  "SELECT numeroHausse FROM Hausse WHERE idMateriel= " + separated[i];
                 String numero = BDTable.requete(hausse);

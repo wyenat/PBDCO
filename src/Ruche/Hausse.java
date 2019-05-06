@@ -57,7 +57,6 @@ public class Hausse extends Materiel {
             for (String cadre : cadres){
                 String contenu = cadre.split(" ")[3];
                 if ( contenu.equals("LARVES") || contenu == "POLLEN" ){
-                    System.out.println(contenu);
                     if (this.numeroHausse != 1 && this.numeroHausse != 2){
                         Erreur.main("Le numéro de la hausse doit être 1 ou 2 quand "
                                 + "le cadre contient " + contenu + "\n Ici, le numéro"

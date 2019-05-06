@@ -251,7 +251,7 @@
     </Container>
     <Component class="javax.swing.JButton" name="Enregistrer">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Enregistrer"/>
+        <Property name="text" type="java.lang.String" value="Generer"/>
         <Property name="toolTipText" type="java.lang.String" value=""/>
       </Properties>
       <Events>

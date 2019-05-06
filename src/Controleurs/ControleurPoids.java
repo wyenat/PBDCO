@@ -11,7 +11,7 @@ import SQL.BDTable;
 
 
 /**
- * Un controlleur de Poids :)
+ * Un controleur de Poids :)
  */
 public class ControleurPoids {
 
@@ -33,29 +33,25 @@ public class ControleurPoids {
         +" HAVING AVG(Mesure.VALEUR)<1.5";
         
         
-        
-       String res = BDTable.requete(idHausse);
+       String res = BDTable.requeteDouble(idHausse);
        String[] separated = res.split(" ");
        
        
        
-       System.out.println("ALORS "+separated.length);
        if (res!="" && res!=null){
             String ruche = "";
             String numeros = "";
-            for (int i =0; i<separated.length; i++){
-                
-                String idRuche =  "SELECT nomRuche FROM Ruche"
+            for (int i =0; i<separated.length; i+=2){
+                String idRuche =  "SELECT nomRuche, Ruche.idRuche FROM Ruche"
                         + " JOIN CompositionRuche ON compositionRuche.IDRUCHE=Ruche.IDRUCHE "
                         + "WHERE compositionRuche.idMateriel= " + separated[i];
-                System.out.println(separated[i]);
                 String id = BDTable.requete(idRuche);
-                ruche += id + " ";
+                String[] idSepare = id.split(" ");
+                ruche += idSepare[0] + " (id: " + idSepare[1] + ") ";
                 
                 String hausse =  "SELECT numeroHausse FROM Hausse WHERE idMateriel= " + separated[i];
                 String numero = BDTable.requete(hausse);
                 numeros += numero + " ";
-                
             }
             Alerte.main("L.a.es ruche.s " + ruche + "a.ont besoin d'une intervention à cause de leur poids trop faible respectivement sur leur.s hausse.s numéro " + numeros);
        }

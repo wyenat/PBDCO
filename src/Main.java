@@ -27,6 +27,7 @@ public class Main {
         //Connection à la base de données
         BDTable.connection();
         BDSurveille espion = new BDSurveille();
+        
         try {
             // Chargement du driver Oracle
             System.out.print("Loading Oracle driver... "); 
@@ -56,7 +57,8 @@ public class Main {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 AppClient client = new AppClient();
-                client.setVisible(true);                
+                client.setVisible(true);
+
                 
                  client.addWindowListener(new WindowAdapter(){
              public void windowClosing(WindowEvent e){

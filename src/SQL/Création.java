@@ -41,7 +41,6 @@ public class Création implements FabriqueSQL{
     @Override
     public String SQLHausse(String req) {
         req = "INSERT INTO HAUSSE VALUES ( " + req + " )"; 
-        System.out.println(req);
         String result = BDTable.requete(req);
         return result;
     }
@@ -87,7 +86,6 @@ public class Création implements FabriqueSQL{
     public String SQLMateriau(String req, Class<? extends Materiel> aClass) {
         String table = aClass.getName().replace("Ruche.", "");
         req = "INSERT INTO "+ table +" VALUES ( " + req + " )"; 
-        System.out.println(req);
         String result = BDTable.requete(req);
         return result;
     }
@@ -124,6 +122,16 @@ public class Création implements FabriqueSQL{
 
     @Override
     public String SQLCompositionRuche(String req, String cond) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String SQLCapteurs(String req, String cond) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String SQLCapteurs(String req) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
