@@ -1028,7 +1028,7 @@ public class AppClient extends javax.swing.JFrame {
 
     private void supprimerRucheMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_supprimerRucheMouseClicked
         // Destruction de la ruche
-        Ruche.dissocier(currentRucheId);
+        contI.supprimerRuche(currentRucheId);
     }//GEN-LAST:event_supprimerRucheMouseClicked
 
     private void displayRuchesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayRuchesActionPerformed
@@ -1036,8 +1036,9 @@ public class AppClient extends javax.swing.JFrame {
     }//GEN-LAST:event_displayRuchesActionPerformed
 
     private void ajoutMateriauBoutonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ajoutMateriauBoutonMouseClicked
+        String materiel = (String) this.typeMaterielCombo.getSelectedItem();
         Materiau materiau = (Materiau) this.typeMateriauCombo.getSelectedItem();
-        contI.creerNouveauMateriau(materiau);
+        contI.creerNouveauMateriau(materiel, materiau);
     }//GEN-LAST:event_ajoutMateriauBoutonMouseClicked
 
     private void ButtonSupprimerMaterielMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ButtonSupprimerMaterielMouseClicked
@@ -1048,8 +1049,7 @@ public class AppClient extends javax.swing.JFrame {
     }//GEN-LAST:event_ButtonSupprimerMaterielMouseClicked
 
     private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseClicked
-        CreateurHausse ch = new CreateurHausse();
-        ch.creer();
+        contI.creerNouvelleHausse();
         this.majComboHausse();
     }//GEN-LAST:event_jButton5MouseClicked
 
@@ -1076,8 +1076,7 @@ public class AppClient extends javax.swing.JFrame {
     }//GEN-LAST:event_ajouterCadresBoutonActionPerformed
 
     private void ajouterCadresBoutonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ajouterCadresBoutonMouseClicked
-        CreateurCadre cc = new CreateurCadre();
-        cc.creer();
+        contI.creerNouveauCadre();
     }//GEN-LAST:event_ajouterCadresBoutonMouseClicked
 
     private void typeMaterielComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_typeMaterielComboItemStateChanged
@@ -1096,16 +1095,12 @@ public class AppClient extends javax.swing.JFrame {
         if (this.typeIntervention.getItemCount() == 6){
             this.typeIntervention.removeItemAt(0);
         }
-
         String sel = this.typeIntervention.getSelectedItem().toString();
         String[] combo;
         this.detailCombo.removeAllItems();
         this.detailCombo.setVisible(true);
         this.actionEnregistrerBouton.setText("Enregistrer");
         switch(sel){
-
-
-
             case  "Récolte d'une hausse":
                 this.detailsText.setText("Hausse récoltée :");
                 combo = Hausse.getListe("idRuche=" + currentRucheId).split(",");
@@ -1118,9 +1113,6 @@ public class AppClient extends javax.swing.JFrame {
                     this.panelDeuxième.setVisible(false);
                 }
                 break;
-
-
-
             case "Pose d'une nouvelle hausse de récolte":
                 this.detailsText.setText("Hausse posée :");
                 this.detailCombo.setVisible(true);
@@ -1129,19 +1121,13 @@ public class AppClient extends javax.swing.JFrame {
                     this.detailCombo.addItem(s);
                 }
                 break;
-
-
             case "Mise à jour des informations d'état et de contenu des cadres":
                 this.detailsText.setText("");
                 this.detailCombo.setVisible(false);
                 this.actionEnregistrerBouton.setText("Ouvrir l'éditeur");
                 break;
-
-
-
             case "Extraction d'un cadre d'une hausse":
                 // Conservation de l'intégrité
-
                 this.deuxiemeIntervention.setText("Insertion d'un cadre dans une hausse");
                 this.detailsText1.setText("Cadre ajouté :");
                 combo = Cadre.getListe("idMaterielHausse is NULL").split(",");
@@ -1157,9 +1143,6 @@ public class AppClient extends javax.swing.JFrame {
                 }
                 this.panelDeuxième.setVisible(true);
                 break;
-
-
-
             case "Insertion d'un cadre dans une hausse":
                 // Conservation de l'intégrité
                 this.deuxiemeIntervention.setText("Extraction d'un cadre d'une hausse");
@@ -1177,65 +1160,16 @@ public class AppClient extends javax.swing.JFrame {
                 }
                 this.panelDeuxième.setVisible(true);
                 break;
-
-
             default:
                 break;
         }
     }//GEN-LAST:event_typeInterventionItemStateChanged
 
     private void actionEnregistrerBoutonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_actionEnregistrerBoutonMouseClicked
-        Modification modif = new Modification();
         if (this.actionEnregistrerBouton.getText().equals("Enregistrer")){
-            switch( this.typeIntervention.getSelectedItem().toString()){
-
-
-                case "Récolte d'une hausse":
-                    String idPrems = this.detailCombo.getSelectedItem().toString().split(" ")[0];
-                    String valPrems = this.detailCombo.getSelectedItem().toString().split(" ")[3];
-                    if (this.panelDeuxième.isVisible()){
-                        String idDeuz = this.detailCombo1.getSelectedItem().toString().split(" ")[0];
-                        String valDeuz = this.detailCombo1.getSelectedItem().toString().split(" ")[3];
-                        if (valPrems.equals(valDeuz)){
-                            modif.SQLCompositionRuche("", idPrems);
-                            modif.SQLCompositionRuche(this.currentRucheId, idDeuz);
-                        } else {
-                            Erreur.main("Il faut remplacer une hausse " + valPrems
-                                   + " et pas par une " + valDeuz + " ! "
-                                    + "\n ( La hausse fait partie du corps de ruche )");
-                        }
-                    } else {
-                        modif.SQLCompositionRuche("", idPrems);
-                    }
-                    break;
-
-                case "Pose d'une nouvelle hausse de récolte":
-                    idPrems = this.detailCombo.getSelectedItem().toString().split(" ")[0];
-                    modif.SQLCompositionRuche("", idPrems);
-                    if (this.panelDeuxième.isVisible()){
-                        String idDeuz = this.detailCombo1.getSelectedItem().toString().split(" ")[0];
-                        modif.SQLCompositionRuche(this.currentRucheId, idDeuz);
-                    }
-                    break;
-
-                case "Insertion d'un cadre dans une hausse":
-                    String premierCadre = this.detailCombo.getSelectedItem().toString();
-                    String secondCadre = this.detailCombo1.getSelectedItem().toString();
-                    modif.SQLCompositionHausse("idMaterielHausse = null",
-                            "idMaterielCadre = '" + secondCadre.split(" ")[0] +"'");
-                    modif.SQLCompositionHausse("idMaterielHausse = '" + this.currentHausseId + "'",
-                            "idMaterielCadre = '" + premierCadre.split(" ")[0] +"'");
-                    break;
-
-                case "Extraction d'un cadre d'une hausse":
-                    premierCadre = this.detailCombo.getSelectedItem().toString();
-                    secondCadre = this.detailCombo1.getSelectedItem().toString();
-                    modif.SQLCompositionHausse("idMaterielHausse = null",
-                            "idMaterielCadre = '" + premierCadre.split(" ")[0] +"'");
-                    modif.SQLCompositionHausse("idMaterielHausse = '" + this.currentHausseId + "'",
-                            "idMaterielCadre = '" + secondCadre.split(" ")[0] +"'");
-                    break;
-            }
+            Boolean seconde = this.panelDeuxième.isVisible();
+            String intervention = this.typeIntervention.getSelectedItem().toString();
+            contI.registerIntervention(seconde, intervention, this.detailCombo1, this.detailCombo, this.currentRucheId, this.currentHausseId);
         } else {
             ModificateurDeCadre.main(currentHausseId);
         }
@@ -1246,8 +1180,6 @@ public class AppClient extends javax.swing.JFrame {
             this.panelDeuxième.setVisible(false);
             if (this.detailCombo.getComponentCount() >= 1){
             switch (this.typeIntervention.getSelectedItem().toString()){
-
-
                 case "Récolte d'une hausse":
                      if (Integer.parseInt(this.detailCombo.getSelectedItem().toString().split(" ")[3]) < 3){
                          this.panelDeuxième.setVisible(true);
@@ -1259,16 +1191,12 @@ public class AppClient extends javax.swing.JFrame {
                     this.panelDeuxième.setVisible(false);
                 }
                 break;
-
-
                 case "Pose d'une nouvelle hausse de récolte":
                     int id = Integer.parseInt(this.detailCombo.getSelectedItem().toString().split(" ")[3]);
-
                     String[] listIDs = Hausse.getListe("idRuche =" + this.currentRucheId).split(",");
                     for (String s : listIDs){
                         System.out.println("id = " + id + ", test = " + s);
                        if (Integer.parseInt(s.split(" ")[3]) == id){
-
                            this.panelDeuxième.setVisible(true);
                            this.deuxiemeIntervention.setText("Récolte d'une hausse");
                            this.detailCombo1.removeAllItems();
@@ -1279,7 +1207,6 @@ public class AppClient extends javax.swing.JFrame {
                        }
                     }
                     break;
-
                 default:
                    this.panelDeuxième.setVisible(true);
             }
@@ -1295,7 +1222,6 @@ public class AppClient extends javax.swing.JFrame {
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
         ApplicationCapteurs appcap = new ApplicationCapteurs();
         appcap.setVisible(true);
-
     }//GEN-LAST:event_jButton2MouseClicked
 
 
