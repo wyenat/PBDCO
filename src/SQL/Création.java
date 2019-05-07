@@ -5,13 +5,33 @@
  */
 package SQL;
 
+import java.sql.*;
+import java.util.*;
+import java.util.logging.*;
+import oracle.jdbc.*;
+import oracle.jdbc.dcn.*;
+import Controleurs.ChangeListener;
+
 import Ruche.Materiel;
+import static SQL.BDTable.conn;
+import static java.sql.Connection.TRANSACTION_READ_COMMITTED;
 
 /**
  *
  * Gère la création SQL
  */
 public class Création implements FabriqueSQL{
+
+
+    public void commit(){
+        Connection conn = BDTable.conn;
+        try {
+            conn.setTransactionIsolation(TRANSACTION_READ_COMMITTED); //Vérifier si c'est suffisant
+            conn.commit();
+        } catch (SQLException ex) {
+            Logger.getLogger(Création.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     @Override
     /**
@@ -28,11 +48,12 @@ public class Création implements FabriqueSQL{
    nomRuche VARCHAR(255)
    );
          */
-        req = "INSERT INTO RUCHE VALUES ( " + req + " )"; 
+        req = "INSERT INTO RUCHE VALUES ( " + req + " )";
         String result = BDTable.requete(req);
+        this.commit();
         return result;
     }
-    
+
      @Override
     public String SQLRuche(String req, String cond) {
         throw new UnsupportedOperationException("Pas de conditions en création !");
@@ -40,8 +61,9 @@ public class Création implements FabriqueSQL{
 
     @Override
     public String SQLHausse(String req) {
-        req = "INSERT INTO HAUSSE VALUES ( " + req + " )"; 
+        req = "INSERT INTO HAUSSE VALUES ( " + req + " )";
         String result = BDTable.requete(req);
+        this.commit();
         return result;
     }
 
@@ -57,8 +79,9 @@ public class Création implements FabriqueSQL{
 
     @Override
     public String SQLMesure(String req) {
-        req = "INSERT INTO MESURE VALUES ( " + req + " )"; 
+        req = "INSERT INTO MESURE VALUES ( " + req + " )";
         String result = BDTable.requete(req);
+        this.commit();
         return result;
     }
 
@@ -85,15 +108,17 @@ public class Création implements FabriqueSQL{
      */
     public String SQLMateriau(String req, Class<? extends Materiel> aClass) {
         String table = aClass.getName().replace("Ruche.", "");
-        req = "INSERT INTO "+ table +" VALUES ( " + req + " )"; 
+        req = "INSERT INTO "+ table +" VALUES ( " + req + " )";
         String result = BDTable.requete(req);
+        this.commit();
         return result;
     }
 
     @Override
     public String SQLCadre(String req) {
-        req = "INSERT INTO CADRE VALUES ( " + req + " )"; 
+        req = "INSERT INTO CADRE VALUES ( " + req + " )";
         String result = BDTable.requete(req);
+        this.commit();
         return result;
     }
 
@@ -104,8 +129,9 @@ public class Création implements FabriqueSQL{
 
     @Override
     public String SQLCompositionHausse(String req) {
-        req = "INSERT INTO COMPOSITIONHAUSSE VALUES ( " + req + " )"; 
+        req = "INSERT INTO COMPOSITIONHAUSSE VALUES ( " + req + " )";
         String result = BDTable.requete(req);
+        this.commit();
         return result;
     }
 
@@ -115,8 +141,9 @@ public class Création implements FabriqueSQL{
     }
 
     public String SQLCompositionRuche(String req) {
-        req = "INSERT INTO COMPOSITIONRUCHE VALUES ( " + req + " )"; 
+        req = "INSERT INTO COMPOSITIONRUCHE VALUES ( " + req + " )";
         String result = BDTable.requete(req);
+        this.commit();
         return result;
     }
 
@@ -132,7 +159,7 @@ public class Création implements FabriqueSQL{
 
     @Override
     public String SQLCapteurs(String req) {
-        req = "INSERT INTO CAPTEUR VALUES ( " + req + " )"; 
+        req = "INSERT INTO CAPTEUR VALUES ( " + req + " )";
         String result = BDTable.requete(req);
         System.out.println(req);
         return result;
@@ -150,10 +177,6 @@ public class Création implements FabriqueSQL{
 
     @Override
     public String SQLEmplacementCapteur(String req) {
-        req = "INSERT INTO EMPLACEMENTCAPTEUR VALUES ( " + req + " )"; 
-        String result = BDTable.requete(req);
-        System.out.println(req);
-        return result;
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
 }

@@ -6,11 +6,26 @@
 package SQL;
 
 import Ruche.Materiel;
+import java.sql.Connection;
+import static java.sql.Connection.TRANSACTION_SERIALIZABLE;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Gère la destruction de lignes
  */
 public class Destruction implements FabriqueSQL{
+    
+        public void commit(){
+        Connection conn = BDTable.conn;
+        try {
+            conn.setTransactionIsolation(TRANSACTION_SERIALIZABLE);
+            conn.commit();
+        } catch (SQLException ex) {
+            Logger.getLogger(Création.class.getName()).log(Level.SEVERE, null, ex);
+        }      
+    }
 
     @Override
     /**
@@ -19,7 +34,6 @@ public class Destruction implements FabriqueSQL{
     public String SQLRuche(String cond) {
        cond = "DELETE FROM RUCHE WHERE (" + cond + ")";
        BDTable.requete(cond);
-       
        return "Deleted";
     }
 
@@ -65,8 +79,7 @@ public class Destruction implements FabriqueSQL{
     public String SQLMateriau(String cond) {
         cond = "DELETE FROM "+"TOIT T JOIN COUVERCLE C ON T.idMATERIEL=C.idMATERIEL "+" WHERE (" + cond+ ")";
         BDTable.requete(cond);
-       
-       return "Deleted";
+        return "Deleted";
     }
 
     @Override
@@ -75,7 +88,7 @@ public class Destruction implements FabriqueSQL{
 //        cond = "DELETE FROM "+table+" WHERE (" + cond + ")";
 //        BDTable.requete(cond);
 //       
-       return "Deleted";
+        return "Deleted";
     }
 
     @Override
@@ -92,7 +105,7 @@ public class Destruction implements FabriqueSQL{
     public String SQLCompositionHausse(String req) {
         req = "DELETE FROM "+"COMPOSITIONHAUSSE "+" WHERE (" + req + ")";
         BDTable.requete(req);
-       return "Deleted";   
+        return "Deleted";   
     }
         
 

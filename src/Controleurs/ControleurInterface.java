@@ -25,16 +25,15 @@ import javax.swing.JLabel;
  */
 public class ControleurInterface {
     private Affichage affichage;
-    
     public ControleurInterface(){
         affichage = new Affichage();
     }
-    
+
     public void creerNouvelleRuche(){
         CreateurRuche cg = new CreateurRuche();
         cg.creerRuche();
     }
-    
+
     public String[] afficheSQLRuche(String currentRucheId){
         String[] textToSet = {"", "", "", "", ""};
         textToSet[0] = affichage.SQLRuche("couleurReine", "idRuche=" + currentRucheId);
@@ -60,15 +59,15 @@ public class ControleurInterface {
         // Destruction de la ruche
         Ruche.dissocier(currentRucheId);
     }
-    
+
     public void creerNouvelleHausse(){
         CreateurHausse.creer();
     }
-    
+
     public void associerNouvelleHausse(){
         CreateurHausse.associer();
     }
-    
+
     public void creerNouveauMateriau(String materiel, Materiau materiau){
         // Fonction pour ajouter du matériel
         Materiel mat;
@@ -145,7 +144,7 @@ public class ControleurInterface {
         }
     }
 
-    
+
 
     public void majCapteurAssocie(JComboBox<String> capteurPoisdAssociéBox, String currentCadreId, JLabel textCaptPoidsAssocier, JComboBox<String> capteurPoisdAssociéBox0, JButton associerCapteurPoidsBouton, JButton dissocierCapteurPoidsBouton) {
         Affichage affichage = new Affichage();
@@ -158,9 +157,9 @@ public class ControleurInterface {
             associerCapteurPoidsBouton.setVisible(false);
             dissocierCapteurPoidsBouton.setVisible(true);
         }
-       
+
         // On affiche les capteurs libres pour les associer
-        else { 
+        else {
             String captLibres = affichage.SQLCapteurLibre( "idCapteur", " type = 'poids' AND idCapteur");
             textCaptPoidsAssocier.setText("Capteur associable :");
             for (String s : captLibres.split(" ")){
@@ -171,7 +170,7 @@ public class ControleurInterface {
         }
     }
 
- 
+
 
     public void majCapteurTemperature(JLabel capteurAssociéText, JComboBox<String> capteurTemperatureAssocieCombo, JButton associerCapteurTemperatureBouton, JButton dissocierCapteurTemperatureBouton, String currentHausseId) {
         Affichage affichage = new Affichage();
@@ -184,9 +183,9 @@ public class ControleurInterface {
             associerCapteurTemperatureBouton.setVisible(false);
             dissocierCapteurTemperatureBouton.setVisible(true);
         }
-       
+
         // On affiche les capteurs libres pour les associer
-        else { 
+        else {
             String captLibres = affichage.SQLCapteurLibre( "idCapteur", " type = 'temperature' AND idCapteur");
             capteurAssociéText.setText("Capteur associable :");
             for (String s : captLibres.split(" ")){
