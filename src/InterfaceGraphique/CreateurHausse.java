@@ -108,7 +108,7 @@ public class CreateurHausse extends javax.swing.JFrame {
 
         jLabel39.setText("id");
 
-        String listToits = Toit.getListe();
+        String listToits = Hausse.getListe("idRuche is NULL");
         haussesDisponibleCombo.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = listToits.split(",");
             public int getSize() { return strings.length; }
