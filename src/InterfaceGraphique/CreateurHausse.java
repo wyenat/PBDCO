@@ -324,13 +324,14 @@ public class CreateurHausse extends javax.swing.JFrame {
         if (type.equals("associer")){
             String  h = this.haussesDisponibleCombo.getSelectedValue();
             if (Hausse.verifier(Integer.parseInt(h.split(" ")[3]), selection)){
-            // TODO !! Vivien
-            //h.creer(selection);
-            dispose();
+                Hausse.associer(h.split(" ")[0], selection);
+                dispose();
             };
         } 
         if (type.equals("creer")){
             Hausse h = new Hausse((int) this.numeroHausse.getValue(), (Materiau) this.typeMateriauCombo.getSelectedItem(), (Couleur) this.CouleurCombo.getSelectedItem());
+            h.creer();
+            dispose();
         }
        
     }//GEN-LAST:event_CreerBoutonMouseClicked

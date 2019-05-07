@@ -107,6 +107,7 @@ public class Modification implements FabriqueSQL{
     public String SQLCompositionHausse(String req, String cond) {
         String result = "UPDATE COMPOSITIONHAUSSE SET " 
                 + req + " WHERE " + cond;
+        System.out.println(result);
         BDTable.requete(result);
         this.commit();
         return "";

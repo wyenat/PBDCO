@@ -30,6 +30,10 @@ import javax.swing.ComboBoxModel;
 import javax.swing.JComboBox;
 import static java.lang.Thread.sleep;
 import static java.lang.Thread.sleep;
+import static java.lang.Thread.sleep;
+import static java.lang.Thread.sleep;
+import static java.lang.Thread.sleep;
+import static java.lang.Thread.sleep;
 
 /**
  *
@@ -1170,6 +1174,9 @@ public class AppClient extends javax.swing.JFrame {
 
     private void typeMaterielComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_typeMaterielComboItemStateChanged
         String select = this.typeMaterielCombo.getSelectedItem().toString();
+        if (this.typeMaterielCombo.getItemCount() > 6){
+            this.typeMaterielCombo.removeItemAt(0);
+        }
         this.typeMateriauCombo.removeAllItems();
         if (!select.equals("Capteur de Poids") && !select.equals("Capteur de Température") && !select.equals("Hausse")){
             this.typeMateriauCombo.addItem(Materiau.BOIS);

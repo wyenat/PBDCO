@@ -119,23 +119,28 @@ public class Hausse extends Materiel {
         return couleur;
     }
 
+    public void creer(){
+        // Création de la hausse dans la table de la hausse
+        Création crea = new Création();
+        String req = idMateriel + ", '" + this.materiau.toString() + "', '" + this.couleur.toString() +"', " + this.numeroHausse;
+        crea.SQLHausse(req);
+    
+         // Création de la hausse dans la table, associée à aucune ruche
+        req = "" + this.idMateriel + ", null";
+        crea.SQLCompositionRuche(req);
+    }
 
-    public void creer(List<String> selection) {
+    public static void associer(String id, List<String> selection) {
         // Affectation des cadres à la hausse
         Modification modif = new Modification();
         for (String cadre : selection){
                 String idCadre = cadre.split(" ")[0];
-                modif.SQLCompositionHausse("" + this.idMateriel, idCadre);
+                modif.SQLCompositionHausse( "idMaterielHausse = " + id, "idMaterielCadre = " +idCadre);
         }
         
-        // Création de la hausse dans la table, associée à aucune ruche
-        Création crea = new Création();
-        String req = "" + this.idMateriel + ", null";
-        crea.SQLCompositionRuche(req);
         
-        // Création de la hausse dans la table de la hausse
-        req = idMateriel + ", '" + this.materiau.toString() + "', '" + this.couleur.toString() +"', " + this.numeroHausse;
-        crea.SQLHausse(req);
+        
+        
 
     }
 }
