@@ -9,22 +9,18 @@ import Capteurs.Capteur;
 import Capteurs.Poids.CapteurPoids;
 import Capteurs.Temperature.CapteurTemperature;
 import Controleurs.ControleurCapteurs;
-import SQL.Affichage;
-import SQL.Création;
 
 /**
  *
  * @author matterv
  */
 public class ApplicationCapteurs extends javax.swing.JFrame {
-     private Affichage affichage;
      private String currentRucheId;
      private ControleurCapteurs controleurCapt;
     /**
      * Creates new form ApplicationCapteurs
      */
     public ApplicationCapteurs() {
-        affichage = new Affichage();
         controleurCapt = new ControleurCapteurs();
         initComponents();
     }
