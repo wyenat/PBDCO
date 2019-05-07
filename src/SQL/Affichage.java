@@ -177,4 +177,14 @@ public class Affichage implements FabriqueSQL{
     public String SQLEmplacementCapteur(String req) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public String SQLCapteursJoin(String req, String cond) {
+        req = "SELECT distinct Capteur." + req + " FROM EMPLACEMENTCAPTEUR" +
+        " JOIN Capteur ON EmplacementCapteur.idCapteur=Capteur.idCapteur " +
+        "WHERE " + cond;
+        System.out.println(req);
+        String result = BDTable.requete(req);
+        return result;
+    }
 }

@@ -20,8 +20,6 @@ import Ruche.Plancher;
 import Ruche.Ruche;
 import Ruche.Toit;
 import SQL.Affichage;
-import SQL.Destruction;
-import SQL.Modification;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import static java.lang.Thread.sleep;
@@ -59,10 +57,11 @@ public class AppClient extends javax.swing.JFrame {
     }
 
     private void refresh(){
-        jLabel16.setText(affichage.SQLRuche("couleurReine", "idRuche=" + currentRucheId));
-        jLabel17.setText(affichage.SQLRuche("raceReine", "idRuche=" + currentRucheId));
-        jLabel18.setText(affichage.SQLRuche("AgeReine", "idRuche=" + currentRucheId));
-        textCaptPoidsAssocier.setText("Nom Ruche : " + affichage.SQLRuche("nomRuche"));
+        String[] textToSet = contI.afficheSQLRuche(currentRucheId);
+        jLabel16.setText(textToSet[0]);
+        jLabel17.setText(textToSet[1]);
+        jLabel18.setText(textToSet[2]);
+        textCaptPoidsAssocier.setText(textToSet[3]);
 
         //new javax.swing.DefaultComboBoxModel(affichage.SQLRuche("idRuche").split(" ")));
 
@@ -1067,10 +1066,11 @@ public class AppClient extends javax.swing.JFrame {
     private void displayRuchesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_displayRuchesItemStateChanged
         // TODO add your handling code here:
         this.currentRucheId = this.displayRuches.getSelectedItem().toString();
-        this.nomRucheAffichage.setText(affichage.SQLRuche("nomRuche", "idRuche = " + currentRucheId));
-        this.textCouleurAfficher.setText(affichage.SQLRuche("couleurReine", "idRuche=" + currentRucheId));
-        this.textRaceAfficher.setText(affichage.SQLRuche("raceReine", "idRuche=" + currentRucheId));
-        this.textAgeAfficher.setText(affichage.SQLRuche("AgeReine", "idRuche=" + currentRucheId));
+        String[] textToSet = contI.afficheSQLRuche(currentRucheId);
+        this.nomRucheAffichage.setText(textToSet[4]);
+        this.textCouleurAfficher.setText(textToSet[0]);
+        this.textRaceAfficher.setText(textToSet[1]);
+        this.textAgeAfficher.setText(textToSet[2]);
         majComboHausse();
     }//GEN-LAST:event_displayRuchesItemStateChanged
 
@@ -1098,15 +1098,10 @@ public class AppClient extends javax.swing.JFrame {
             }
             this.displayCadre.addItem(s.split(" ")[0]);
         }
-        String coul = affichage.SQLHausses("Hausse.couleur", "CompositionRuche.idRuche="
-                + currentRucheId + " AND Hausse.idMateriel = " + currentHausseId);
-        String num = affichage.SQLHausses("Hausse.numeroHausse", "CompositionRuche.idRuche="
-                + currentRucheId + " AND Hausse.idMateriel = " + currentHausseId);
-        String mat = affichage.SQLHausses("Hausse.materiau", "CompositionRuche.idRuche="
-                + currentRucheId + " AND Hausse.idMateriel = " + currentHausseId);
-        this.textHausseCouleur.setText(coul);
-        this.textHausseMateriau.setText(mat);
-        this.textHausseNumero.setText(num);
+        String[] textToSet = contI.afficheSQLHausse(currentRucheId, currentHausseId);
+        this.textHausseCouleur.setText(textToSet[0]);
+        this.textHausseMateriau.setText(textToSet[2]);
+        this.textHausseNumero.setText(textToSet[1]);
     }
 
     private void associerRucheBoutonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_associerRucheBoutonActionPerformed
@@ -1125,8 +1120,7 @@ public class AppClient extends javax.swing.JFrame {
     private void ButtonSupprimerMaterielMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ButtonSupprimerMaterielMouseClicked
         // Supprimer matériaux
         int currentMaterielID = Integer.parseInt((String) this.stockCombo.getSelectedItem());
-        Destruction dest = new Destruction();
-        dest.SQLMateriau("idMateriel="+currentMaterielID);
+        contI.supprimerMateriel(currentMaterielID);
     }//GEN-LAST:event_ButtonSupprimerMaterielMouseClicked
 
     private void associerHausseBoutonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_associerHausseBoutonMouseClicked
@@ -1152,9 +1146,10 @@ public class AppClient extends javax.swing.JFrame {
         if (this.displayCadre.getItemCount() > 1){
             this.currentCadreId = this.displayCadre.getSelectedItem().toString();
         }
-        this.EtatCadre.setText(affichage.SQLCadre("etat", "idMateriel = " + currentCadreId));
-        this.matiereCadre.setText(affichage.SQLCadre("materiau", "idMateriel = " + currentCadreId));
-        this.contenuCadre.setText(affichage.SQLCadre("contenu", "idMateriel = " + currentCadreId));
+        String[] textToSet = contI.afficheSQLCadre(currentCadreId);
+        this.EtatCadre.setText(textToSet[0]);
+        this.matiereCadre.setText(textToSet[1]);
+        this.contenuCadre.setText(textToSet[2]);
         this.contI.majCapteurAssocie(this.capteurPoisdAssociéBox, 
                 currentCadreId, 
                 textCaptPoidsAssocier,

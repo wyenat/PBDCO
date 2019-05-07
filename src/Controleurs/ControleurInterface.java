@@ -24,28 +24,50 @@ import javax.swing.JLabel;
  * @author nodelant
  */
 public class ControleurInterface {
-    
+    private Affichage affichage;
     public ControleurInterface(){
+        affichage = new Affichage();
     }
-    
+
     public void creerNouvelleRuche(){
         CreateurRuche cg = new CreateurRuche();
         cg.creerRuche();
+    }
+
+    public String[] afficheSQLRuche(String currentRucheId){
+        String[] textToSet = {"", "", "", "", ""};
+        textToSet[0] = affichage.SQLRuche("couleurReine", "idRuche=" + currentRucheId);
+        textToSet[1] = affichage.SQLRuche("raceReine", "idRuche=" + currentRucheId);
+        textToSet[2] = affichage.SQLRuche("AgeReine", "idRuche=" + currentRucheId);
+        textToSet[3] = "Nom Ruche : " + affichage.SQLRuche("nomRuche");     
+        textToSet[4] = affichage.SQLRuche("nomRuche", "idRuche=" + currentRucheId);
+        return textToSet;
+    }
+    
+    public String[] afficheSQLHausse(String currentRucheId, String currentHausseId){
+        String[] textToSet = {"", "", ""};
+        textToSet[0] = affichage.SQLHausses("Hausse.couleur", "CompositionRuche.idRuche="
+                      + currentRucheId + " AND Hausse.idMateriel = " + currentHausseId);
+        textToSet[1] = affichage.SQLHausses("Hausse.numeroHausse", "CompositionRuche.idRuche="
+                      + currentRucheId + " AND Hausse.idMateriel = " + currentHausseId);
+        textToSet[2] = affichage.SQLHausses("Hausse.materiau", "CompositionRuche.idRuche="
+                      + currentRucheId + " AND Hausse.idMateriel = " + currentHausseId);
+        return textToSet; 
     }
     
     public void supprimerRuche(String currentRucheId){
         // Destruction de la ruche
         Ruche.dissocier(currentRucheId);
     }
-    
+
     public void creerNouvelleHausse(){
         CreateurHausse.creer();
     }
-    
+
     public void associerNouvelleHausse(){
         CreateurHausse.associer();
     }
-    
+
     public void creerNouveauMateriau(String materiel, Materiau materiau){
         // Fonction pour ajouter du matériel
         Materiel mat;
@@ -122,7 +144,7 @@ public class ControleurInterface {
         }
     }
 
-    
+
 
     public void majCapteurAssocie(JComboBox<String> capteurPoisdAssociéBox, String currentCadreId, JLabel textCaptPoidsAssocier, JComboBox<String> capteurPoisdAssociéBox0, JButton associerCapteurPoidsBouton, JButton dissocierCapteurPoidsBouton) {
         Affichage affichage = new Affichage();
@@ -135,9 +157,9 @@ public class ControleurInterface {
             associerCapteurPoidsBouton.setVisible(false);
             dissocierCapteurPoidsBouton.setVisible(true);
         }
-       
+
         // On affiche les capteurs libres pour les associer
-        else { 
+        else {
             String captLibres = affichage.SQLCapteurLibre( "idCapteur", " type = 'poids' AND idCapteur");
             textCaptPoidsAssocier.setText("Capteur associable :");
             for (String s : captLibres.split(" ")){
@@ -148,7 +170,7 @@ public class ControleurInterface {
         }
     }
 
- 
+
 
     public void majCapteurTemperature(JLabel capteurAssociéText, JComboBox<String> capteurTemperatureAssocieCombo, JButton associerCapteurTemperatureBouton, JButton dissocierCapteurTemperatureBouton, String currentHausseId, JLabel textTemperature) {
         Affichage affichage = new Affichage();
@@ -167,9 +189,9 @@ public class ControleurInterface {
                 textTemperature.setText("Pas de mesures");
             }
         }
-       
+
         // On affiche les capteurs libres pour les associer
-        else { 
+        else {
             String captLibres = affichage.SQLCapteurLibre( "idCapteur", " type = 'temperature' AND idCapteur");
             capteurAssociéText.setText("Capteur associable :");
             for (String s : captLibres.split(" ")){
@@ -178,6 +200,19 @@ public class ControleurInterface {
             associerCapteurTemperatureBouton.setVisible(true);
             dissocierCapteurTemperatureBouton.setVisible(false);
         }
+    }
+
+    public void supprimerMateriel(int currentMaterielID) {
+        Destruction dest = new Destruction();
+        dest.SQLMateriau("idMateriel="+currentMaterielID);
+    }
+
+    public String[] afficheSQLCadre(String currentCadreId) {
+        String[] textToSet = {"", "", ""};
+        textToSet[0] = affichage.SQLCadre("etat", "idMateriel = " + currentCadreId);
+        textToSet[1] = affichage.SQLCadre("materiau", "idMateriel = " + currentCadreId);
+        textToSet[2] = affichage.SQLCadre("contenu", "idMateriel = " + currentCadreId);
+        return textToSet;
     }
 
 }

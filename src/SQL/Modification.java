@@ -7,12 +7,31 @@ package SQL;
 
 import Ruche.Materiel;
 
+import java.sql.*;
+import java.util.*;
+import java.util.logging.*;
+import oracle.jdbc.*;
+import oracle.jdbc.dcn.*;
+import Controleurs.ChangeListener;
+import static java.sql.Connection.TRANSACTION_SERIALIZABLE;
+
+
 /**
  *
  * @author matterv
  */
 public class Modification implements FabriqueSQL{
 
+    public void commit(){
+        Connection conn = BDTable.conn;
+        try {
+            conn.setTransactionIsolation(TRANSACTION_SERIALIZABLE);
+            conn.commit();
+        } catch (SQLException ex) {
+            Logger.getLogger(Création.class.getName()).log(Level.SEVERE, null, ex);
+        }      
+    }
+    
     @Override
     public String SQLRuche(String req) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -89,6 +108,7 @@ public class Modification implements FabriqueSQL{
         String result = "UPDATE COMPOSITIONHAUSSE SET " 
                 + req + " WHERE " + cond;
         BDTable.requete(result);
+        this.commit();
         return "";
     }
 
@@ -96,6 +116,7 @@ public class Modification implements FabriqueSQL{
          String result = "UPDATE COMPOSITIONRUCHE SET IDRUCHE = '" 
                 + req + "' WHERE " + "IDMATERIEL = '" + cond +"'";
         BDTable.requete(result);
+        this.commit();
         return "";
     }
 
@@ -126,6 +147,11 @@ public class Modification implements FabriqueSQL{
 
     @Override
     public String SQLEmplacementCapteur(String req) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String SQLCapteursJoin(String req, String cond) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
