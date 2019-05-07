@@ -16,25 +16,15 @@ import java.util.logging.Logger;
  * Gère la destruction de lignes
  */
 public class Destruction implements FabriqueSQL{
-    
-        public void commit(){
-        Connection conn = BDTable.conn;
-        try {
-            conn.setTransactionIsolation(TRANSACTION_SERIALIZABLE);
-            conn.commit();
-        } catch (SQLException ex) {
-            Logger.getLogger(Création.class.getName()).log(Level.SEVERE, null, ex);
-        }      
-    }
 
     @Override
     /**
      * @param cond la condition de destruction
      */
     public String SQLRuche(String cond) {
-       cond = "DELETE FROM RUCHE WHERE (" + cond + ")";
-       BDTable.requete(cond);
-       return "Deleted";
+        cond = "DELETE FROM RUCHE WHERE (" + cond + ")";
+        BDTable.requete(cond);
+        return "Deleted";
     }
 
 
@@ -154,5 +144,10 @@ public class Destruction implements FabriqueSQL{
         BDTable.requete(req);
         return "Deleted";   
     }
-    
+
+    @Override
+    public String SQLCapteursJoin(String req, String cond) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

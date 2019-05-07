@@ -180,7 +180,7 @@ public class ControleurInterface {
 
 
 
-    public void majCapteurTemperature(JLabel capteurAssociéText, JComboBox<String> capteurTemperatureAssocieCombo, JButton associerCapteurTemperatureBouton, JButton dissocierCapteurTemperatureBouton, String currentHausseId) {
+    public void majCapteurTemperature(JLabel capteurAssociéText, JComboBox<String> capteurTemperatureAssocieCombo, JButton associerCapteurTemperatureBouton, JButton dissocierCapteurTemperatureBouton, String currentHausseId, JLabel textTemperature) {
         Affichage affichage = new Affichage();
          capteurTemperatureAssocieCombo.removeAllItems();
         // Note : on est sûr que c'est un capteur de température car associé à un cadre
@@ -190,6 +190,12 @@ public class ControleurInterface {
              capteurTemperatureAssocieCombo.addItem(captAssocie);
             associerCapteurTemperatureBouton.setVisible(false);
             dissocierCapteurTemperatureBouton.setVisible(true);
+            String aff = affichage.SQLMesure("MAX(valeur) as max ", "idCapteur = " + captAssocie + " GROUP BY idCapteur");
+            if (aff.length() != 0){
+                textTemperature.setText(aff);
+            } else {
+                textTemperature.setText("Pas de mesures");
+            }
         }
 
         // On affiche les capteurs libres pour les associer

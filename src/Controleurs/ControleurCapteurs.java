@@ -34,9 +34,9 @@ public class ControleurCapteurs {
     public void ajouterMesures(){
            Affichage aff = new Affichage();
            String capteursPoids = "idCapteur";
-           capteursPoids = aff.SQLCapteurs(capteursPoids, " type = 'poids'");
+           capteursPoids = aff.SQLCapteursJoin(capteursPoids, " type = 'poids'");
            String capteursTemperature = "idCapteur";
-           capteursTemperature = aff.SQLCapteurs(capteursTemperature, " type = 'temperature'");
+           capteursTemperature = aff.SQLCapteursJoin(capteursTemperature, " type = 'temperature'");
            
            Création crea = new Création();
            Random rand = new Random();
