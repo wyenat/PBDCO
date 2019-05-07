@@ -20,6 +20,8 @@ import Ruche.Plancher;
 import Ruche.Ruche;
 import Ruche.Toit;
 import SQL.Affichage;
+import SQL.BDTable;
+import SQL.Création;
 import SQL.Destruction;
 import SQL.Modification;
 import java.awt.event.WindowAdapter;
@@ -32,6 +34,9 @@ import javax.swing.ComboBoxModel;
 import javax.swing.JComboBox;
 import static java.lang.Thread.sleep;
 import static java.lang.Thread.sleep;
+import java.sql.Connection;
+import static java.sql.Connection.TRANSACTION_READ_COMMITTED;
+import java.sql.SQLException;
 
 /**
  *
@@ -1370,7 +1375,13 @@ public class AppClient extends javax.swing.JFrame {
     }//GEN-LAST:event_ajoutMateriauBoutonMouseClicked
 
     private void undoBoutonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_undoBoutonMouseClicked
-        // Lucille 
+        Connection conn = BDTable.conn;
+        try {
+            conn.rollback();
+            System.out.println("rollback\n");
+        } catch (SQLException ex) {
+            Logger.getLogger(Création.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_undoBoutonMouseClicked
 
 

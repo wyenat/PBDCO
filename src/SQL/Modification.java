@@ -21,16 +21,6 @@ import static java.sql.Connection.TRANSACTION_SERIALIZABLE;
  * @author matterv
  */
 public class Modification implements FabriqueSQL{
-
-    public void commit(){
-        Connection conn = BDTable.conn;
-        try {
-            conn.setTransactionIsolation(TRANSACTION_SERIALIZABLE);
-            conn.commit();
-        } catch (SQLException ex) {
-            Logger.getLogger(Création.class.getName()).log(Level.SEVERE, null, ex);
-        }      
-    }
     
     @Override
     public String SQLRuche(String req) {
@@ -108,7 +98,6 @@ public class Modification implements FabriqueSQL{
         String result = "UPDATE COMPOSITIONHAUSSE SET " 
                 + req + " WHERE " + cond;
         BDTable.requete(result);
-        this.commit();
         return "";
     }
 
@@ -116,7 +105,6 @@ public class Modification implements FabriqueSQL{
          String result = "UPDATE COMPOSITIONRUCHE SET IDRUCHE = '" 
                 + req + "' WHERE " + "IDMATERIEL = '" + cond +"'";
         BDTable.requete(result);
-        this.commit();
         return "";
     }
 
