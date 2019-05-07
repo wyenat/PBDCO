@@ -23,7 +23,7 @@ public abstract class Capteur {
     private void InitIdCapteur() {
         String req = "idCapteur";
         Affichage aff = new Affichage();
-        String resultat = aff.SQLUniteCapteur(req);
+        String resultat = aff.SQLCapteurs(req);
         int candidat = -1;
         if (resultat!=""){
             for (String potentiel : resultat.split(" ")){

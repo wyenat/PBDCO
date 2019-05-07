@@ -80,5 +80,10 @@ public interface FabriqueSQL {
     
     public String SQLCapteurs(String req);
     
+    public String SQLCapteurLibre(String req, String cond);
+    
+    public String SQLEmplacementCapteur(String req) ;
+    
+    public String SQLEmplacementCapteur(String req, String cond);
     
 }
