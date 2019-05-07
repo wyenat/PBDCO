@@ -30,8 +30,10 @@ public class Destruction implements FabriqueSQL{
     }
 
     @Override
-    public String SQLHausse(String req) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String SQLHausse(String cond) {
+        cond = "DELETE FROM RUCHE WHERE (" + cond + ")";
+        BDTable.requete(cond);
+        return "Deleted";
     }
 
     @Override
@@ -62,7 +64,6 @@ public class Destruction implements FabriqueSQL{
     @Override
     public String SQLMateriau(String cond) {
         cond = "DELETE FROM "+"TOIT T JOIN COUVERCLE C ON T.idMATERIEL=C.idMATERIEL "+" WHERE (" + cond+ ")";
-        System.out.println(cond);
         BDTable.requete(cond);
        
        return "Deleted";
@@ -89,8 +90,11 @@ public class Destruction implements FabriqueSQL{
 
     @Override
     public String SQLCompositionHausse(String req) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        req = "DELETE FROM "+"COMPOSITIONHAUSSE "+" WHERE (" + req + ")";
+        BDTable.requete(req);
+       return "Deleted";   
     }
+        
 
     @Override
     public String SQLCompositionHausse(String req, String cond) {
@@ -99,11 +103,25 @@ public class Destruction implements FabriqueSQL{
 
     @Override
     public String SQLCompositionRuche(String req) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        req = "DELETE FROM "+"RUCHE "+" WHERE (" + req + ")";
+        BDTable.requete(req);
+        return "Deleted";   
     }
 
     @Override
     public String SQLCompositionRuche(String req, String cond) {
+        req = "DELETE FROM "+"COMPOSITIONRUCHE "+" WHERE (" + req + ")";
+        BDTable.requete(req);
+        return "Deleted";   
+    }
+
+    @Override
+    public String SQLCapteurs(String req, String cond) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String SQLCapteurs(String req) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

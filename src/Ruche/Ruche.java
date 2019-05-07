@@ -3,10 +3,17 @@ package Ruche;
 import InterfaceGraphique.Erreur;
 import SQL.Affichage;
 import SQL.Création;
+import SQL.Destruction;
 import SQL.Modification;
 import javax.swing.JList;
 
 public class Ruche {
+
+    public static void dissocier(String currentRucheId) {
+        Destruction destruction = new Destruction();
+        destruction.SQLCompositionRuche("idRuche = " +currentRucheId);
+        destruction.SQLRuche("idRuche = " +currentRucheId);
+    }
     private int idRuche;
 
     public int getIdRuche() {

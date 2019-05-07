@@ -14,6 +14,7 @@ import Ruche.Hausse;
 import Ruche.Materiau;
 import Ruche.Materiel;
 import Ruche.Plancher;
+import Ruche.Ruche;
 import Ruche.Toit;
 import SQL.Affichage;
 import SQL.BDTable;
@@ -27,6 +28,8 @@ import java.util.logging.Logger;
 import static java.lang.Thread.sleep;
 import javax.swing.ComboBoxModel;
 import javax.swing.JComboBox;
+import static java.lang.Thread.sleep;
+import static java.lang.Thread.sleep;
 
 /**
  *
@@ -39,7 +42,7 @@ public class AppClient extends javax.swing.JFrame {
     private String currentCadreId;
     private String currentStockId;
     private ControleurInterface contI;
-    
+
     /**
      * Creates new form AppClient
      */
@@ -48,15 +51,15 @@ public class AppClient extends javax.swing.JFrame {
         contI = new ControleurInterface();
         initComponents();
         this.panelDeuxième.setVisible(false);
-        
+
     }
-    
+
     private void refresh(){
         jLabel16.setText(affichage.SQLRuche("couleurReine", "idRuche=" + currentRucheId));
         jLabel17.setText(affichage.SQLRuche("raceReine", "idRuche=" + currentRucheId));
         jLabel18.setText(affichage.SQLRuche("AgeReine", "idRuche=" + currentRucheId));
         jLabel6.setText("Nom Ruche : " + affichage.SQLRuche("nomRuche"));
-        
+
         //new javax.swing.DefaultComboBoxModel(affichage.SQLRuche("idRuche").split(" ")));
 
 //        displayRuches.addItemListener(new java.awt.event.ItemListener() {
@@ -69,10 +72,10 @@ public class AppClient extends javax.swing.JFrame {
 //                displayRuchesActionPerformed(evt);
 //            }
 //        });
-        
-        
+
+
     }
-        
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -92,12 +95,24 @@ public class AppClient extends javax.swing.JFrame {
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
         jSeparator1 = new javax.swing.JSeparator();
         jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
         displayHausse = new javax.swing.JComboBox();
-        jButton1 = new javax.swing.JButton();
+        jLabel30 = new javax.swing.JLabel();
+        jLabel31 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
         jTabbedPane5 = new javax.swing.JTabbedPane();
         jPanel4 = new javax.swing.JPanel();
+        jPanel11 = new javax.swing.JPanel();
         nomRucheAffichage = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
+        jPanel12 = new javax.swing.JPanel();
+        jLabel26 = new javax.swing.JLabel();
+        jLabel27 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
+        jLabel29 = new javax.swing.JLabel();
+        textHausseCouleur = new javax.swing.JLabel();
+        textHausseNumero = new javax.swing.JLabel();
+        textHausseMateriau = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -125,7 +140,6 @@ public class AppClient extends javax.swing.JFrame {
         jPanel6 = new javax.swing.JPanel();
         ajouterCadresBouton = new javax.swing.JButton();
         displayCadre = new javax.swing.JComboBox();
-        jButton8 = new javax.swing.JButton();
         jSeparator3 = new javax.swing.JSeparator();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
@@ -223,21 +237,30 @@ public class AppClient extends javax.swing.JFrame {
             }
         });
 
-        jButton6.setBackground(new java.awt.Color(255, 255, 153));
-        jButton6.setText("Dissocier Hausse");
-
-        String[] listH = ("Ruches" + Hausse.getListe("idRuche = " + (String) this.displayRuches.getSelectedItem())).split(" ");
+        String[] listH = {};
         displayHausse.setModel(new javax.swing.DefaultComboBoxModel(listH));
+        int compteur=0;
+        for (String s : Hausse.getListe("idRuche=" + currentRucheId).split(",")){
+            if (compteur++ > 0){
+                this.currentHausseId = s.split(" ")[0];
+                majComboCadre();
+            }
+            this.displayHausse.addItem(s.split(" ")[0]);
+        }
         displayHausse.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 displayHausseItemStateChanged(evt);
             }
         });
 
-        jButton1.setText("Application capteurs");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+        jLabel30.setText("Hausse courante :");
+
+        jLabel31.setText("Ruche courante :");
+
+        jButton2.setText("Application Capteurs");
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton2MouseClicked(evt);
             }
         });
 
@@ -249,17 +272,26 @@ public class AppClient extends javax.swing.JFrame {
             .addComponent(supprimerRuche, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(displayRuches, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jButton5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(displayHausse, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addContainerGap())
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel30)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jLabel31))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jButton2)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap())))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -267,47 +299,147 @@ public class AppClient extends javax.swing.JFrame {
                 .addComponent(associerRucheBouton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(supprimerRuche, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel31)
+                .addGap(9, 9, 9)
                 .addComponent(displayRuches, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel30)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(displayHausse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addComponent(jButton2))
         );
 
         jSplitPane1.setLeftComponent(jPanel2);
 
         jTabbedPane5.setBackground(new java.awt.Color(255, 255, 153));
-        jTabbedPane5.setForeground(new java.awt.Color(0, 0, 0));
+
+        jPanel11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         nomRucheAffichage.setText("Nom Ruche : " + affichage.SQLRuche("nomRuche", "idRuche=" + currentRucheId));
+
+        jLabel5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("Ruche");
+
+        jLabel25.setText("nom :");
+
+        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
+        jPanel11.setLayout(jPanel11Layout);
+        jPanel11Layout.setHorizontalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel25)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(nomRucheAffichage)
+                .addContainerGap(389, Short.MAX_VALUE))
+        );
+        jPanel11Layout.setVerticalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(nomRucheAffichage, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel25))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel12.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        jLabel26.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel26.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel26.setText("Hausse");
+
+        jLabel27.setText("Couleur :");
+
+        jLabel28.setText("Numéro :");
+
+        jLabel29.setText("Matériau :");
+
+        textHausseCouleur.setText(" ");
+
+        textHausseNumero.setText(" ");
+
+        textHausseMateriau.setText(" ");
+
+        javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
+        jPanel12.setLayout(jPanel12Layout);
+        jPanel12Layout.setHorizontalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel12Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel26, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel12Layout.createSequentialGroup()
+                        .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel12Layout.createSequentialGroup()
+                                .addComponent(jLabel27)
+                                .addGap(18, 18, 18)
+                                .addComponent(textHausseCouleur))
+                            .addGroup(jPanel12Layout.createSequentialGroup()
+                                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel28)
+                                    .addComponent(jLabel29))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(textHausseMateriau)
+                                    .addComponent(textHausseNumero))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel12Layout.setVerticalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel12Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel26)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel27)
+                    .addComponent(textHausseCouleur))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel28)
+                    .addComponent(textHausseNumero))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel29)
+                    .addComponent(textHausseMateriau))
+                .addContainerGap(88, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(nomRucheAffichage)
-                .addContainerGap(460, Short.MAX_VALUE))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(nomRucheAffichage, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(271, Short.MAX_VALUE))
+                .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
-        jTabbedPane5.addTab("Ruche", jPanel4);
+        jTabbedPane5.addTab("Informations", jPanel4);
 
         jLabel7.setText("Reine");
         jLabel7.setFocusable(false);
@@ -374,7 +506,7 @@ public class AppClient extends javax.swing.JFrame {
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel11)
-                .addContainerGap(171, Short.MAX_VALUE))
+                .addContainerGap(173, Short.MAX_VALUE))
         );
 
         jTabbedPane5.addTab("Essaim", jPanel5);
@@ -422,7 +554,7 @@ public class AppClient extends javax.swing.JFrame {
 
             detailCombo1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {""}));
 
-            deuxiemeIntervention.setText("jLabel5");
+            deuxiemeIntervention.setText("     ");
 
             javax.swing.GroupLayout panelDeuxièmeLayout = new javax.swing.GroupLayout(panelDeuxième);
             panelDeuxième.setLayout(panelDeuxièmeLayout);
@@ -454,7 +586,7 @@ public class AppClient extends javax.swing.JFrame {
                 .addGroup(panelDeuxièmeLayout.createSequentialGroup()
                     .addContainerGap()
                     .addComponent(deuxièmeText)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
                     .addGroup(panelDeuxièmeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel4)
                         .addComponent(interventionDeux)
@@ -482,9 +614,9 @@ public class AppClient extends javax.swing.JFrame {
                                     .addComponent(detailsText)
                                     .addGap(0, 0, Short.MAX_VALUE)))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(typeIntervention, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(detailCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(detailCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(typeIntervention, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGap(99, 99, 99))
                         .addComponent(panelDeuxième, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addContainerGap())
@@ -512,7 +644,7 @@ public class AppClient extends javax.swing.JFrame {
             jTabbedPane5.addTab("Actions", jPanel3);
 
             ajouterCadresBouton.setBackground(new java.awt.Color(255, 255, 153));
-            ajouterCadresBouton.setText("Associer");
+            ajouterCadresBouton.setText("Créer");
             ajouterCadresBouton.addMouseListener(new java.awt.event.MouseAdapter() {
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
                     ajouterCadresBoutonMouseClicked(evt);
@@ -530,9 +662,6 @@ public class AppClient extends javax.swing.JFrame {
                     displayCadreItemStateChanged(evt);
                 }
             });
-
-            jButton8.setBackground(new java.awt.Color(255, 255, 153));
-            jButton8.setText("Dissocier");
 
             jSeparator3.setBackground(new java.awt.Color(232, 231, 231));
             jSeparator3.setForeground(new java.awt.Color(54, 46, 46));
@@ -605,11 +734,8 @@ public class AppClient extends javax.swing.JFrame {
                     .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(displayCadre, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel6Layout.createSequentialGroup()
-                            .addComponent(ajouterCadresBouton, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, 334, Short.MAX_VALUE))
-                        .addGroup(jPanel6Layout.createSequentialGroup()
                             .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(ajouterCadresBouton, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(jPanel6Layout.createSequentialGroup()
                                     .addComponent(jLabel12)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -623,7 +749,7 @@ public class AppClient extends javax.swing.JFrame {
                                         .addComponent(EtatCadre)
                                         .addComponent(contenuCadre)))
                                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(0, 0, Short.MAX_VALUE)))
+                            .addGap(0, 210, Short.MAX_VALUE)))
                     .addContainerGap())
             );
             jPanel6Layout.setVerticalGroup(
@@ -632,9 +758,7 @@ public class AppClient extends javax.swing.JFrame {
                     .addContainerGap()
                     .addComponent(displayCadre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(ajouterCadresBouton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(ajouterCadresBouton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -651,7 +775,7 @@ public class AppClient extends javax.swing.JFrame {
                         .addComponent(contenuCadre))
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                     .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(57, Short.MAX_VALUE))
+                    .addContainerGap(59, Short.MAX_VALUE))
             );
 
             jTabbedPane5.addTab("Cadres", jPanel6);
@@ -708,7 +832,7 @@ public class AppClient extends javax.swing.JFrame {
                 .addGroup(jPanel9Layout.createSequentialGroup()
                     .addGap(36, 36, 36)
                     .addComponent(typeMateriauCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                     .addComponent(ajoutMateriauBouton)
                     .addContainerGap())
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -804,7 +928,7 @@ public class AppClient extends javax.swing.JFrame {
                     .addContainerGap()
                     .addComponent(jLabel21)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(18, 18, 18)
                     .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap())
@@ -839,7 +963,7 @@ public class AppClient extends javax.swing.JFrame {
             pack();
         }// </editor-fold>//GEN-END:initComponents
 
-    private void associerRucheBoutonMouseClicked(java.awt.event.MouseEvent evt) {           
+    private void associerRucheBoutonMouseClicked(java.awt.event.MouseEvent evt) {
         contI.creerNouvelleRuche();
         displayRuches.getModel().setSelectedItem(affichage.SQLRuche("idRuche", "idRuche="+currentRucheId).split(" "));
        // synchronized(cg) {
@@ -851,7 +975,7 @@ public class AppClient extends javax.swing.JFrame {
         //       }
         //    }
         System.out.println("Fenêtre création fermée!");
-    }                                     
+    }
 
     private void displayRuchesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_displayRuchesItemStateChanged
         // TODO add your handling code here:
@@ -862,7 +986,7 @@ public class AppClient extends javax.swing.JFrame {
         this.textAgeAfficher.setText(affichage.SQLRuche("AgeReine", "idRuche=" + currentRucheId));
         majComboHausse();
     }//GEN-LAST:event_displayRuchesItemStateChanged
-    
+
     /**
      * Affiche les Hausses associée à la ruche rentrée
      */
@@ -877,7 +1001,7 @@ public class AppClient extends javax.swing.JFrame {
             this.displayHausse.addItem(s.split(" ")[0]);
         }
     }
-    
+
     public void majComboCadre(){
         this.displayCadre.removeAllItems();
         int compteur = 0;
@@ -887,14 +1011,24 @@ public class AppClient extends javax.swing.JFrame {
             }
             this.displayCadre.addItem(s.split(" ")[0]);
         }
+        String coul = affichage.SQLHausses("Hausse.couleur", "CompositionRuche.idRuche="
+                + currentRucheId + " AND Hausse.idMateriel = " + currentHausseId);
+        String num = affichage.SQLHausses("Hausse.numeroHausse", "CompositionRuche.idRuche="
+                + currentRucheId + " AND Hausse.idMateriel = " + currentHausseId);
+        String mat = affichage.SQLHausses("Hausse.materiau", "CompositionRuche.idRuche="
+                + currentRucheId + " AND Hausse.idMateriel = " + currentHausseId);
+        this.textHausseCouleur.setText(coul);
+        this.textHausseMateriau.setText(mat);
+        this.textHausseNumero.setText(num);
     }
-    
+
     private void associerRucheBoutonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_associerRucheBoutonActionPerformed
        // TODO add your handling code here:
     }//GEN-LAST:event_associerRucheBoutonActionPerformed
 
     private void supprimerRucheMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_supprimerRucheMouseClicked
-        contI.supprimerRuche(currentRucheId);
+        // Destruction de la ruche
+        Ruche.dissocier(currentRucheId);
     }//GEN-LAST:event_supprimerRucheMouseClicked
 
     private void displayRuchesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayRuchesActionPerformed
@@ -903,8 +1037,7 @@ public class AppClient extends javax.swing.JFrame {
 
     private void ajoutMateriauBoutonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ajoutMateriauBoutonMouseClicked
         Materiau materiau = (Materiau) this.typeMateriauCombo.getSelectedItem();
-        String materiel = (String) this.typeMaterielCombo.getSelectedItem();
-        contI.creerNouveauMateriau(materiau, materiel);
+        contI.creerNouveauMateriau(materiau);
     }//GEN-LAST:event_ajoutMateriauBoutonMouseClicked
 
     private void ButtonSupprimerMaterielMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ButtonSupprimerMaterielMouseClicked
@@ -921,7 +1054,7 @@ public class AppClient extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5MouseClicked
 
     private void displayHausseItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_displayHausseItemStateChanged
-       
+
         if (this.displayHausse.getItemCount() > 1 ){
             this.currentHausseId = this.displayHausse.getSelectedItem().toString();
             majComboCadre();
@@ -963,16 +1096,16 @@ public class AppClient extends javax.swing.JFrame {
         if (this.typeIntervention.getItemCount() == 6){
             this.typeIntervention.removeItemAt(0);
         }
-        
+
         String sel = this.typeIntervention.getSelectedItem().toString();
         String[] combo;
         this.detailCombo.removeAllItems();
         this.detailCombo.setVisible(true);
         this.actionEnregistrerBouton.setText("Enregistrer");
         switch(sel){
-            
-            
-            
+
+
+
             case  "Récolte d'une hausse":
                 this.detailsText.setText("Hausse récoltée :");
                 combo = Hausse.getListe("idRuche=" + currentRucheId).split(",");
@@ -985,9 +1118,9 @@ public class AppClient extends javax.swing.JFrame {
                     this.panelDeuxième.setVisible(false);
                 }
                 break;
-                
-                
-                
+
+
+
             case "Pose d'une nouvelle hausse de récolte":
                 this.detailsText.setText("Hausse posée :");
                 this.detailCombo.setVisible(true);
@@ -996,35 +1129,56 @@ public class AppClient extends javax.swing.JFrame {
                     this.detailCombo.addItem(s);
                 }
                 break;
-                
-                
+
+
             case "Mise à jour des informations d'état et de contenu des cadres":
                 this.detailsText.setText("");
                 this.detailCombo.setVisible(false);
                 this.actionEnregistrerBouton.setText("Ouvrir l'éditeur");
                 break;
-                
-                
-                
+
+
+
             case "Extraction d'un cadre d'une hausse":
+                // Conservation de l'intégrité
+
+                this.deuxiemeIntervention.setText("Insertion d'un cadre dans une hausse");
+                this.detailsText1.setText("Cadre ajouté :");
+                combo = Cadre.getListe("idMaterielHausse is NULL").split(",");
+                this.detailCombo1.removeAllItems();
+                for (String s: combo){
+                    this.detailCombo1.addItem(s);
+                }
+                // ComboBox
                 this.detailsText.setText("Cadre extrait :");
                 combo = Cadre.getListe("idMaterielHausse = " + currentHausseId).split(",");
                 for (String s : combo){
                     this.detailCombo.addItem(s);
                 }
+                this.panelDeuxième.setVisible(true);
                 break;
-                
-                
-                
+
+
+
             case "Insertion d'un cadre dans une hausse":
-                this.detailsText.setText("Cadre ajouté :"); 
+                // Conservation de l'intégrité
+                this.deuxiemeIntervention.setText("Extraction d'un cadre d'une hausse");
+                this.detailsText1.setText("Cadre extrait :");
+                combo = Cadre.getListe("idMaterielHausse = " + currentHausseId).split(",");
+                this.detailCombo1.removeAllItems();
+                for (String s: combo){
+                    this.detailCombo1.addItem(s);
+                }
+                // ComboBox
+                this.detailsText.setText("Cadre ajouté :");
                 combo = Cadre.getListe("idMaterielHausse is NULL").split(",");
                 for (String s: combo){
                     this.detailCombo.addItem(s);
                 }
+                this.panelDeuxième.setVisible(true);
                 break;
-                
-                
+
+
             default:
                 break;
         }
@@ -1034,8 +1188,8 @@ public class AppClient extends javax.swing.JFrame {
         Modification modif = new Modification();
         if (this.actionEnregistrerBouton.getText().equals("Enregistrer")){
             switch( this.typeIntervention.getSelectedItem().toString()){
-                
-                
+
+
                 case "Récolte d'une hausse":
                     String idPrems = this.detailCombo.getSelectedItem().toString().split(" ")[0];
                     String valPrems = this.detailCombo.getSelectedItem().toString().split(" ")[3];
@@ -1046,7 +1200,7 @@ public class AppClient extends javax.swing.JFrame {
                             modif.SQLCompositionRuche("", idPrems);
                             modif.SQLCompositionRuche(this.currentRucheId, idDeuz);
                         } else {
-                            Erreur.main("Il faut remplacer une hausse " + valPrems 
+                            Erreur.main("Il faut remplacer une hausse " + valPrems
                                    + " et pas par une " + valDeuz + " ! "
                                     + "\n ( La hausse fait partie du corps de ruche )");
                         }
@@ -1054,18 +1208,36 @@ public class AppClient extends javax.swing.JFrame {
                         modif.SQLCompositionRuche("", idPrems);
                     }
                     break;
-            
+
                 case "Pose d'une nouvelle hausse de récolte":
                     idPrems = this.detailCombo.getSelectedItem().toString().split(" ")[0];
                     modif.SQLCompositionRuche("", idPrems);
                     if (this.panelDeuxième.isVisible()){
                         String idDeuz = this.detailCombo1.getSelectedItem().toString().split(" ")[0];
                         modif.SQLCompositionRuche(this.currentRucheId, idDeuz);
-                    } 
+                    }
+                    break;
+
+                case "Insertion d'un cadre dans une hausse":
+                    String premierCadre = this.detailCombo.getSelectedItem().toString();
+                    String secondCadre = this.detailCombo1.getSelectedItem().toString();
+                    modif.SQLCompositionHausse("idMaterielHausse = null",
+                            "idMaterielCadre = '" + secondCadre.split(" ")[0] +"'");
+                    modif.SQLCompositionHausse("idMaterielHausse = '" + this.currentHausseId + "'",
+                            "idMaterielCadre = '" + premierCadre.split(" ")[0] +"'");
+                    break;
+
+                case "Extraction d'un cadre d'une hausse":
+                    premierCadre = this.detailCombo.getSelectedItem().toString();
+                    secondCadre = this.detailCombo1.getSelectedItem().toString();
+                    modif.SQLCompositionHausse("idMaterielHausse = null",
+                            "idMaterielCadre = '" + premierCadre.split(" ")[0] +"'");
+                    modif.SQLCompositionHausse("idMaterielHausse = '" + this.currentHausseId + "'",
+                            "idMaterielCadre = '" + secondCadre.split(" ")[0] +"'");
                     break;
             }
         } else {
-            
+            ModificateurDeCadre.main(currentHausseId);
         }
     }//GEN-LAST:event_actionEnregistrerBoutonMouseClicked
 
@@ -1074,8 +1246,8 @@ public class AppClient extends javax.swing.JFrame {
             this.panelDeuxième.setVisible(false);
             if (this.detailCombo.getComponentCount() >= 1){
             switch (this.typeIntervention.getSelectedItem().toString()){
-            
-                
+
+
                 case "Récolte d'une hausse":
                      if (Integer.parseInt(this.detailCombo.getSelectedItem().toString().split(" ")[3]) < 3){
                          this.panelDeuxième.setVisible(true);
@@ -1087,45 +1259,45 @@ public class AppClient extends javax.swing.JFrame {
                     this.panelDeuxième.setVisible(false);
                 }
                 break;
-            
-            
+
+
                 case "Pose d'une nouvelle hausse de récolte":
                     int id = Integer.parseInt(this.detailCombo.getSelectedItem().toString().split(" ")[3]);
-                    
+
                     String[] listIDs = Hausse.getListe("idRuche =" + this.currentRucheId).split(",");
                     for (String s : listIDs){
                         System.out.println("id = " + id + ", test = " + s);
                        if (Integer.parseInt(s.split(" ")[3]) == id){
-                           
+
                            this.panelDeuxième.setVisible(true);
                            this.deuxiemeIntervention.setText("Récolte d'une hausse");
                            this.detailCombo1.removeAllItems();
                            this.detailCombo1.addItem(s);
                            continue;
+                       } else {
+                           this.panelDeuxième.setVisible(false);
                        }
                     }
                     break;
-            }   
+
+                default:
+                   this.panelDeuxième.setVisible(true);
+            }
             } else {
                 this.detailsText.setText("Pas assez de trucs voulus !");
             }
         }
         catch(Exception e){
-            
+
         }
     }//GEN-LAST:event_detailComboItemStateChanged
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        
-        ApplicationCapteurs capts = new ApplicationCapteurs();
-        capts.setVisible(true);
-        capts.addWindowListener(new WindowAdapter(){
-             public void windowClosing(WindowEvent e){
-                 //J'imagine qu'il faut faire un truc ici
-        }
-        });
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+        ApplicationCapteurs appcap = new ApplicationCapteurs();
+        appcap.setVisible(true);
+
+    }//GEN-LAST:event_jButton2MouseClicked
+
 
     /**
      * @param args the command line arguments
@@ -1134,7 +1306,7 @@ public class AppClient extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -1182,10 +1354,8 @@ public class AppClient extends javax.swing.JFrame {
     private javax.swing.JComboBox displayRuches;
     private javax.swing.Box.Filler filler1;
     private javax.swing.JLabel interventionDeux;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1203,14 +1373,24 @@ public class AppClient extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -1232,6 +1412,9 @@ public class AppClient extends javax.swing.JFrame {
     private javax.swing.JButton supprimerRuche;
     private javax.swing.JLabel textAgeAfficher;
     private javax.swing.JLabel textCouleurAfficher;
+    private javax.swing.JLabel textHausseCouleur;
+    private javax.swing.JLabel textHausseMateriau;
+    private javax.swing.JLabel textHausseNumero;
     private javax.swing.JLabel textRaceAfficher;
     private javax.swing.JComboBox typeIntervention;
     private javax.swing.JComboBox<Materiau> typeMateriauCombo;

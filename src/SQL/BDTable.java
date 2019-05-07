@@ -62,7 +62,7 @@ public class BDTable {
                * NOTE : POSE PROBLEME SI UNE SEULE ENTRÉE
                */
                    for (int i=1; i<=len; i++){
-                
+                       
                    result += rset.getObject(i).toString() + " ";
                 }
           }
@@ -87,7 +87,6 @@ public class BDTable {
     int len = s.split(",").length;
     String result = "";
     ResultSet rset = stmt.executeQuery();
-        System.out.println(" caca " + len);
 
     if (s.startsWith("SELECT")){
         while (rset.next()) {

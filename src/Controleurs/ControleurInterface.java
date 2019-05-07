@@ -22,15 +22,15 @@ import javax.swing.JComboBox;
  * @author nodelant
  */
 public class ControleurInterface {
-    
+
     public ControleurInterface(){
     }
-    
+
     public void creerNouvelleRuche(){
         CreateurRuche cg = new CreateurRuche();
         cg.creerRuche();
     }
-    
+
     public void supprimerRuche(String currentRucheId){
         // Destruction de la ruche
         Avertissement aver = new Avertissement();
@@ -43,28 +43,31 @@ public class ControleurInterface {
             System.out.println("Ruche non supprimée");
         }
     }
-    
-    public void creerNouveauMateriau( Materiau omateriau, String materiel){
+
+    public void creerNouveauMateriau(Materiau omateriau){
         // Fonction pour ajouter du matériel
         Materiau materiau = (Materiau) omateriau;
         Materiel mat;
-        switch (materiel){
-            case "Toit":
-                mat = new Toit(materiau);
-                break;
-            case "Couvercle":
-                mat = new Couvercle(materiau);
-                break;
-            case "Plancher":
-                mat = new Plancher(materiau);
-                break;
-            default:
-                mat = null;
-                System.out.println(omateriau.getClass().toString());
-                break;
-        }
-        if (mat != null) {
-            mat.create();
-        }
+//        if (materiau == Materiau.BOIS){
+//                mat = new Toit(materiau);
+//        }
+//        else if(materiau == Materiau.METAL){
+//
+//        }
+//        else if(materiau == Materiau.PLASTIQUE)
+//            case "Couvercle":
+//                mat = new Couvercle(materiau);
+//                break;
+//            case "Plancher":
+//                mat = new Plancher(materiau);
+//                break;
+//            default:
+//                mat = null;
+//                System.out.println("Erreur");
+//                break;
+//        }
+//        if (mat != null) {
+//            mat.create();
+//        }
     }
 }

@@ -75,4 +75,10 @@ public interface FabriqueSQL {
     public String SQLCompositionRuche(String req);
     
     public String SQLCompositionRuche(String req, String cond);
+    
+    public String SQLCapteurs(String req, String cond);
+    
+    public String SQLCapteurs(String req);
+    
+    
 }

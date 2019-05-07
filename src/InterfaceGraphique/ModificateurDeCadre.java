@@ -5,17 +5,33 @@
  */
 package InterfaceGraphique;
 
+import Ruche.Cadre;
+import Ruche.Contenu;
+import Ruche.Etat;
+import SQL.Affichage;
+import SQL.Modification;
+
 /**
  *
- * @author matterv
  */
 public class ModificateurDeCadre extends javax.swing.JFrame {
-
+    public Affichage affichage = new Affichage();
+    public String currentCadreId;
+    public String currentHausseId;
     /**
      * Creates new form ModificateurDeCadre
      */
-    public ModificateurDeCadre() {
+    public ModificateurDeCadre(String id) {
         initComponents();
+        this.displayCadre.removeAllItems();
+        this.currentHausseId = id;
+        int compteur = 0;
+        for (String s : Cadre.getListe("idMaterielHausse = " + id).split(",")){
+            if (compteur++ < 1) {
+                this.currentCadreId = s.split(" ")[0];
+            }
+            this.displayCadre.addItem(s.split(" ")[0]);
+        }
     }
 
     /**
@@ -30,13 +46,22 @@ public class ModificateurDeCadre extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        displayCadre = new javax.swing.JComboBox();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        etatCourant = new javax.swing.JLabel();
+        EtatCombo = new javax.swing.JComboBox<Etat>();
         jPanel4 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        contCourant = new javax.swing.JLabel();
+        ContenuCombo = new javax.swing.JComboBox<Contenu>();
+        displayCadre = new javax.swing.JComboBox();
+        modifBouton = new javax.swing.JButton();
+        annulBouton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -45,13 +70,6 @@ public class ModificateurDeCadre extends javax.swing.JFrame {
         jLabel1.setText("Modificateur de cadre");
 
         jLabel2.setText("Cadre à modifier : ");
-
-        displayCadre.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Séléctionnez une hausse" }));
-        displayCadre.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                displayCadreItemStateChanged(evt);
-            }
-        });
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -63,6 +81,12 @@ public class ModificateurDeCadre extends javax.swing.JFrame {
 
         jLabel5.setText("Courant");
 
+        jLabel6.setText("Voulu");
+
+        etatCourant.setText("jLabel7");
+
+        EtatCombo.setModel(new javax.swing.DefaultComboBoxModel<Etat>(Etat.getAll()));
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -73,7 +97,12 @@ public class ModificateurDeCadre extends javax.swing.JFrame {
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel5)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel6))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addComponent(etatCourant, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(EtatCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -82,8 +111,14 @@ public class ModificateurDeCadre extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel5)
-                .addContainerGap(69, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(EtatCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(etatCourant))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -92,13 +127,30 @@ public class ModificateurDeCadre extends javax.swing.JFrame {
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Contenu");
 
+        jLabel8.setText("Courant");
+
+        jLabel9.setText("Voulu");
+
+        contCourant.setText("jLabel10");
+
+        ContenuCombo.setModel(new javax.swing.DefaultComboBoxModel<Contenu>(Contenu.getAll()));
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel9))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(contCourant)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(ContenuCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -106,7 +158,15 @@ public class ModificateurDeCadre extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel4)
-                .addContainerGap(93, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel9))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(contCourant)
+                    .addComponent(ContenuCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -123,12 +183,33 @@ public class ModificateurDeCadre extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
+
+        displayCadre.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Séléctionnez une hausse" }));
+        displayCadre.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                displayCadreItemStateChanged(evt);
+            }
+        });
+
+        modifBouton.setText("Modifier");
+        modifBouton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                modifBoutonMouseClicked(evt);
+            }
+        });
+
+        annulBouton.setText("Annuler");
+        annulBouton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                annulBoutonMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -138,11 +219,16 @@ public class ModificateurDeCadre extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 378, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2)
-                        .addGap(1, 1, 1)
-                        .addComponent(displayCadre, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(displayCadre, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(annulBouton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(modifBouton)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -155,7 +241,12 @@ public class ModificateurDeCadre extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(displayCadre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(modifBouton)
+                    .addComponent(annulBouton))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -173,18 +264,45 @@ public class ModificateurDeCadre extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void displayCadreItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_displayCadreItemStateChanged
-//        if (this.displayCadre.getItemCount() > 1){
-//            this.currentCadreId = this.displayCadre.getSelectedItem().toString();
-//        }
-//        this.EtatCadre.setText(affichage.SQLCadre("etat", "idMateriel = " + currentCadreId));
-//        this.matiereCadre.setText(affichage.SQLCadre("materiau", "idMateriel = " + currentCadreId));
-//        this.contenuCadre.setText(affichage.SQLCadre("contenu", "idMateriel = " + currentCadreId));
+        if (this.displayCadre.getItemCount() > 1){
+            this.currentCadreId = this.displayCadre.getSelectedItem().toString();
+        }
+        this.etatCourant.setText(affichage.SQLCadre("etat", "idMateriel = " + currentCadreId));
+        this.contCourant.setText(affichage.SQLCadre("contenu", "idMateriel = " + currentCadreId));
     }//GEN-LAST:event_displayCadreItemStateChanged
+
+    private void modifBoutonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_modifBoutonMouseClicked
+        Etat nouveauEtat = (Etat) this.EtatCombo.getSelectedItem();
+        Contenu nouveauContenu = (Contenu) this.ContenuCombo.getSelectedItem();
+        
+        //Vérification de l'intégrité :
+        boolean integre = true;
+        String num = affichage.SQLHausse("numeroHausse", "idMateriel = " + currentHausseId);
+        if (nouveauContenu != Contenu.VIDE){
+            int nume = Integer.parseInt(num.replace(" ", ""));
+            if (nume != 1 && nume != 2){
+                integre = false;
+            }
+        }
+        
+        // Modification
+        if (integre){
+              Modification modif = new Modification();
+              modif.SQLCadre("etat = '" + nouveauEtat + "', contenu = '" + nouveauContenu +"'", currentCadreId);
+              dispose();
+        } else {
+             Erreur.main("Une hausse de numéro " + num + " ne peut pas contenir " + nouveauContenu.toString());
+        }     
+    }//GEN-LAST:event_modifBoutonMouseClicked
+
+    private void annulBoutonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_annulBoutonMouseClicked
+        dispose();
+    }//GEN-LAST:event_annulBoutonMouseClicked
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String id) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -211,21 +329,30 @@ public class ModificateurDeCadre extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ModificateurDeCadre().setVisible(true);
+                new ModificateurDeCadre(id).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<Contenu> ContenuCombo;
+    private javax.swing.JComboBox<Etat> EtatCombo;
+    private javax.swing.JButton annulBouton;
+    private javax.swing.JLabel contCourant;
     private javax.swing.JComboBox displayCadre;
+    private javax.swing.JLabel etatCourant;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JButton modifBouton;
     // End of variables declaration//GEN-END:variables
 }

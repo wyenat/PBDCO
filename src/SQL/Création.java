@@ -26,9 +26,9 @@ public class Création implements FabriqueSQL{
             conn.commit();
         } catch (SQLException ex) {
             Logger.getLogger(Création.class.getName()).log(Level.SEVERE, null, ex);
-        }      
+        }
     }
-    
+
     @Override
     /**
      * @param req est les valeurs rentrées, séparées par des virgules.
@@ -44,12 +44,12 @@ public class Création implements FabriqueSQL{
    nomRuche VARCHAR(255)
    );
          */
-        req = "INSERT INTO RUCHE VALUES ( " + req + " )"; 
+        req = "INSERT INTO RUCHE VALUES ( " + req + " )";
         String result = BDTable.requete(req);
         this.commit();
         return result;
     }
-    
+
      @Override
     public String SQLRuche(String req, String cond) {
         throw new UnsupportedOperationException("Pas de conditions en création !");
@@ -57,8 +57,7 @@ public class Création implements FabriqueSQL{
 
     @Override
     public String SQLHausse(String req) {
-        req = "INSERT INTO HAUSSE VALUES ( " + req + " )"; 
-        System.out.println(req);
+        req = "INSERT INTO HAUSSE VALUES ( " + req + " )";
         String result = BDTable.requete(req);
         this.commit();
         return result;
@@ -76,7 +75,7 @@ public class Création implements FabriqueSQL{
 
     @Override
     public String SQLMesure(String req) {
-        req = "INSERT INTO MESURE VALUES ( " + req + " )"; 
+        req = "INSERT INTO MESURE VALUES ( " + req + " )";
         String result = BDTable.requete(req);
         this.commit();
         return result;
@@ -105,8 +104,7 @@ public class Création implements FabriqueSQL{
      */
     public String SQLMateriau(String req, Class<? extends Materiel> aClass) {
         String table = aClass.getName().replace("Ruche.", "");
-        req = "INSERT INTO "+ table +" VALUES ( " + req + " )"; 
-        System.out.println(req);
+        req = "INSERT INTO "+ table +" VALUES ( " + req + " )";
         String result = BDTable.requete(req);
         this.commit();
         return result;
@@ -114,7 +112,7 @@ public class Création implements FabriqueSQL{
 
     @Override
     public String SQLCadre(String req) {
-        req = "INSERT INTO CADRE VALUES ( " + req + " )"; 
+        req = "INSERT INTO CADRE VALUES ( " + req + " )";
         String result = BDTable.requete(req);
         this.commit();
         return result;
@@ -127,7 +125,7 @@ public class Création implements FabriqueSQL{
 
     @Override
     public String SQLCompositionHausse(String req) {
-        req = "INSERT INTO COMPOSITIONHAUSSE VALUES ( " + req + " )"; 
+        req = "INSERT INTO COMPOSITIONHAUSSE VALUES ( " + req + " )";
         String result = BDTable.requete(req);
         this.commit();
         return result;
@@ -139,7 +137,7 @@ public class Création implements FabriqueSQL{
     }
 
     public String SQLCompositionRuche(String req) {
-        req = "INSERT INTO COMPOSITIONRUCHE VALUES ( " + req + " )"; 
+        req = "INSERT INTO COMPOSITIONRUCHE VALUES ( " + req + " )";
         String result = BDTable.requete(req);
         this.commit();
         return result;

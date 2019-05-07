@@ -88,7 +88,10 @@ public class Modification implements FabriqueSQL{
 
     @Override
     public String SQLCadre(String req, String cond) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String result = "UPDATE CADRE SET " + req + " WHERE IDMATERIEL = '" + cond +"'";
+        
+        BDTable.requete(result);
+        return "";
     }
 
     @Override
@@ -97,9 +100,12 @@ public class Modification implements FabriqueSQL{
     }
     
      @Override
+     /**
+      * @param req est les paramètres qu'on veut remplacer
+      */
     public String SQLCompositionHausse(String req, String cond) {
-        String result = "UPDATE COMPOSITIONHAUSSE SET IDMATERIELHAUSSE = '" 
-                + req + "' WHERE " + "IDMATERIELCADRE = '" + cond +"'";
+        String result = "UPDATE COMPOSITIONHAUSSE SET " 
+                + req + " WHERE " + cond;
         BDTable.requete(result);
         this.commit();
         return "";
@@ -115,6 +121,16 @@ public class Modification implements FabriqueSQL{
 
     @Override
     public String SQLCompositionRuche(String req) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String SQLCapteurs(String req, String cond) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String SQLCapteurs(String req) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
