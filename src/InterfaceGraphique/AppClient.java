@@ -98,7 +98,7 @@ public class AppClient extends javax.swing.JFrame {
         displayRuches = new javax.swing.JComboBox();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
         jSeparator1 = new javax.swing.JSeparator();
-        jButton5 = new javax.swing.JButton();
+        associerHausseBouton = new javax.swing.JButton();
         displayHausse = new javax.swing.JComboBox();
         jLabel30 = new javax.swing.JLabel();
         jLabel31 = new javax.swing.JLabel();
@@ -242,11 +242,11 @@ public class AppClient extends javax.swing.JFrame {
             }
         });
 
-        jButton5.setBackground(new java.awt.Color(255, 255, 153));
-        jButton5.setText("Associer Hausse");
-        jButton5.addMouseListener(new java.awt.event.MouseAdapter() {
+        associerHausseBouton.setBackground(new java.awt.Color(255, 255, 153));
+        associerHausseBouton.setText("Associer Hausse");
+        associerHausseBouton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton5MouseClicked(evt);
+                associerHausseBoutonMouseClicked(evt);
             }
         });
 
@@ -286,7 +286,7 @@ public class AppClient extends javax.swing.JFrame {
             .addComponent(associerRucheBouton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(supprimerRuche, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(displayRuches, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jButton5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(associerHausseBouton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(displayHausse, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jLabel31, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -315,7 +315,7 @@ public class AppClient extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(associerHausseBouton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel30)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -866,7 +866,7 @@ public class AppClient extends javax.swing.JFrame {
 
             jLabel19.setText("Type");
 
-            typeMaterielCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Toit", "Couvercle", "Plancher", "Capteur de Poids", "Capteur de Température"}));
+            typeMaterielCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hausse", "Toit", "Couvercle", "Plancher", "Capteur de Poids", "Capteur de Température"}));
             typeMaterielCombo.addItemListener(new java.awt.event.ItemListener() {
                 public void itemStateChanged(java.awt.event.ItemEvent evt) {
                     typeMaterielComboItemStateChanged(evt);
@@ -890,7 +890,7 @@ public class AppClient extends javax.swing.JFrame {
             jPanel9Layout.setHorizontalGroup(
                 jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap(343, Short.MAX_VALUE)
                     .addComponent(typeMateriauCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap())
                 .addGroup(jPanel9Layout.createSequentialGroup()
@@ -1106,22 +1106,6 @@ public class AppClient extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_displayRuchesActionPerformed
 
-    private void ajoutMateriauBoutonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ajoutMateriauBoutonMouseClicked
-        String m = (String) this.typeMaterielCombo.getSelectedItem();
-        if (m.startsWith("Capteur")){
-            if (m.endsWith("Poids")){
-                CapteurPoids cp = new CapteurPoids();
-                cp.creer();
-            } else {
-                CapteurTemperature ct = new CapteurTemperature();
-                ct.creer();
-            }
-        } else {
-            Materiau materiau = (Materiau) this.typeMateriauCombo.getSelectedItem();
-            contI.creerNouveauMateriau(m, materiau);
-        }
-    }//GEN-LAST:event_ajoutMateriauBoutonMouseClicked
-
     private void ButtonSupprimerMaterielMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ButtonSupprimerMaterielMouseClicked
         // Supprimer matériaux
         int currentMaterielID = Integer.parseInt((String) this.stockCombo.getSelectedItem());
@@ -1129,10 +1113,10 @@ public class AppClient extends javax.swing.JFrame {
         dest.SQLMateriau("idMateriel="+currentMaterielID);
     }//GEN-LAST:event_ButtonSupprimerMaterielMouseClicked
 
-    private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseClicked
-        contI.creerNouvelleHausse();
+    private void associerHausseBoutonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_associerHausseBoutonMouseClicked
+        contI.associerNouvelleHausse();
         this.majComboHausse();
-    }//GEN-LAST:event_jButton5MouseClicked
+    }//GEN-LAST:event_associerHausseBoutonMouseClicked
 
     private void displayHausseItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_displayHausseItemStateChanged
 
@@ -1175,11 +1159,16 @@ public class AppClient extends javax.swing.JFrame {
     private void typeMaterielComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_typeMaterielComboItemStateChanged
         String select = this.typeMaterielCombo.getSelectedItem().toString();
         this.typeMateriauCombo.removeAllItems();
-        if (!select.equals("Capteur de Poids") && !select.equals("Capteur de Température")){
+        if (!select.equals("Capteur de Poids") && !select.equals("Capteur de Température") && !select.equals("Hausse")){
             this.typeMateriauCombo.addItem(Materiau.BOIS);
             this.typeMateriauCombo.addItem(Materiau.METAL);
             this.typeMateriauCombo.addItem(Materiau.PLASTIQUE);
             this.typeMateriauCombo.addItem(Materiau.POLYSTYRENE);
+        }
+        if (select.equals("Hausse")){
+            this.ajoutMateriauBouton.setText("Ouvrir interface");
+        } else {
+            this.ajoutMateriauBouton.setText("Ajouter");
         }
     }//GEN-LAST:event_typeMaterielComboItemStateChanged
 
@@ -1343,6 +1332,22 @@ public class AppClient extends javax.swing.JFrame {
         this.contC.dissocierCapteurPoids(currentCadreId);
     }//GEN-LAST:event_dissocierCapteurPoidsBoutonMouseClicked
 
+    private void ajoutMateriauBoutonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ajoutMateriauBoutonMouseClicked
+        String m = (String) this.typeMaterielCombo.getSelectedItem();
+        if (m.startsWith("Capteur")){
+            if (m.endsWith("Poids")){
+                CapteurPoids cp = new CapteurPoids();
+                cp.creer();
+            } else {
+                CapteurTemperature ct = new CapteurTemperature();
+                ct.creer();
+            }
+        } else {
+            Materiau materiau = (Materiau) this.typeMateriauCombo.getSelectedItem();
+            contI.creerNouveauMateriau(m, materiau);
+        }
+    }//GEN-LAST:event_ajoutMateriauBoutonMouseClicked
+
 
     /**
      * @param args the command line arguments
@@ -1387,6 +1392,7 @@ public class AppClient extends javax.swing.JFrame {
     private javax.swing.JButton ajouterCadresBouton;
     private javax.swing.JButton associerCapteurPoidsBouton;
     private javax.swing.JButton associerCapteurTemperatureBouton;
+    private javax.swing.JButton associerHausseBouton;
     private javax.swing.JButton associerRucheBouton;
     private javax.swing.JLabel capteurAssociéText;
     private javax.swing.JComboBox<String> capteurPoisdAssociéBox;
@@ -1406,7 +1412,6 @@ public class AppClient extends javax.swing.JFrame {
     private javax.swing.Box.Filler filler1;
     private javax.swing.JLabel interventionDeux;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

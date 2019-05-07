@@ -39,8 +39,11 @@ public class ControleurInterface {
     }
     
     public void creerNouvelleHausse(){
-        CreateurHausse ch = new CreateurHausse();
-        ch.creer();
+        CreateurHausse.creer();
+    }
+    
+    public void associerNouvelleHausse(){
+        CreateurHausse.associer();
     }
     
     public void creerNouveauMateriau(String materiel, Materiau materiau){
