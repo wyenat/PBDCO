@@ -22,7 +22,7 @@ import static java.sql.Connection.TRANSACTION_READ_COMMITTED;
  */
 public class Création implements FabriqueSQL{
 
-    
+
     public void commit(){
         Connection conn = BDTable.conn;
         try {
@@ -159,6 +159,24 @@ public class Création implements FabriqueSQL{
 
     @Override
     public String SQLCapteurs(String req) {
+        req = "INSERT INTO CAPTEUR VALUES ( " + req + " )";
+        String result = BDTable.requete(req);
+        System.out.println(req);
+        return result;
+    }
+
+    @Override
+    public String SQLCapteurLibre(String req, String cond) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String SQLEmplacementCapteur(String req, String cond) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String SQLEmplacementCapteur(String req) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

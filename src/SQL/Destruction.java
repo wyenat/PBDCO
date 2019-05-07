@@ -137,5 +137,22 @@ public class Destruction implements FabriqueSQL{
     public String SQLCapteurs(String req) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public String SQLCapteurLibre(String req, String cond) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String SQLEmplacementCapteur(String req, String cond) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String SQLEmplacementCapteur(String req) {
+        req = "DELETE FROM "+"EmplacementCapteur "+" WHERE (" + req + ")";
+        BDTable.requete(req);
+        return "Deleted";   
+    }
     
 }

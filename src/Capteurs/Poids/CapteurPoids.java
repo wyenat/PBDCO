@@ -7,6 +7,7 @@ package Capteurs.Poids;
 import Capteurs.Capteur;
 import Capteurs.Mesure;
 import static Capteurs.UniteMesure.POIDS;
+import SQL.Création;
 
 /**
  *
@@ -26,5 +27,9 @@ public class CapteurPoids extends Capteur {
         Mesure mesure = new Mesure(val, POIDS);
         EnregistrerMesure(mesure);
     }
-    
+
+    public void creer() {
+        Création crea = new Création();
+        crea.SQLCapteurs("'" + this.idCapteur + "', 'poids'");
+    }
 }

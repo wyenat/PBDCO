@@ -30,7 +30,7 @@ public class ControleurTemperature {
                 + "ON Mesure.horodatage = dates.maxdate AND dates.idCapteur = EmplacementCapteur.IDCAPTEUR "
                 + "WHERE Capteur.type='temperature' "
                 + "GROUP BY Hausse.IDMATERIEL, Mesure.valeur "
-                + "HAVING Mesure.VALEUR > 37";
+                + "HAVING (Mesure.VALEUR >= 39 OR Mesure.VALEUR <= 35)";
        String res = BDTable.requeteDouble(idHausse);
        String[] separated = res.split(" ");
       if (res!=null && res!=""){

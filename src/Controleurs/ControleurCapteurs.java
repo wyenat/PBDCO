@@ -56,6 +56,26 @@ public class ControleurCapteurs {
            horodatage++;
     }
 
+    public void associerCapteurTemperature(int idCapt, String currentHausseId) {
+        Création crea = new Création();
+        crea.SQLEmplacementCapteur(idCapt + ", " + currentHausseId);
+    }
+
+    public void dissocierCapteurTemperature(String currentHausseId) {
+        Destruction destru = new Destruction();
+        destru.SQLEmplacementCapteur("idMateriel = " +currentHausseId);
+    }
+
+    public void associerCapteurPoids(int idCapt, String currentCadreId) {
+        Création crea = new Création();
+        crea.SQLEmplacementCapteur(idCapt + ", " + currentCadreId);
+    }
+
+    public void dissocierCapteurPoids(String currentCadreId) {
+        Destruction destru = new Destruction();
+        destru.SQLEmplacementCapteur("idMateriel = " +currentCadreId);
+    }
+
         
      
 }

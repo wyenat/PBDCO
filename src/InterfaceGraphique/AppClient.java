@@ -6,6 +6,9 @@
 package InterfaceGraphique;
 
 
+import Capteurs.Poids.CapteurPoids;
+import Capteurs.Temperature.CapteurTemperature;
+import Controleurs.ControleurCapteurs;
 import Ruche.Cadre;
 import Controleurs.ControleurPoids;
 import Controleurs.ControleurInterface;
@@ -17,7 +20,6 @@ import Ruche.Plancher;
 import Ruche.Ruche;
 import Ruche.Toit;
 import SQL.Affichage;
-import SQL.BDTable;
 import SQL.Destruction;
 import SQL.Modification;
 import java.awt.event.WindowAdapter;
@@ -42,6 +44,7 @@ public class AppClient extends javax.swing.JFrame {
     private String currentCadreId;
     private String currentStockId;
     private ControleurInterface contI;
+    private ControleurCapteurs contC;
 
     /**
      * Creates new form AppClient
@@ -49,6 +52,7 @@ public class AppClient extends javax.swing.JFrame {
     public AppClient() {
         affichage = new Affichage();
         contI = new ControleurInterface();
+        contC = new ControleurCapteurs();
         initComponents();
         this.panelDeuxième.setVisible(false);
 
@@ -58,7 +62,7 @@ public class AppClient extends javax.swing.JFrame {
         jLabel16.setText(affichage.SQLRuche("couleurReine", "idRuche=" + currentRucheId));
         jLabel17.setText(affichage.SQLRuche("raceReine", "idRuche=" + currentRucheId));
         jLabel18.setText(affichage.SQLRuche("AgeReine", "idRuche=" + currentRucheId));
-        jLabel6.setText("Nom Ruche : " + affichage.SQLRuche("nomRuche"));
+        textCaptPoidsAssocier.setText("Nom Ruche : " + affichage.SQLRuche("nomRuche"));
 
         //new javax.swing.DefaultComboBoxModel(affichage.SQLRuche("idRuche").split(" ")));
 
@@ -87,6 +91,7 @@ public class AppClient extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        undoBouton = new javax.swing.JButton();
         jSplitPane1 = new javax.swing.JSplitPane();
         jPanel2 = new javax.swing.JPanel();
         associerRucheBouton = new javax.swing.JButton();
@@ -94,7 +99,7 @@ public class AppClient extends javax.swing.JFrame {
         displayRuches = new javax.swing.JComboBox();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
         jSeparator1 = new javax.swing.JSeparator();
-        jButton5 = new javax.swing.JButton();
+        associerHausseBouton = new javax.swing.JButton();
         displayHausse = new javax.swing.JComboBox();
         jLabel30 = new javax.swing.JLabel();
         jLabel31 = new javax.swing.JLabel();
@@ -116,7 +121,7 @@ public class AppClient extends javax.swing.JFrame {
         jLabel32 = new javax.swing.JLabel();
         textTemperature = new javax.swing.JLabel();
         jLabel34 = new javax.swing.JLabel();
-        jLabel33 = new javax.swing.JLabel();
+        capteurAssociéText = new javax.swing.JLabel();
         capteurTemperatureAssocieCombo = new javax.swing.JComboBox<>();
         associerCapteurTemperatureBouton = new javax.swing.JButton();
         dissocierCapteurTemperatureBouton = new javax.swing.JButton();
@@ -158,7 +163,7 @@ public class AppClient extends javax.swing.JFrame {
         jLabel15 = new javax.swing.JLabel();
         poidsCadre = new javax.swing.JLabel();
         capteurPoisdAssociéBox = new javax.swing.JComboBox<>();
-        jLabel6 = new javax.swing.JLabel();
+        textCaptPoidsAssocier = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         associerCapteurPoidsBouton = new javax.swing.JButton();
         dissocierCapteurPoidsBouton = new javax.swing.JButton();
@@ -190,15 +195,30 @@ public class AppClient extends javax.swing.JFrame {
         jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jLabel1.setDebugGraphicsOptions(javax.swing.DebugGraphics.LOG_OPTION);
 
+        undoBouton.setText("Undo");
+        undoBouton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                undoBoutonMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(undoBouton)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(undoBouton)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         associerRucheBouton.setBackground(new java.awt.Color(255, 255, 153));
@@ -238,11 +258,11 @@ public class AppClient extends javax.swing.JFrame {
             }
         });
 
-        jButton5.setBackground(new java.awt.Color(255, 255, 153));
-        jButton5.setText("Associer Hausse");
-        jButton5.addMouseListener(new java.awt.event.MouseAdapter() {
+        associerHausseBouton.setBackground(new java.awt.Color(255, 255, 153));
+        associerHausseBouton.setText("Associer Hausse");
+        associerHausseBouton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton5MouseClicked(evt);
+                associerHausseBoutonMouseClicked(evt);
             }
         });
 
@@ -282,7 +302,7 @@ public class AppClient extends javax.swing.JFrame {
             .addComponent(associerRucheBouton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(supprimerRuche, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(displayRuches, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jButton5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(associerHausseBouton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(displayHausse, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jLabel31, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -311,7 +331,7 @@ public class AppClient extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(associerHausseBouton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel30)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -384,9 +404,9 @@ public class AppClient extends javax.swing.JFrame {
 
         jLabel34.setText("Celsius");
 
-        jLabel33.setText("Capteur associé : ");
+        capteurAssociéText.setText("Capteur associé : ");
 
-        capteurTemperatureAssocieCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        capteurTemperatureAssocieCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selectionnez une hausse" }));
 
         associerCapteurTemperatureBouton.setText("Associer");
         associerCapteurTemperatureBouton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -431,7 +451,7 @@ public class AppClient extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel34))
                             .addGroup(jPanel12Layout.createSequentialGroup()
-                                .addComponent(jLabel33)
+                                .addComponent(capteurAssociéText)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(capteurTemperatureAssocieCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -466,7 +486,7 @@ public class AppClient extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(capteurTemperatureAssocieCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel33)
+                    .addComponent(capteurAssociéText)
                     .addComponent(associerCapteurTemperatureBouton)
                     .addComponent(dissocierCapteurTemperatureBouton))
                 .addContainerGap(30, Short.MAX_VALUE))
@@ -738,9 +758,9 @@ public class AppClient extends javax.swing.JFrame {
 
             poidsCadre.setText("Non mesuré");
 
-            capteurPoisdAssociéBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+            capteurPoisdAssociéBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selectionnez un cadre" }));
 
-            jLabel6.setText("Capteur associé : ");
+            textCaptPoidsAssocier.setText("Capteur associé : ");
 
             jLabel16.setText("kg");
 
@@ -766,7 +786,7 @@ public class AppClient extends javax.swing.JFrame {
                     .addContainerGap()
                     .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel8Layout.createSequentialGroup()
-                            .addComponent(jLabel6)
+                            .addComponent(textCaptPoidsAssocier)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addComponent(capteurPoisdAssociéBox, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(18, 18, 18)
@@ -779,7 +799,7 @@ public class AppClient extends javax.swing.JFrame {
                             .addComponent(poidsCadre)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jLabel16)))
-                    .addGap(0, 12, Short.MAX_VALUE))
+                    .addGap(0, 0, Short.MAX_VALUE))
             );
             jPanel8Layout.setVerticalGroup(
                 jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -790,12 +810,13 @@ public class AppClient extends javax.swing.JFrame {
                         .addComponent(poidsCadre)
                         .addComponent(jLabel16))
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(capteurPoisdAssociéBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel6)
+                    .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(associerCapteurPoidsBouton)
-                            .addComponent(dissocierCapteurPoidsBouton)))
+                            .addComponent(dissocierCapteurPoidsBouton))
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(capteurPoisdAssociéBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(textCaptPoidsAssocier)))
                     .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             );
 
@@ -861,7 +882,7 @@ public class AppClient extends javax.swing.JFrame {
 
             jLabel19.setText("Type");
 
-            typeMaterielCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Toit", "Couvercle", "Plancher", "Capteur de Poids", "Capteur de Température"}));
+            typeMaterielCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hausse", "Toit", "Couvercle", "Plancher", "Capteur de Poids", "Capteur de Température"}));
             typeMaterielCombo.addItemListener(new java.awt.event.ItemListener() {
                 public void itemStateChanged(java.awt.event.ItemEvent evt) {
                     typeMaterielComboItemStateChanged(evt);
@@ -885,7 +906,7 @@ public class AppClient extends javax.swing.JFrame {
             jPanel9Layout.setHorizontalGroup(
                 jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap(343, Short.MAX_VALUE)
                     .addComponent(typeMateriauCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap())
                 .addGroup(jPanel9Layout.createSequentialGroup()
@@ -1040,16 +1061,7 @@ public class AppClient extends javax.swing.JFrame {
 
     private void associerRucheBoutonMouseClicked(java.awt.event.MouseEvent evt) {
         contI.creerNouvelleRuche();
-        displayRuches.getModel().setSelectedItem(affichage.SQLRuche("idRuche", "idRuche="+currentRucheId).split(" "));
-       // synchronized(cg) {
-       //      while (cg.isOpened()) { try {
-       //          cg.wait();
-       //          } catch (InterruptedException ex) {
-       //              Logger.getLogger(AppClient.class.getName()).log(Level.SEVERE, null, ex);
-       //          }
-        //       }
-        //    }
-        System.out.println("Fenêtre création fermée!");
+        //displayRuches.getModel().setSelectedItem(affichage.SQLRuche("idRuche", "idRuche="+currentRucheId).split(" "));
     }
 
     private void displayRuchesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_displayRuchesItemStateChanged
@@ -1103,23 +1115,12 @@ public class AppClient extends javax.swing.JFrame {
 
     private void supprimerRucheMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_supprimerRucheMouseClicked
         // Destruction de la ruche
-        Ruche.dissocier(currentRucheId);
+        contI.supprimerRuche(currentRucheId);
     }//GEN-LAST:event_supprimerRucheMouseClicked
 
     private void displayRuchesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayRuchesActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_displayRuchesActionPerformed
-
-    private void ajoutMateriauBoutonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ajoutMateriauBoutonMouseClicked
-        String m = (String) this.typeMaterielCombo.getSelectedItem();
-        if (m.startsWith("Capteur")){
-            if (m.endsWith("Poids"));
-           
-        } else {
-            Materiau materiau = (Materiau) this.typeMateriauCombo.getSelectedItem();
-            contI.creerNouveauMateriau(materiau);
-        }
-    }//GEN-LAST:event_ajoutMateriauBoutonMouseClicked
 
     private void ButtonSupprimerMaterielMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ButtonSupprimerMaterielMouseClicked
         // Supprimer matériaux
@@ -1128,17 +1129,21 @@ public class AppClient extends javax.swing.JFrame {
         dest.SQLMateriau("idMateriel="+currentMaterielID);
     }//GEN-LAST:event_ButtonSupprimerMaterielMouseClicked
 
-    private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseClicked
-        CreateurHausse ch = new CreateurHausse();
-        ch.creer();
+    private void associerHausseBoutonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_associerHausseBoutonMouseClicked
+        contI.associerNouvelleHausse();
         this.majComboHausse();
-    }//GEN-LAST:event_jButton5MouseClicked
+    }//GEN-LAST:event_associerHausseBoutonMouseClicked
 
     private void displayHausseItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_displayHausseItemStateChanged
 
         if (this.displayHausse.getItemCount() > 1 ){
             this.currentHausseId = this.displayHausse.getSelectedItem().toString();
             majComboCadre();
+            this.contI.majCapteurTemperature(this.capteurAssociéText,
+                    this.capteurTemperatureAssocieCombo,
+                    this.associerCapteurTemperatureBouton,
+                    this.dissocierCapteurTemperatureBouton,
+                    this.currentHausseId);
         }
     }//GEN-LAST:event_displayHausseItemStateChanged
 
@@ -1149,26 +1154,37 @@ public class AppClient extends javax.swing.JFrame {
         this.EtatCadre.setText(affichage.SQLCadre("etat", "idMateriel = " + currentCadreId));
         this.matiereCadre.setText(affichage.SQLCadre("materiau", "idMateriel = " + currentCadreId));
         this.contenuCadre.setText(affichage.SQLCadre("contenu", "idMateriel = " + currentCadreId));
+        this.contI.majCapteurAssocie(this.capteurPoisdAssociéBox, 
+                currentCadreId, 
+                textCaptPoidsAssocier,
+                capteurPoisdAssociéBox,
+                associerCapteurPoidsBouton,
+                dissocierCapteurPoidsBouton);
 
     }//GEN-LAST:event_displayCadreItemStateChanged
 
+    
     private void ajouterCadresBoutonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ajouterCadresBoutonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ajouterCadresBoutonActionPerformed
 
     private void ajouterCadresBoutonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ajouterCadresBoutonMouseClicked
-        CreateurCadre cc = new CreateurCadre();
-        cc.creer();
+        contI.creerNouveauCadre();
     }//GEN-LAST:event_ajouterCadresBoutonMouseClicked
 
     private void typeMaterielComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_typeMaterielComboItemStateChanged
         String select = this.typeMaterielCombo.getSelectedItem().toString();
         this.typeMateriauCombo.removeAllItems();
-        if (!select.equals("Capteur de Poids") && !select.equals("Capteur de Température")){
+        if (!select.equals("Capteur de Poids") && !select.equals("Capteur de Température") && !select.equals("Hausse")){
             this.typeMateriauCombo.addItem(Materiau.BOIS);
             this.typeMateriauCombo.addItem(Materiau.METAL);
             this.typeMateriauCombo.addItem(Materiau.PLASTIQUE);
             this.typeMateriauCombo.addItem(Materiau.POLYSTYRENE);
+        }
+        if (select.equals("Hausse")){
+            this.ajoutMateriauBouton.setText("Ouvrir interface");
+        } else {
+            this.ajoutMateriauBouton.setText("Ajouter");
         }
     }//GEN-LAST:event_typeMaterielComboItemStateChanged
 
@@ -1177,16 +1193,12 @@ public class AppClient extends javax.swing.JFrame {
         if (this.typeIntervention.getItemCount() == 6){
             this.typeIntervention.removeItemAt(0);
         }
-
         String sel = this.typeIntervention.getSelectedItem().toString();
         String[] combo;
         this.detailCombo.removeAllItems();
         this.detailCombo.setVisible(true);
         this.actionEnregistrerBouton.setText("Enregistrer");
         switch(sel){
-
-
-
             case  "Récolte d'une hausse":
                 this.detailsText.setText("Hausse récoltée :");
                 combo = Hausse.getListe("idRuche=" + currentRucheId).split(",");
@@ -1199,9 +1211,6 @@ public class AppClient extends javax.swing.JFrame {
                     this.panelDeuxième.setVisible(false);
                 }
                 break;
-
-
-
             case "Pose d'une nouvelle hausse de récolte":
                 this.detailsText.setText("Hausse posée :");
                 this.detailCombo.setVisible(true);
@@ -1210,19 +1219,13 @@ public class AppClient extends javax.swing.JFrame {
                     this.detailCombo.addItem(s);
                 }
                 break;
-
-
             case "Mise à jour des informations d'état et de contenu des cadres":
                 this.detailsText.setText("");
                 this.detailCombo.setVisible(false);
                 this.actionEnregistrerBouton.setText("Ouvrir l'éditeur");
                 break;
-
-
-
             case "Extraction d'un cadre d'une hausse":
                 // Conservation de l'intégrité
-
                 this.deuxiemeIntervention.setText("Insertion d'un cadre dans une hausse");
                 this.detailsText1.setText("Cadre ajouté :");
                 combo = Cadre.getListe("idMaterielHausse is NULL").split(",");
@@ -1238,9 +1241,6 @@ public class AppClient extends javax.swing.JFrame {
                 }
                 this.panelDeuxième.setVisible(true);
                 break;
-
-
-
             case "Insertion d'un cadre dans une hausse":
                 // Conservation de l'intégrité
                 this.deuxiemeIntervention.setText("Extraction d'un cadre d'une hausse");
@@ -1258,65 +1258,16 @@ public class AppClient extends javax.swing.JFrame {
                 }
                 this.panelDeuxième.setVisible(true);
                 break;
-
-
             default:
                 break;
         }
     }//GEN-LAST:event_typeInterventionItemStateChanged
 
     private void actionEnregistrerBoutonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_actionEnregistrerBoutonMouseClicked
-        Modification modif = new Modification();
         if (this.actionEnregistrerBouton.getText().equals("Enregistrer")){
-            switch( this.typeIntervention.getSelectedItem().toString()){
-
-
-                case "Récolte d'une hausse":
-                    String idPrems = this.detailCombo.getSelectedItem().toString().split(" ")[0];
-                    String valPrems = this.detailCombo.getSelectedItem().toString().split(" ")[3];
-                    if (this.panelDeuxième.isVisible()){
-                        String idDeuz = this.detailCombo1.getSelectedItem().toString().split(" ")[0];
-                        String valDeuz = this.detailCombo1.getSelectedItem().toString().split(" ")[3];
-                        if (valPrems.equals(valDeuz)){
-                            modif.SQLCompositionRuche("", idPrems);
-                            modif.SQLCompositionRuche(this.currentRucheId, idDeuz);
-                        } else {
-                            Erreur.main("Il faut remplacer une hausse " + valPrems
-                                   + " et pas par une " + valDeuz + " ! "
-                                    + "\n ( La hausse fait partie du corps de ruche )");
-                        }
-                    } else {
-                        modif.SQLCompositionRuche("", idPrems);
-                    }
-                    break;
-
-                case "Pose d'une nouvelle hausse de récolte":
-                    idPrems = this.detailCombo.getSelectedItem().toString().split(" ")[0];
-                    modif.SQLCompositionRuche("", idPrems);
-                    if (this.panelDeuxième.isVisible()){
-                        String idDeuz = this.detailCombo1.getSelectedItem().toString().split(" ")[0];
-                        modif.SQLCompositionRuche(this.currentRucheId, idDeuz);
-                    }
-                    break;
-
-                case "Insertion d'un cadre dans une hausse":
-                    String premierCadre = this.detailCombo.getSelectedItem().toString();
-                    String secondCadre = this.detailCombo1.getSelectedItem().toString();
-                    modif.SQLCompositionHausse("idMaterielHausse = null",
-                            "idMaterielCadre = '" + secondCadre.split(" ")[0] +"'");
-                    modif.SQLCompositionHausse("idMaterielHausse = '" + this.currentHausseId + "'",
-                            "idMaterielCadre = '" + premierCadre.split(" ")[0] +"'");
-                    break;
-
-                case "Extraction d'un cadre d'une hausse":
-                    premierCadre = this.detailCombo.getSelectedItem().toString();
-                    secondCadre = this.detailCombo1.getSelectedItem().toString();
-                    modif.SQLCompositionHausse("idMaterielHausse = null",
-                            "idMaterielCadre = '" + premierCadre.split(" ")[0] +"'");
-                    modif.SQLCompositionHausse("idMaterielHausse = '" + this.currentHausseId + "'",
-                            "idMaterielCadre = '" + secondCadre.split(" ")[0] +"'");
-                    break;
-            }
+            Boolean seconde = this.panelDeuxième.isVisible();
+            String intervention = this.typeIntervention.getSelectedItem().toString();
+            contI.registerIntervention(seconde, intervention, this.detailCombo1, this.detailCombo, this.currentRucheId, this.currentHausseId);
         } else {
             ModificateurDeCadre.main(currentHausseId);
         }
@@ -1327,8 +1278,6 @@ public class AppClient extends javax.swing.JFrame {
             this.panelDeuxième.setVisible(false);
             if (this.detailCombo.getComponentCount() >= 1){
             switch (this.typeIntervention.getSelectedItem().toString()){
-
-
                 case "Récolte d'une hausse":
                      if (Integer.parseInt(this.detailCombo.getSelectedItem().toString().split(" ")[3]) < 3){
                          this.panelDeuxième.setVisible(true);
@@ -1340,16 +1289,12 @@ public class AppClient extends javax.swing.JFrame {
                     this.panelDeuxième.setVisible(false);
                 }
                 break;
-
-
                 case "Pose d'une nouvelle hausse de récolte":
                     int id = Integer.parseInt(this.detailCombo.getSelectedItem().toString().split(" ")[3]);
-
                     String[] listIDs = Hausse.getListe("idRuche =" + this.currentRucheId).split(",");
                     for (String s : listIDs){
                         System.out.println("id = " + id + ", test = " + s);
                        if (Integer.parseInt(s.split(" ")[3]) == id){
-
                            this.panelDeuxième.setVisible(true);
                            this.deuxiemeIntervention.setText("Récolte d'une hausse");
                            this.detailCombo1.removeAllItems();
@@ -1360,7 +1305,6 @@ public class AppClient extends javax.swing.JFrame {
                        }
                     }
                     break;
-
                 default:
                    this.panelDeuxième.setVisible(true);
             }
@@ -1376,7 +1320,6 @@ public class AppClient extends javax.swing.JFrame {
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
         ApplicationCapteurs appcap = new ApplicationCapteurs();
         appcap.setVisible(true);
-
     }//GEN-LAST:event_jButton2MouseClicked
 
     /**
@@ -1384,8 +1327,8 @@ public class AppClient extends javax.swing.JFrame {
      * @param evt 
      */
     private void associerCapteurTemperatureBoutonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_associerCapteurTemperatureBoutonMouseClicked
-        // Enguerran !
-        int idCapt = Integer.parseInt(this.capteurTemperatureAssocieCombo.getSelectedItem().toString());
+         int idCapt = Integer.parseInt(this.capteurTemperatureAssocieCombo.getSelectedItem().toString());
+         this.contC.associerCapteurTemperature(idCapt, currentHausseId);
     }//GEN-LAST:event_associerCapteurTemperatureBoutonMouseClicked
 
     /**
@@ -1393,16 +1336,42 @@ public class AppClient extends javax.swing.JFrame {
      * @param evt 
      */
     private void dissocierCapteurTemperatureBoutonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dissocierCapteurTemperatureBoutonMouseClicked
-        // Enguerran !
+        this.contC.dissocierCapteurTemperature(currentHausseId);
     }//GEN-LAST:event_dissocierCapteurTemperatureBoutonMouseClicked
 
     private void associerCapteurPoidsBoutonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_associerCapteurPoidsBoutonMouseClicked
-        // Enguerran !
+        int idCapt = Integer.parseInt(this.capteurPoisdAssociéBox.getSelectedItem().toString());
+        this.contC.associerCapteurPoids(idCapt, currentCadreId);
     }//GEN-LAST:event_associerCapteurPoidsBoutonMouseClicked
 
     private void dissocierCapteurPoidsBoutonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dissocierCapteurPoidsBoutonMouseClicked
-        // Enguerran !
+        this.contC.dissocierCapteurPoids(currentCadreId);
     }//GEN-LAST:event_dissocierCapteurPoidsBoutonMouseClicked
+
+    private void ajoutMateriauBoutonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ajoutMateriauBoutonMouseClicked
+        String m = (String) this.typeMaterielCombo.getSelectedItem();
+        if (m.startsWith("Capteur")){
+            if (m.endsWith("Poids")){
+                CapteurPoids cp = new CapteurPoids();
+                cp.creer();
+            } else {
+                CapteurTemperature ct = new CapteurTemperature();
+                ct.creer();
+            }
+        } else {
+            if (m.equals("Hausse")){
+                
+            } else {
+                Materiau materiau = (Materiau) this.typeMateriauCombo.getSelectedItem();
+                contI.creerNouveauMateriau(m, materiau);
+            }
+           
+        }
+    }//GEN-LAST:event_ajoutMateriauBoutonMouseClicked
+
+    private void undoBoutonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_undoBoutonMouseClicked
+        // Lucille 
+    }//GEN-LAST:event_undoBoutonMouseClicked
 
 
     /**
@@ -1448,7 +1417,9 @@ public class AppClient extends javax.swing.JFrame {
     private javax.swing.JButton ajouterCadresBouton;
     private javax.swing.JButton associerCapteurPoidsBouton;
     private javax.swing.JButton associerCapteurTemperatureBouton;
+    private javax.swing.JButton associerHausseBouton;
     private javax.swing.JButton associerRucheBouton;
+    private javax.swing.JLabel capteurAssociéText;
     private javax.swing.JComboBox<String> capteurPoisdAssociéBox;
     private javax.swing.JComboBox<String> capteurTemperatureAssocieCombo;
     private javax.swing.JLabel contenuCadre;
@@ -1466,7 +1437,6 @@ public class AppClient extends javax.swing.JFrame {
     private javax.swing.Box.Filler filler1;
     private javax.swing.JLabel interventionDeux;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1493,11 +1463,9 @@ public class AppClient extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
-    private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -1525,6 +1493,7 @@ public class AppClient extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> stockCombo;
     private javax.swing.JButton supprimerRuche;
     private javax.swing.JLabel textAgeAfficher;
+    private javax.swing.JLabel textCaptPoidsAssocier;
     private javax.swing.JLabel textCouleurAfficher;
     private javax.swing.JLabel textHausseCouleur;
     private javax.swing.JLabel textHausseMateriau;
@@ -1534,5 +1503,6 @@ public class AppClient extends javax.swing.JFrame {
     private javax.swing.JComboBox typeIntervention;
     private javax.swing.JComboBox<Materiau> typeMateriauCombo;
     private javax.swing.JComboBox<String> typeMaterielCombo;
+    private javax.swing.JButton undoBouton;
     // End of variables declaration//GEN-END:variables
 }

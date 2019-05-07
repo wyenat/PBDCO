@@ -5,10 +5,14 @@
  */
 package Capteurs.Temperature;
 
-/**
- *
- * @author matterv
- */
-public class CapteurTemperature {
+import Capteurs.Capteur;
+import SQL.Création;
+
+public class CapteurTemperature extends Capteur {
+
+    public void creer() {
+        Création crea = new Création();
+        crea.SQLCapteurs("'" + this.idCapteur + "', 'temperature'");
+    }
     
 }

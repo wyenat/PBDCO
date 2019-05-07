@@ -149,7 +149,32 @@ public class Affichage implements FabriqueSQL{
 
     @Override
     public String SQLCapteurs(String req) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         req = "SELECT " + req + " FROM Capteur";
+        String result = BDTable.requete(req);
+        return result;
     }
 
+    @Override
+    public String SQLCapteurLibre(String req, String cond) {
+         req = "SELECT " + req +  " FROM CAPTEUR WHERE " + cond + " NOT IN " 
+                + "(SELECT " + req 
+                + " FROM EMPLACEMENTCAPTEUR)";
+          System.out.println(req);
+            String result = BDTable.requete(req);
+            return result;
+    }
+
+    @Override
+    public String SQLEmplacementCapteur(String req, String cond) {
+         req = "SELECT " + req + " FROM EMPLACEMENTCAPTEUR WHERE " + cond;
+        String result = BDTable.requete(req);
+        System.out.println(req);
+        return result;
+    }
+
+    @Override
+    public String SQLEmplacementCapteur(String req) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
 }

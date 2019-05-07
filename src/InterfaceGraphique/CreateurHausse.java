@@ -11,6 +11,7 @@ import Ruche.Couleur;
 import Ruche.Etat;
 import Ruche.Hausse;
 import Ruche.Materiau;
+import Ruche.Toit;
 import SQL.Modification;
 import java.util.List;
 
@@ -23,8 +24,18 @@ public class CreateurHausse extends javax.swing.JFrame {
     /**
      * Creates new form CreateurHausse
      */
-    public CreateurHausse() {
+    public CreateurHausse(String type) {
         initComponents();
+        if (type.equals("creer")){
+            this.cadrePanel.setVisible(false);
+            this.haussePanel.setVisible(false);
+            this.constructionPanel.setVisible(true);
+        }
+        if (type.equals("associer")){
+            this.constructionPanel.setVisible(false);
+            this.haussePanel.setVisible(true);
+            this.cadrePanel.setVisible(true);
+        }
     }
 
     /**
@@ -38,39 +49,39 @@ public class CreateurHausse extends javax.swing.JFrame {
 
         jMenuItem1 = new javax.swing.JMenuItem();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        CouleurCombo = new javax.swing.JComboBox<Couleur>();
-        numeroHausse = new javax.swing.JSpinner();
         CreerBouton = new javax.swing.JButton();
         AnnulerBouton = new javax.swing.JButton();
-        typeMateriauCombo = new javax.swing.JComboBox<Materiau>();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        listCadresDisponibles = new javax.swing.JList<>();
+        haussePanel = new javax.swing.JPanel();
+        jLabel37 = new javax.swing.JLabel();
+        jLabel38 = new javax.swing.JLabel();
+        jLabel39 = new javax.swing.JLabel();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        listToitsDisponibles = new javax.swing.JList<>();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        cadrePanel = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        listCadresDisponibles = new javax.swing.JList<>();
+        constructionPanel = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        typeMateriauCombo = new javax.swing.JComboBox<Materiau>();
+        jLabel3 = new javax.swing.JLabel();
+        CouleurCombo = new javax.swing.JComboBox<Couleur>();
+        jLabel4 = new javax.swing.JLabel();
+        numeroHausse = new javax.swing.JSpinner();
 
         jMenuItem1.setText("jMenuItem1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Créateur de Hausse");
-
-        jLabel2.setText("Matériau");
-
-        jLabel3.setText("Couleur");
-
-        jLabel4.setText("Numéro");
-
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("Cadres");
-
-        CouleurCombo.setModel(new javax.swing.DefaultComboBoxModel<Couleur>(Couleur.getAll()));
 
         CreerBouton.setText("Créer");
         CreerBouton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -86,7 +97,77 @@ public class CreateurHausse extends javax.swing.JFrame {
             }
         });
 
-        typeMateriauCombo.setModel(new javax.swing.DefaultComboBoxModel<Materiau>(new Materiau[] { Materiau.BOIS, Materiau.METAL, Materiau.PLASTIQUE, Materiau.POLYSTYRENE, Materiau.CRISTAL_DE_BISMUTH }));
+        haussePanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jLabel37.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel37.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel37.setText("Hausse");
+
+        jLabel38.setText("matériau");
+
+        jLabel39.setText("id");
+
+        String listToits = Toit.getListe();
+        listToitsDisponibles.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = listToits.split(",");
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane8.setViewportView(listToitsDisponibles);
+
+        jLabel10.setText("couleur");
+
+        jLabel11.setText("Numéro");
+
+        javax.swing.GroupLayout haussePanelLayout = new javax.swing.GroupLayout(haussePanel);
+        haussePanel.setLayout(haussePanelLayout);
+        haussePanelLayout.setHorizontalGroup(
+            haussePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(haussePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(haussePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(haussePanelLayout.createSequentialGroup()
+                        .addComponent(jLabel39)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel38)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel10)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel11)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jLabel37, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        haussePanelLayout.setVerticalGroup(
+            haussePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(haussePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel37)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(haussePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel39)
+                    .addComponent(jLabel38)
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel11))
+                .addGap(14, 14, 14)
+                .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        cadrePanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jLabel5.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("Cadres");
+
+        jLabel6.setText("id");
+
+        jLabel7.setText("type");
+
+        jLabel9.setText("état");
+
+        jLabel8.setText("contenu");
 
         String listCadre = Cadre.getListe("idMaterielHausse IS NULL");
         listCadresDisponibles.setModel(new javax.swing.AbstractListModel<String>() {
@@ -96,83 +177,134 @@ public class CreateurHausse extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(listCadresDisponibles);
 
-        jLabel6.setText("id");
+        javax.swing.GroupLayout cadrePanelLayout = new javax.swing.GroupLayout(cadrePanel);
+        cadrePanel.setLayout(cadrePanelLayout);
+        cadrePanelLayout.setHorizontalGroup(
+            cadrePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(cadrePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(cadrePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(cadrePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(cadrePanelLayout.createSequentialGroup()
+                            .addGap(12, 12, 12)
+                            .addComponent(jLabel6)
+                            .addGap(35, 35, 35)
+                            .addComponent(jLabel7)
+                            .addGap(34, 34, 34)
+                            .addComponent(jLabel9)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel8)
+                            .addGap(8, 8, 8))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        cadrePanelLayout.setVerticalGroup(
+            cadrePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(cadrePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(cadrePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel9)
+                    .addComponent(jLabel8))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1)
+                .addContainerGap())
+        );
 
-        jLabel7.setText("type");
+        constructionPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jLabel8.setText("contenu");
+        jLabel2.setText("Matériau");
 
-        jLabel9.setText("état");
+        typeMateriauCombo.setModel(new javax.swing.DefaultComboBoxModel<Materiau>(new Materiau[] { Materiau.BOIS, Materiau.METAL, Materiau.PLASTIQUE, Materiau.POLYSTYRENE, Materiau.CRISTAL_DE_BISMUTH }));
+
+        jLabel3.setText("Couleur");
+
+        CouleurCombo.setModel(new javax.swing.DefaultComboBoxModel<Couleur>(Couleur.getAll()));
+        CouleurCombo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CouleurComboActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("Numéro");
+
+        javax.swing.GroupLayout constructionPanelLayout = new javax.swing.GroupLayout(constructionPanel);
+        constructionPanel.setLayout(constructionPanelLayout);
+        constructionPanelLayout.setHorizontalGroup(
+            constructionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(constructionPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(constructionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel2)
+                    .addGroup(constructionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel4)
+                        .addComponent(jLabel3)))
+                .addGap(6, 6, 6)
+                .addGroup(constructionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(CouleurCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(numeroHausse, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(typeMateriauCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(21, Short.MAX_VALUE))
+        );
+        constructionPanelLayout.setVerticalGroup(
+            constructionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(constructionPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(constructionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(typeMateriauCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(constructionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(CouleurCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(constructionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(numeroHausse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(93, 93, 93)
+                .addComponent(AnnulerBouton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(CreerBouton)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(12, 12, 12)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel4))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(numeroHausse)
-                                    .addComponent(CouleurCombo, 0, 192, Short.MAX_VALUE)
-                                    .addComponent(typeMateriauCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(AnnulerBouton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(CreerBouton))
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addComponent(jLabel6)
-                .addGap(34, 34, 34)
-                .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel9)
-                .addGap(32, 32, 32)
-                .addComponent(jLabel8)
-                .addGap(27, 27, 27))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cadrePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(constructionPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(haussePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(18, 18, 18)
                 .addComponent(jLabel1)
-                .addGap(24, 24, 24)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(typeMateriauCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(11, 11, 11)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(CouleurCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(7, 7, 7)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(numeroHausse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel5)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(constructionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cadrePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(haussePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel9))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(CreerBouton)
                     .addComponent(AnnulerBouton))
@@ -195,10 +327,15 @@ public class CreateurHausse extends javax.swing.JFrame {
         };
     }//GEN-LAST:event_CreerBoutonMouseClicked
 
+    private void CouleurComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CouleurComboActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CouleurComboActionPerformed
+
     /**
+     * Créateur de hausse
      * @param args the command line arguments
      */
-    public void creer() {
+    public static void creer() {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -225,18 +362,64 @@ public class CreateurHausse extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CreateurHausse().setVisible(true);
+                new CreateurHausse("creer").setVisible(true);
+                
             }
         });
     }
+    
+    /**
+     * Associateur de hausse
+     */
+    public static void associer() {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(CreateurHausse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(CreateurHausse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(CreateurHausse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(CreateurHausse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new CreateurHausse("associer").setVisible(true);
+                
+            }
+        });
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AnnulerBouton;
     private javax.swing.JComboBox<Couleur> CouleurCombo;
     private javax.swing.JButton CreerBouton;
+    private javax.swing.JPanel cadrePanel;
+    private javax.swing.JPanel constructionPanel;
+    private javax.swing.JPanel haussePanel;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel37;
+    private javax.swing.JLabel jLabel38;
+    private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -245,7 +428,9 @@ public class CreateurHausse extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JList<String> listCadresDisponibles;
+    private javax.swing.JList<String> listToitsDisponibles;
     private javax.swing.JSpinner numeroHausse;
     private javax.swing.JComboBox<Materiau> typeMateriauCombo;
     // End of variables declaration//GEN-END:variables

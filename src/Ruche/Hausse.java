@@ -42,7 +42,6 @@ public class Hausse extends Materiel {
      */
     public static void dissocier(String currentHausseId) {
         Destruction destru = new Destruction();
-        // On dissocie la hausse de la ruche
         destru.SQLCompositionHausse("idMateriel = " +currentHausseId);
     }
     
