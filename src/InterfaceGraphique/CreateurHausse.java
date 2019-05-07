@@ -5,6 +5,7 @@
  */
 package InterfaceGraphique;
 
+import Controleurs.ControleurHausse;
 import Ruche.Cadre;
 import Ruche.Contenu;
 import Ruche.Couleur;
@@ -21,6 +22,7 @@ import java.util.List;
  */
 public class CreateurHausse extends javax.swing.JFrame {
     String type = "";
+    ControleurHausse contH = new ControleurHausse();
     /**
      * Creates new form CreateurHausse
      */
@@ -108,11 +110,11 @@ public class CreateurHausse extends javax.swing.JFrame {
 
         jLabel39.setText("id");
 
-        String listToits = Hausse.getListe("idRuche is NULL");
-        haussesDisponibleCombo.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = listToits.split(",");
+        haussesDisponibleCombo.setModel( new javax.swing.AbstractListModel<String>() {
+            String[] strings = contH.initVueHausse("Sans cadre", "idRuche IS NULL MINUS (SELECT Hausse.idMateriel, materiau, couleur, numeroHausse FROM COMPOSITIONHAUSSE JOIN HAUSSE ON COMPOSITIONHAUSSE.IDMATERIELHAUSSE = HAUSSE.IDMATERIEL)");
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
+
         });
         jScrollPane8.setViewportView(haussesDisponibleCombo);
 
@@ -198,7 +200,7 @@ public class CreateurHausse extends javax.swing.JFrame {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel8)
                             .addGap(8, 8, 8))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         cadrePanelLayout.setVerticalGroup(
             cadrePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -323,15 +325,17 @@ public class CreateurHausse extends javax.swing.JFrame {
         List<String> selection = this.listCadresDisponibles.getSelectedValuesList();  
         if (type.equals("associer")){
             String  h = this.haussesDisponibleCombo.getSelectedValue();
-            if (Hausse.verifier(Integer.parseInt(h.split(" ")[3]), selection)){
+            if (Hausse.verifierCadre(Integer.parseInt(h.split(" ")[3]), selection)){
                 Hausse.associer(h.split(" ")[0], selection);
                 dispose();
             };
         } 
         if (type.equals("creer")){
             Hausse h = new Hausse((int) this.numeroHausse.getValue(), (Materiau) this.typeMateriauCombo.getSelectedItem(), (Couleur) this.CouleurCombo.getSelectedItem());
-            h.creer();
-            dispose();
+            if (Hausse.verifierNum(h.getnumeroHausse())){
+                h.creer();
+                dispose();
+            } 
         }
        
     }//GEN-LAST:event_CreerBoutonMouseClicked

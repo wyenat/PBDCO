@@ -20,6 +20,10 @@ import Ruche.Plancher;
 import Ruche.Ruche;
 import Ruche.Toit;
 import SQL.Affichage;
+import SQL.BDTable;
+import SQL.Création;
+import SQL.Destruction;
+import SQL.Modification;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import static java.lang.Thread.sleep;
@@ -34,6 +38,9 @@ import static java.lang.Thread.sleep;
 import static java.lang.Thread.sleep;
 import static java.lang.Thread.sleep;
 import static java.lang.Thread.sleep;
+import java.sql.Connection;
+import static java.sql.Connection.TRANSACTION_READ_COMMITTED;
+import java.sql.SQLException;
 
 /**
  *
@@ -1154,8 +1161,8 @@ public class AppClient extends javax.swing.JFrame {
         this.EtatCadre.setText(textToSet[0]);
         this.matiereCadre.setText(textToSet[1]);
         this.contenuCadre.setText(textToSet[2]);
-        this.contI.majCapteurAssocie(this.capteurPoisdAssociéBox, 
-                currentCadreId, 
+        this.contI.majCapteurAssocie(this.capteurPoisdAssociéBox,
+                currentCadreId,
                 textCaptPoidsAssocier,
                 capteurPoisdAssociéBox,
                 associerCapteurPoidsBouton,
@@ -1163,7 +1170,7 @@ public class AppClient extends javax.swing.JFrame {
 
     }//GEN-LAST:event_displayCadreItemStateChanged
 
-    
+
     private void ajouterCadresBoutonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ajouterCadresBoutonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ajouterCadresBoutonActionPerformed
@@ -1327,7 +1334,7 @@ public class AppClient extends javax.swing.JFrame {
 
     /**
      * Associe le capteur selectionné à la hausse sélectionnée
-     * @param evt 
+     * @param evt
      */
     private void associerCapteurTemperatureBoutonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_associerCapteurTemperatureBoutonMouseClicked
          int idCapt = Integer.parseInt(this.capteurTemperatureAssocieCombo.getSelectedItem().toString());
@@ -1336,7 +1343,7 @@ public class AppClient extends javax.swing.JFrame {
 
     /**
      * Dissocie le capteur selectionné de sa hausse
-     * @param evt 
+     * @param evt
      */
     private void dissocierCapteurTemperatureBoutonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dissocierCapteurTemperatureBoutonMouseClicked
         this.contC.dissocierCapteurTemperature(currentHausseId);
@@ -1368,12 +1375,18 @@ public class AppClient extends javax.swing.JFrame {
                 Materiau materiau = (Materiau) this.typeMateriauCombo.getSelectedItem();
                 contI.creerNouveauMateriau(m, materiau);
             }
-           
+
         }
     }//GEN-LAST:event_ajoutMateriauBoutonMouseClicked
 
     private void undoBoutonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_undoBoutonMouseClicked
-        // Lucille 
+        Connection conn = BDTable.conn;
+        try {
+            conn.rollback();
+            System.out.println("rollback\n");
+        } catch (SQLException ex) {
+            Logger.getLogger(Création.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_undoBoutonMouseClicked
 
 

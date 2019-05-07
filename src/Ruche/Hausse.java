@@ -53,15 +53,19 @@ public class Hausse extends Materiel {
         this.numeroHausse = numero;
         this.couleur = couleur;
     }
-    
-    
-    public static boolean verifier(int numeroHausse, List<String> cadres){
+    public static boolean verifierNum(int numeroHausse){
         boolean correct = true;
+        System.out.println("Numéro =" + numeroHausse);
         if (numeroHausse < 1){
             Erreur.main("Le numéro de la hausse doit être supérieur à 0, "
                     + "ici " + numeroHausse);
             correct = false;
         }
+        return correct;
+    }
+    
+    public static boolean verifierCadre( int numeroHausse, List<String> cadres){
+         boolean correct = true;
         if (cadres.size() != 10){
             Erreur.main("Une hausse est composée d'exactement 10 hausses, et "
                     + "seulement " + cadres.size() + " ont été selectionnées");
@@ -123,10 +127,12 @@ public class Hausse extends Materiel {
         // Création de la hausse dans la table de la hausse
         Création crea = new Création();
         String req = idMateriel + ", '" + this.materiau.toString() + "', '" + this.couleur.toString() +"', " + this.numeroHausse;
+         System.out.println(req);
         crea.SQLHausse(req);
     
          // Création de la hausse dans la table, associée à aucune ruche
         req = "" + this.idMateriel + ", null";
+        System.out.println(req);
         crea.SQLCompositionRuche(req);
     }
 

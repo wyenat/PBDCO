@@ -5,6 +5,7 @@
  */
 package InterfaceGraphique;
 
+import Controleurs.ControleurHausse;
 import Ruche.Cadre;
 import Ruche.Couleur;
 import Ruche.Couvercle;
@@ -21,6 +22,7 @@ import javax.swing.JList;
  */
 public class CreateurRuche extends javax.swing.JFrame {
     public boolean openedWindow;
+    ControleurHausse contH = new ControleurHausse();
     
     public CreateurRuche() {
         openedWindow = true;
@@ -172,9 +174,9 @@ public class CreateurRuche extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        String listHausse = Hausse.getListe("idRuche IS NULL");
+        String listHausse = Hausse.getListe("idRuche IS NULL AND HAUSSE.IDMATERIEL IN (SELECT idMaterielHausse FROM COMPOSITIONHAUSSE)");
         listHaussesDisponibles.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = listHausse.split(",");
+            String[] strings = contH.initVueHausse("Avec cadre", "idRuche IS NULL AND HAUSSE.IdMateriel IN (SELECT idMaterielHausse FROM COMPOSITIONHAUSSE )");
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });

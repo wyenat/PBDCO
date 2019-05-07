@@ -113,16 +113,17 @@ public class Affichage implements FabriqueSQL{
     public String SQLMateriauLibre(String req, String mat) {
             req = "SELECT " + req + 
                 " FROM " + mat +" WHERE idMateriel NOT IN \n" +
-"                (SELECT idMateriel\n" +
+"                (SELECT idMateriel " +
 "                FROM COMPOSITIONRUCHE)";
             String result = BDTable.requete(req);
             return result;
     }
 
     public String SQLHausses(String req, String cond) {
-        req = "SELECT " + req + " FROM HAUSSE JOIN COMPOSITIONRUCHE " +
-              "ON COMPOSITIONRUCHE.IDMATERIEL = HAUSSE.IDMATERIEL" +
-               " WHERE " + cond;
+        req = "SELECT DISTINCT " + req + " FROM HAUSSE " 
+               + " JOIN COMPOSITIONRUCHE ON COMPOSITIONRUCHE.IDMATERIEL = HAUSSE.IDMATERIEL "
+               + " WHERE " + cond;
+        System.out.println(req);
         String result = BDTable.requete(req);
         return result;
     }
