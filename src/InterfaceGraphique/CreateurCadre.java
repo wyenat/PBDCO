@@ -5,17 +5,18 @@
  */
 package InterfaceGraphique;
 
-import Ruche.Cadre;
 import Ruche.Contenu;
 import Ruche.Etat;
 import Ruche.Materiau;
+import Controleurs.ControleurCreateurCadre;
 
 /**
  *
  * @author matterv
  */
 public class CreateurCadre extends javax.swing.JFrame {
-
+    ControleurCreateurCadre contC = new ControleurCreateurCadre();
+    
     /**
      * Creates new form CreateurCadre
      */
@@ -135,8 +136,7 @@ public class CreateurCadre extends javax.swing.JFrame {
         assert(etat!=null);
         assert(mat!=null);
         System.out.println(cont.toString() + etat.toString() + mat.toString());
-        Cadre cadre = new Cadre(cont, etat, mat);
-        cadre.creer();
+        contC.creerCadre(cont, etat, mat);
         dispose();
     }//GEN-LAST:event_CreerBoutonMouseClicked
 

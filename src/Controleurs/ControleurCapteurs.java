@@ -5,6 +5,8 @@
  */
 package Controleurs;
 
+import Capteurs.Poids.CapteurPoids;
+import Capteurs.Temperature.CapteurTemperature;
 import InterfaceGraphique.*;
 import SQL.*;
 import java.util.Random;
@@ -27,14 +29,8 @@ public class ControleurCapteurs {
         catch (java.lang.NullPointerException e){
             horodatage = 0;
         }
-        
-            
-        
-        
     }
-    
-    
-    
+
     public void ajouterMesures(){
            Affichage aff = new Affichage();
            String capteursPoids = "idCapteur";
@@ -76,6 +72,13 @@ public class ControleurCapteurs {
         destru.SQLEmplacementCapteur("idMateriel = " +currentCadreId);
     }
 
-        
-     
+    public void creerCapteurPoids(){
+        CapteurPoids cp = new CapteurPoids();
+        cp.creer();
+    }     
+
+    public void creerCapteurTemperature() {
+        CapteurTemperature ct = new CapteurTemperature();
+        ct.creer();
+    }
 }
