@@ -141,5 +141,5 @@ public class Destruction implements FabriqueSQL{
         BDTable.requete(req);
         return "Deleted";   
     }
-    
+
 }

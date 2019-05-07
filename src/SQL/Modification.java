@@ -128,5 +128,4 @@ public class Modification implements FabriqueSQL{
     public String SQLEmplacementCapteur(String req) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
 }

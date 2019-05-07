@@ -20,12 +20,13 @@ import java.util.List;
  * @author matterv
  */
 public class CreateurHausse extends javax.swing.JFrame {
-
+    String type = "";
     /**
      * Creates new form CreateurHausse
      */
     public CreateurHausse(String type) {
         initComponents();
+        this.type = type;
         if (type.equals("creer")){
             this.cadrePanel.setVisible(false);
             this.haussePanel.setVisible(false);
@@ -56,7 +57,7 @@ public class CreateurHausse extends javax.swing.JFrame {
         jLabel38 = new javax.swing.JLabel();
         jLabel39 = new javax.swing.JLabel();
         jScrollPane8 = new javax.swing.JScrollPane();
-        listToitsDisponibles = new javax.swing.JList<>();
+        haussesDisponibleCombo = new javax.swing.JList<>();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         cadrePanel = new javax.swing.JPanel();
@@ -108,12 +109,12 @@ public class CreateurHausse extends javax.swing.JFrame {
         jLabel39.setText("id");
 
         String listToits = Toit.getListe();
-        listToitsDisponibles.setModel(new javax.swing.AbstractListModel<String>() {
+        haussesDisponibleCombo.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = listToits.split(",");
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane8.setViewportView(listToitsDisponibles);
+        jScrollPane8.setViewportView(haussesDisponibleCombo);
 
         jLabel10.setText("couleur");
 
@@ -320,11 +321,18 @@ public class CreateurHausse extends javax.swing.JFrame {
 
     private void CreerBoutonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CreerBoutonMouseClicked
         List<String> selection = this.listCadresDisponibles.getSelectedValuesList();  
-        Hausse h = new Hausse((int) this.numeroHausse.getValue(), (Materiau) this.typeMateriauCombo.getSelectedItem(), (Couleur) this.CouleurCombo.getSelectedItem());
-        if (h.verifier(selection)){
-            h.creer(selection);
+        if (type.equals("associer")){
+            String  h = this.haussesDisponibleCombo.getSelectedValue();
+            if (Hausse.verifier(Integer.parseInt(h.split(" ")[3]), selection)){
+            // TODO !! Vivien
+            //h.creer(selection);
             dispose();
-        };
+            };
+        } 
+        if (type.equals("creer")){
+            Hausse h = new Hausse((int) this.numeroHausse.getValue(), (Materiau) this.typeMateriauCombo.getSelectedItem(), (Couleur) this.CouleurCombo.getSelectedItem());
+        }
+       
     }//GEN-LAST:event_CreerBoutonMouseClicked
 
     private void CouleurComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CouleurComboActionPerformed
@@ -412,6 +420,7 @@ public class CreateurHausse extends javax.swing.JFrame {
     private javax.swing.JPanel cadrePanel;
     private javax.swing.JPanel constructionPanel;
     private javax.swing.JPanel haussePanel;
+    private javax.swing.JList<String> haussesDisponibleCombo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -430,7 +439,6 @@ public class CreateurHausse extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JList<String> listCadresDisponibles;
-    private javax.swing.JList<String> listToitsDisponibles;
     private javax.swing.JSpinner numeroHausse;
     private javax.swing.JComboBox<Materiau> typeMateriauCombo;
     // End of variables declaration//GEN-END:variables

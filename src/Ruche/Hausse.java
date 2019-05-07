@@ -41,8 +41,8 @@ public class Hausse extends Materiel {
      * @param currentHausseId 
      */
     public static void dissocier(String currentHausseId) {
-        Destruction destru = new Destruction();
-        destru.SQLCompositionHausse("idMateriel = " +currentHausseId);
+        Modification modif = new Modification();
+        modif.SQLCompositionHausse("idMaterielHausse = null", "idMaterielHausse = " + currentHausseId);
     }
     
     private int numeroHausse;
@@ -54,11 +54,12 @@ public class Hausse extends Materiel {
         this.couleur = couleur;
     }
     
-    public boolean verifier( List<String> cadres){
+    
+    public static boolean verifier(int numeroHausse, List<String> cadres){
         boolean correct = true;
-        if (this.numeroHausse < 1){
+        if (numeroHausse < 1){
             Erreur.main("Le numéro de la hausse doit être supérieur à 0, "
-                    + "ici " + this.numeroHausse);
+                    + "ici " + numeroHausse);
             correct = false;
         }
         if (cadres.size() != 10){
@@ -69,10 +70,10 @@ public class Hausse extends Materiel {
             for (String cadre : cadres){
                 String contenu = cadre.split(" ")[3];
                 if ( contenu.equals("LARVES") || contenu == "POLLEN" ){
-                    if (this.numeroHausse != 1 && this.numeroHausse != 2){
+                    if (numeroHausse != 1 && numeroHausse != 2){
                         Erreur.main("Le numéro de la hausse doit être 1 ou 2 quand "
                                 + "le cadre contient " + contenu + "\n Ici, le numéro"
-                                + " rentré est " + this.numeroHausse);
+                                + " rentré est " + numeroHausse);
                         correct = false;
                     break;
                     }

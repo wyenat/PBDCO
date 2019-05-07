@@ -1143,7 +1143,8 @@ public class AppClient extends javax.swing.JFrame {
                     this.capteurTemperatureAssocieCombo,
                     this.associerCapteurTemperatureBouton,
                     this.dissocierCapteurTemperatureBouton,
-                    this.currentHausseId);
+                    this.currentHausseId,
+                    this.textTemperature);
         }
     }//GEN-LAST:event_displayHausseItemStateChanged
 
@@ -1360,7 +1361,7 @@ public class AppClient extends javax.swing.JFrame {
             }
         } else {
             if (m.equals("Hausse")){
-                
+                contI.creerNouvelleHausse();
             } else {
                 Materiau materiau = (Materiau) this.typeMateriauCombo.getSelectedItem();
                 contI.creerNouveauMateriau(m, materiau);
