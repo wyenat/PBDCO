@@ -119,10 +119,7 @@ public class ControleurInterface {
         }
     }
 
-    public void associerCapteurPoids(int idCapt, String currentCadreId) {
-        Création crea = new Création();
-        crea.SQLEmplacementCapteur(idCapt + ", " + currentCadreId);
-    }
+    
 
     public void majCapteurAssocie(JComboBox<String> capteurPoisdAssociéBox, String currentCadreId, JLabel textCaptPoidsAssocier, JComboBox<String> capteurPoisdAssociéBox0, JButton associerCapteurPoidsBouton, JButton dissocierCapteurPoidsBouton) {
         Affichage affichage = new Affichage();
@@ -148,8 +145,30 @@ public class ControleurInterface {
         }
     }
 
-    public void dissocierCapteurPoids(String currentCadreId) {
-        Destruction destru = new Destruction();
-        destru.SQLEmplacementCapteur("idMateriel = " +currentCadreId);
+ 
+
+    public void majCapteurTemperature(JLabel capteurAssociéText, JComboBox<String> capteurTemperatureAssocieCombo, JButton associerCapteurTemperatureBouton, JButton dissocierCapteurTemperatureBouton, String currentHausseId) {
+        Affichage affichage = new Affichage();
+         capteurTemperatureAssocieCombo.removeAllItems();
+        // Note : on est sûr que c'est un capteur de température car associé à un cadre
+        String captAssocie = affichage.SQLEmplacementCapteur("idCapteur", "idMateriel = " + currentHausseId );
+        if (captAssocie.length() > 0){
+            capteurAssociéText.setText("Capteur associé :");
+             capteurTemperatureAssocieCombo.addItem(captAssocie);
+            associerCapteurTemperatureBouton.setVisible(false);
+            dissocierCapteurTemperatureBouton.setVisible(true);
+        }
+       
+        // On affiche les capteurs libres pour les associer
+        else { 
+            String captLibres = affichage.SQLCapteurLibre( "idCapteur", " type = 'temperature' AND idCapteur");
+            capteurAssociéText.setText("Capteur associable :");
+            for (String s : captLibres.split(" ")){
+                 capteurTemperatureAssocieCombo.addItem(s);
+            }
+            associerCapteurTemperatureBouton.setVisible(true);
+            dissocierCapteurTemperatureBouton.setVisible(false);
+        }
     }
+
 }

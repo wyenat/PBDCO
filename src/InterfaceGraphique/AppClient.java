@@ -8,6 +8,7 @@ package InterfaceGraphique;
 
 import Capteurs.Poids.CapteurPoids;
 import Capteurs.Temperature.CapteurTemperature;
+import Controleurs.ControleurCapteurs;
 import Ruche.Cadre;
 import Controleurs.ControleurPoids;
 import Controleurs.ControleurInterface;
@@ -43,6 +44,7 @@ public class AppClient extends javax.swing.JFrame {
     private String currentCadreId;
     private String currentStockId;
     private ControleurInterface contI;
+    private ControleurCapteurs contC;
 
     /**
      * Creates new form AppClient
@@ -50,6 +52,7 @@ public class AppClient extends javax.swing.JFrame {
     public AppClient() {
         affichage = new Affichage();
         contI = new ControleurInterface();
+        contC = new ControleurCapteurs();
         initComponents();
         this.panelDeuxième.setVisible(false);
 
@@ -1136,6 +1139,11 @@ public class AppClient extends javax.swing.JFrame {
         if (this.displayHausse.getItemCount() > 1 ){
             this.currentHausseId = this.displayHausse.getSelectedItem().toString();
             majComboCadre();
+            this.contI.majCapteurTemperature(this.capteurAssociéText,
+                    this.capteurTemperatureAssocieCombo,
+                    this.associerCapteurTemperatureBouton,
+                    this.dissocierCapteurTemperatureBouton,
+                    this.currentHausseId);
         }
     }//GEN-LAST:event_displayHausseItemStateChanged
 
@@ -1314,8 +1322,8 @@ public class AppClient extends javax.swing.JFrame {
      * @param evt 
      */
     private void associerCapteurTemperatureBoutonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_associerCapteurTemperatureBoutonMouseClicked
-        // Enguerran !
-        int idCapt = Integer.parseInt(this.capteurTemperatureAssocieCombo.getSelectedItem().toString());
+         int idCapt = Integer.parseInt(this.capteurTemperatureAssocieCombo.getSelectedItem().toString());
+         this.contC.associerCapteurTemperature(idCapt, currentHausseId);
     }//GEN-LAST:event_associerCapteurTemperatureBoutonMouseClicked
 
     /**
@@ -1323,16 +1331,16 @@ public class AppClient extends javax.swing.JFrame {
      * @param evt 
      */
     private void dissocierCapteurTemperatureBoutonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dissocierCapteurTemperatureBoutonMouseClicked
-        // Enguerran !
+        this.contC.dissocierCapteurTemperature(currentHausseId);
     }//GEN-LAST:event_dissocierCapteurTemperatureBoutonMouseClicked
 
     private void associerCapteurPoidsBoutonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_associerCapteurPoidsBoutonMouseClicked
         int idCapt = Integer.parseInt(this.capteurPoisdAssociéBox.getSelectedItem().toString());
-        this.contI.associerCapteurPoids(idCapt, currentCadreId);
+        this.contC.associerCapteurPoids(idCapt, currentCadreId);
     }//GEN-LAST:event_associerCapteurPoidsBoutonMouseClicked
 
     private void dissocierCapteurPoidsBoutonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dissocierCapteurPoidsBoutonMouseClicked
-        this.contI.dissocierCapteurPoids(currentCadreId);
+        this.contC.dissocierCapteurPoids(currentCadreId);
     }//GEN-LAST:event_dissocierCapteurPoidsBoutonMouseClicked
 
 
