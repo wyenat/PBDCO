@@ -62,7 +62,6 @@ public class BDTable {
                */
                    for (int i=1; i<=len; i++){
                        
-                    System.out.println(rset.getObject(i));
                    result += rset.getObject(i).toString() + " ";
                 }
           }
