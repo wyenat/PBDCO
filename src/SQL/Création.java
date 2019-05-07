@@ -5,6 +5,13 @@
  */
 package SQL;
 
+import java.sql.*;
+import java.util.*;
+import java.util.logging.*;
+import oracle.jdbc.*;
+import oracle.jdbc.dcn.*;
+import Controleurs.ChangeListener;
+
 import Ruche.Materiel;
 
 /**
@@ -13,6 +20,15 @@ import Ruche.Materiel;
  */
 public class Création implements FabriqueSQL{
 
+    public void commit(){
+        Connection conn = BDTable.conn;
+        try {
+            conn.commit();
+        } catch (SQLException ex) {
+            Logger.getLogger(Création.class.getName()).log(Level.SEVERE, null, ex);
+        }      
+    }
+    
     @Override
     /**
      * @param req est les valeurs rentrées, séparées par des virgules.
@@ -30,6 +46,7 @@ public class Création implements FabriqueSQL{
          */
         req = "INSERT INTO RUCHE VALUES ( " + req + " )"; 
         String result = BDTable.requete(req);
+        this.commit();
         return result;
     }
     
@@ -43,6 +60,7 @@ public class Création implements FabriqueSQL{
         req = "INSERT INTO HAUSSE VALUES ( " + req + " )"; 
         System.out.println(req);
         String result = BDTable.requete(req);
+        this.commit();
         return result;
     }
 
@@ -60,6 +78,7 @@ public class Création implements FabriqueSQL{
     public String SQLMesure(String req) {
         req = "INSERT INTO MESURE VALUES ( " + req + " )"; 
         String result = BDTable.requete(req);
+        this.commit();
         return result;
     }
 
@@ -89,6 +108,7 @@ public class Création implements FabriqueSQL{
         req = "INSERT INTO "+ table +" VALUES ( " + req + " )"; 
         System.out.println(req);
         String result = BDTable.requete(req);
+        this.commit();
         return result;
     }
 
@@ -96,6 +116,7 @@ public class Création implements FabriqueSQL{
     public String SQLCadre(String req) {
         req = "INSERT INTO CADRE VALUES ( " + req + " )"; 
         String result = BDTable.requete(req);
+        this.commit();
         return result;
     }
 
@@ -108,6 +129,7 @@ public class Création implements FabriqueSQL{
     public String SQLCompositionHausse(String req) {
         req = "INSERT INTO COMPOSITIONHAUSSE VALUES ( " + req + " )"; 
         String result = BDTable.requete(req);
+        this.commit();
         return result;
     }
 
@@ -119,6 +141,7 @@ public class Création implements FabriqueSQL{
     public String SQLCompositionRuche(String req) {
         req = "INSERT INTO COMPOSITIONRUCHE VALUES ( " + req + " )"; 
         String result = BDTable.requete(req);
+        this.commit();
         return result;
     }
 
@@ -126,5 +149,4 @@ public class Création implements FabriqueSQL{
     public String SQLCompositionRuche(String req, String cond) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
 }

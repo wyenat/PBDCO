@@ -9,9 +9,9 @@ import Controleurs.ChangeListener;
 
 public class BDTable {
         private static final String URL = "jdbc:oracle:thin:@ensioracle1.imag.fr:1521:ensioracle1";
-        private static final String USERNAME = "matterv";                            // A adapter pour votre compte Oracle
-        private static final String PASSWD = "matterv";                             // A adapter pour votre compte Oracle
-        private static Connection conn;
+        private static final String USERNAME = "krauthl";                            // A adapter pour votre compte Oracle
+        private static final String PASSWD = "krauthl";                             // A adapter pour votre compte Oracle
+        public static Connection conn;
         private static OracleConnection connSurveille;
         // Objet à conserver pour pouvoir arrêter la surveillance (correspond au thread de surveillance)
         private static DatabaseChangeRegistration dcr = null;
@@ -31,8 +31,9 @@ public class BDTable {
       System.out.print("Connecting to the database... ");
       conn = DriverManager.getConnection(URL, USERNAME, PASSWD);
       System.out.println("connected");
-       
-       
+      conn.setAutoCommit(false);
+      conn.setTransactionIsolation(conn.TRANSACTION_SERIALIZABLE);
+    
        
     } catch (SQLException e) {
       System.err.println("failed");

@@ -7,12 +7,30 @@ package SQL;
 
 import Ruche.Materiel;
 
+import java.sql.*;
+import java.util.*;
+import java.util.logging.*;
+import oracle.jdbc.*;
+import oracle.jdbc.dcn.*;
+import Controleurs.ChangeListener;
+
+
 /**
  *
  * @author matterv
  */
 public class Modification implements FabriqueSQL{
 
+    public void commit(){
+        Connection conn = BDTable.conn;
+        try {
+            conn.commit();
+            System.out.println("modif success\n");
+        } catch (SQLException ex) {
+            Logger.getLogger(Création.class.getName()).log(Level.SEVERE, null, ex);
+        }      
+    }
+    
     @Override
     public String SQLRuche(String req) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -83,6 +101,7 @@ public class Modification implements FabriqueSQL{
         String result = "UPDATE COMPOSITIONHAUSSE SET IDMATERIELHAUSSE = '" 
                 + req + "' WHERE " + "IDMATERIELCADRE = '" + cond +"'";
         BDTable.requete(result);
+        this.commit();
         return "";
     }
 
@@ -90,6 +109,7 @@ public class Modification implements FabriqueSQL{
          String result = "UPDATE COMPOSITIONRUCHE SET IDRUCHE = '" 
                 + req + "' WHERE " + "IDMATERIEL = '" + cond +"'";
         BDTable.requete(result);
+        this.commit();
         return "";
     }
 

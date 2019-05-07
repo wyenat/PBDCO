@@ -902,8 +902,9 @@ public class AppClient extends javax.swing.JFrame {
     }//GEN-LAST:event_displayRuchesActionPerformed
 
     private void ajoutMateriauBoutonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ajoutMateriauBoutonMouseClicked
-        Object materiau = this.typeMateriauCombo.getSelectedItem();
-        contI.creerNouveauMateriau(materiau);
+        Materiau materiau = (Materiau) this.typeMateriauCombo.getSelectedItem();
+        String materiel = (String) this.typeMaterielCombo.getSelectedItem();
+        contI.creerNouveauMateriau(materiau, materiel);
     }//GEN-LAST:event_ajoutMateriauBoutonMouseClicked
 
     private void ButtonSupprimerMaterielMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ButtonSupprimerMaterielMouseClicked

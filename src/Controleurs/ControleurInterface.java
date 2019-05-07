@@ -44,11 +44,11 @@ public class ControleurInterface {
         }
     }
     
-    public void creerNouveauMateriau(Object omateriau){
+    public void creerNouveauMateriau( Materiau omateriau, String materiel){
         // Fonction pour ajouter du matériel
         Materiau materiau = (Materiau) omateriau;
         Materiel mat;
-        switch ((String) omateriau){
+        switch (materiel){
             case "Toit":
                 mat = new Toit(materiau);
                 break;
@@ -60,7 +60,7 @@ public class ControleurInterface {
                 break;
             default:
                 mat = null;
-                System.out.println("Erreur");
+                System.out.println(omateriau.getClass().toString());
                 break;
         }
         if (mat != null) {
