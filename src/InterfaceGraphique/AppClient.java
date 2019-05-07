@@ -91,6 +91,7 @@ public class AppClient extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        undoBouton = new javax.swing.JButton();
         jSplitPane1 = new javax.swing.JSplitPane();
         jPanel2 = new javax.swing.JPanel();
         associerRucheBouton = new javax.swing.JButton();
@@ -194,15 +195,30 @@ public class AppClient extends javax.swing.JFrame {
         jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jLabel1.setDebugGraphicsOptions(javax.swing.DebugGraphics.LOG_OPTION);
 
+        undoBouton.setText("Undo");
+        undoBouton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                undoBoutonMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(undoBouton)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(undoBouton)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         associerRucheBouton.setBackground(new java.awt.Color(255, 255, 153));
@@ -1343,10 +1359,19 @@ public class AppClient extends javax.swing.JFrame {
                 ct.creer();
             }
         } else {
-            Materiau materiau = (Materiau) this.typeMateriauCombo.getSelectedItem();
-            contI.creerNouveauMateriau(m, materiau);
+            if (m.equals("Hausse")){
+                
+            } else {
+                Materiau materiau = (Materiau) this.typeMateriauCombo.getSelectedItem();
+                contI.creerNouveauMateriau(m, materiau);
+            }
+           
         }
     }//GEN-LAST:event_ajoutMateriauBoutonMouseClicked
+
+    private void undoBoutonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_undoBoutonMouseClicked
+        // Lucille 
+    }//GEN-LAST:event_undoBoutonMouseClicked
 
 
     /**
@@ -1478,5 +1503,6 @@ public class AppClient extends javax.swing.JFrame {
     private javax.swing.JComboBox typeIntervention;
     private javax.swing.JComboBox<Materiau> typeMateriauCombo;
     private javax.swing.JComboBox<String> typeMaterielCombo;
+    private javax.swing.JButton undoBouton;
     // End of variables declaration//GEN-END:variables
 }
