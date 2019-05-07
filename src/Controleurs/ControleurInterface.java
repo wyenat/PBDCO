@@ -24,13 +24,36 @@ import javax.swing.JLabel;
  * @author nodelant
  */
 public class ControleurInterface {
+    private Affichage affichage;
     
     public ControleurInterface(){
+        affichage = new Affichage();
     }
     
     public void creerNouvelleRuche(){
         CreateurRuche cg = new CreateurRuche();
         cg.creerRuche();
+    }
+    
+    public String[] afficheSQLRuche(String currentRucheId){
+        String[] textToSet = {"", "", "", "", ""};
+        textToSet[0] = affichage.SQLRuche("couleurReine", "idRuche=" + currentRucheId);
+        textToSet[1] = affichage.SQLRuche("raceReine", "idRuche=" + currentRucheId);
+        textToSet[2] = affichage.SQLRuche("AgeReine", "idRuche=" + currentRucheId);
+        textToSet[3] = "Nom Ruche : " + affichage.SQLRuche("nomRuche");     
+        textToSet[4] = affichage.SQLRuche("nomRuche", "idRuche=" + currentRucheId);
+        return textToSet;
+    }
+    
+    public String[] afficheSQLHausse(String currentRucheId, String currentHausseId){
+        String[] textToSet = {"", "", ""};
+        textToSet[0] = affichage.SQLHausses("Hausse.couleur", "CompositionRuche.idRuche="
+                      + currentRucheId + " AND Hausse.idMateriel = " + currentHausseId);
+        textToSet[1] = affichage.SQLHausses("Hausse.numeroHausse", "CompositionRuche.idRuche="
+                      + currentRucheId + " AND Hausse.idMateriel = " + currentHausseId);
+        textToSet[2] = affichage.SQLHausses("Hausse.materiau", "CompositionRuche.idRuche="
+                      + currentRucheId + " AND Hausse.idMateriel = " + currentHausseId);
+        return textToSet; 
     }
     
     public void supprimerRuche(String currentRucheId){
@@ -172,6 +195,19 @@ public class ControleurInterface {
             associerCapteurTemperatureBouton.setVisible(true);
             dissocierCapteurTemperatureBouton.setVisible(false);
         }
+    }
+
+    public void supprimerMateriel(int currentMaterielID) {
+        Destruction dest = new Destruction();
+        dest.SQLMateriau("idMateriel="+currentMaterielID);
+    }
+
+    public String[] afficheSQLCadre(String currentCadreId) {
+        String[] textToSet = {"", "", ""};
+        textToSet[0] = affichage.SQLCadre("etat", "idMateriel = " + currentCadreId);
+        textToSet[1] = affichage.SQLCadre("materiau", "idMateriel = " + currentCadreId);
+        textToSet[2] = affichage.SQLCadre("contenu", "idMateriel = " + currentCadreId);
+        return textToSet;
     }
 
 }
