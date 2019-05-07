@@ -113,6 +113,13 @@ public class AppClient extends javax.swing.JFrame {
         textHausseCouleur = new javax.swing.JLabel();
         textHausseNumero = new javax.swing.JLabel();
         textHausseMateriau = new javax.swing.JLabel();
+        jLabel32 = new javax.swing.JLabel();
+        textTemperature = new javax.swing.JLabel();
+        jLabel34 = new javax.swing.JLabel();
+        jLabel33 = new javax.swing.JLabel();
+        capteurTemperatureAssocieCombo = new javax.swing.JComboBox<>();
+        associerCapteurTemperatureBouton = new javax.swing.JButton();
+        dissocierCapteurTemperatureBouton = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -150,9 +157,11 @@ public class AppClient extends javax.swing.JFrame {
         jPanel8 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
         poidsCadre = new javax.swing.JLabel();
-        capteurBox = new javax.swing.JComboBox<>();
+        capteurPoisdAssociéBox = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
+        associerCapteurPoidsBouton = new javax.swing.JButton();
+        dissocierCapteurPoidsBouton = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         jLabel21 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
@@ -253,8 +262,10 @@ public class AppClient extends javax.swing.JFrame {
             }
         });
 
+        jLabel30.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel30.setText("Hausse courante :");
 
+        jLabel31.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel31.setText("Ruche courante :");
 
         jButton2.setText("Application Capteurs");
@@ -273,6 +284,7 @@ public class AppClient extends javax.swing.JFrame {
             .addComponent(displayRuches, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jButton5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(displayHausse, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel31, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -281,17 +293,10 @@ public class AppClient extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel30)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jLabel31))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jButton2)
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addContainerGap())))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel30, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton2))
+                        .addGap(12, 12, 12))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -341,7 +346,7 @@ public class AppClient extends javax.swing.JFrame {
                 .addComponent(jLabel25)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(nomRucheAffichage)
-                .addContainerGap(389, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -373,6 +378,30 @@ public class AppClient extends javax.swing.JFrame {
 
         textHausseMateriau.setText(" ");
 
+        jLabel32.setText("Température :");
+
+        textTemperature.setText("Non mesuré");
+
+        jLabel34.setText("Celsius");
+
+        jLabel33.setText("Capteur associé : ");
+
+        capteurTemperatureAssocieCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        associerCapteurTemperatureBouton.setText("Associer");
+        associerCapteurTemperatureBouton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                associerCapteurTemperatureBoutonMouseClicked(evt);
+            }
+        });
+
+        dissocierCapteurTemperatureBouton.setText("Dissocier");
+        dissocierCapteurTemperatureBouton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                dissocierCapteurTemperatureBoutonMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
         jPanel12Layout.setHorizontalGroup(
@@ -394,7 +423,21 @@ public class AppClient extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(textHausseMateriau)
-                                    .addComponent(textHausseNumero))))
+                                    .addComponent(textHausseNumero)))
+                            .addGroup(jPanel12Layout.createSequentialGroup()
+                                .addComponent(jLabel32)
+                                .addGap(18, 18, 18)
+                                .addComponent(textTemperature)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel34))
+                            .addGroup(jPanel12Layout.createSequentialGroup()
+                                .addComponent(jLabel33)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(capteurTemperatureAssocieCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(associerCapteurTemperatureBouton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(dissocierCapteurTemperatureBouton)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -415,7 +458,18 @@ public class AppClient extends javax.swing.JFrame {
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel29)
                     .addComponent(textHausseMateriau))
-                .addContainerGap(88, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel32)
+                    .addComponent(textTemperature)
+                    .addComponent(jLabel34))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(capteurTemperatureAssocieCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel33)
+                    .addComponent(associerCapteurTemperatureBouton)
+                    .addComponent(dissocierCapteurTemperatureBouton))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -480,7 +534,7 @@ public class AppClient extends javax.swing.JFrame {
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(textAgeAfficher, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(textRaceAfficher, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE))))
-                .addContainerGap(368, Short.MAX_VALUE))
+                .addContainerGap(377, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -609,7 +663,7 @@ public class AppClient extends javax.swing.JFrame {
                         .addComponent(actionEnregistrerBouton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
                                 .addGroup(jPanel3Layout.createSequentialGroup()
                                     .addComponent(detailsText)
                                     .addGap(0, 0, Short.MAX_VALUE)))
@@ -684,11 +738,25 @@ public class AppClient extends javax.swing.JFrame {
 
             poidsCadre.setText("Non mesuré");
 
-            capteurBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+            capteurPoisdAssociéBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
             jLabel6.setText("Capteur associé : ");
 
             jLabel16.setText("kg");
+
+            associerCapteurPoidsBouton.setText("Associer");
+            associerCapteurPoidsBouton.addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    associerCapteurPoidsBoutonMouseClicked(evt);
+                }
+            });
+
+            dissocierCapteurPoidsBouton.setText("Dissocier");
+            dissocierCapteurPoidsBouton.addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    dissocierCapteurPoidsBoutonMouseClicked(evt);
+                }
+            });
 
             javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
             jPanel8.setLayout(jPanel8Layout);
@@ -700,14 +768,18 @@ public class AppClient extends javax.swing.JFrame {
                         .addGroup(jPanel8Layout.createSequentialGroup()
                             .addComponent(jLabel6)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(capteurBox, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(capteurPoisdAssociéBox, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(associerCapteurPoidsBouton)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(dissocierCapteurPoidsBouton))
                         .addGroup(jPanel8Layout.createSequentialGroup()
                             .addComponent(jLabel15)
                             .addGap(18, 18, 18)
                             .addComponent(poidsCadre)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jLabel16)))
-                    .addGap(0, 16, Short.MAX_VALUE))
+                    .addGap(0, 12, Short.MAX_VALUE))
             );
             jPanel8Layout.setVerticalGroup(
                 jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -719,8 +791,11 @@ public class AppClient extends javax.swing.JFrame {
                         .addComponent(jLabel16))
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(capteurBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel6))
+                        .addComponent(capteurPoisdAssociéBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel6)
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(associerCapteurPoidsBouton)
+                            .addComponent(dissocierCapteurPoidsBouton)))
                     .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             );
 
@@ -732,6 +807,7 @@ public class AppClient extends javax.swing.JFrame {
                 .addGroup(jPanel6Layout.createSequentialGroup()
                     .addContainerGap()
                     .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(displayCadre, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel6Layout.createSequentialGroup()
                             .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -747,9 +823,8 @@ public class AppClient extends javax.swing.JFrame {
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(EtatCadre)
-                                        .addComponent(contenuCadre)))
-                                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(0, 210, Short.MAX_VALUE)))
+                                        .addComponent(contenuCadre))))
+                            .addGap(0, 356, Short.MAX_VALUE)))
                     .addContainerGap())
             );
             jPanel6Layout.setVerticalGroup(
@@ -775,7 +850,7 @@ public class AppClient extends javax.swing.JFrame {
                         .addComponent(contenuCadre))
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                     .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(59, Short.MAX_VALUE))
+                    .addContainerGap(58, Short.MAX_VALUE))
             );
 
             jTabbedPane5.addTab("Cadres", jPanel6);
@@ -917,7 +992,7 @@ public class AppClient extends javax.swing.JFrame {
                 .addGroup(jPanel7Layout.createSequentialGroup()
                     .addContainerGap()
                     .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel21, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 541, Short.MAX_VALUE)
+                        .addComponent(jLabel21, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 550, Short.MAX_VALUE)
                         .addComponent(jPanel9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addContainerGap())
@@ -1036,8 +1111,14 @@ public class AppClient extends javax.swing.JFrame {
     }//GEN-LAST:event_displayRuchesActionPerformed
 
     private void ajoutMateriauBoutonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ajoutMateriauBoutonMouseClicked
-        Materiau materiau = (Materiau) this.typeMateriauCombo.getSelectedItem();
-        contI.creerNouveauMateriau(materiau);
+        String m = (String) this.typeMaterielCombo.getSelectedItem();
+        if (m.startsWith("Capteur")){
+            if (m.endsWith("Poids"));
+           
+        } else {
+            Materiau materiau = (Materiau) this.typeMateriauCombo.getSelectedItem();
+            contI.creerNouveauMateriau(materiau);
+        }
     }//GEN-LAST:event_ajoutMateriauBoutonMouseClicked
 
     private void ButtonSupprimerMaterielMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ButtonSupprimerMaterielMouseClicked
@@ -1298,6 +1379,31 @@ public class AppClient extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton2MouseClicked
 
+    /**
+     * Associe le capteur selectionné à la hausse sélectionnée
+     * @param evt 
+     */
+    private void associerCapteurTemperatureBoutonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_associerCapteurTemperatureBoutonMouseClicked
+        // Enguerran !
+        int idCapt = Integer.parseInt(this.capteurTemperatureAssocieCombo.getSelectedItem().toString());
+    }//GEN-LAST:event_associerCapteurTemperatureBoutonMouseClicked
+
+    /**
+     * Dissocie le capteur selectionné de sa hausse
+     * @param evt 
+     */
+    private void dissocierCapteurTemperatureBoutonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dissocierCapteurTemperatureBoutonMouseClicked
+        // Enguerran !
+    }//GEN-LAST:event_dissocierCapteurTemperatureBoutonMouseClicked
+
+    private void associerCapteurPoidsBoutonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_associerCapteurPoidsBoutonMouseClicked
+        // Enguerran !
+    }//GEN-LAST:event_associerCapteurPoidsBoutonMouseClicked
+
+    private void dissocierCapteurPoidsBoutonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dissocierCapteurPoidsBoutonMouseClicked
+        // Enguerran !
+    }//GEN-LAST:event_dissocierCapteurPoidsBoutonMouseClicked
+
 
     /**
      * @param args the command line arguments
@@ -1340,8 +1446,11 @@ public class AppClient extends javax.swing.JFrame {
     private javax.swing.JButton actionEnregistrerBouton;
     private javax.swing.JToggleButton ajoutMateriauBouton;
     private javax.swing.JButton ajouterCadresBouton;
+    private javax.swing.JButton associerCapteurPoidsBouton;
+    private javax.swing.JButton associerCapteurTemperatureBouton;
     private javax.swing.JButton associerRucheBouton;
-    private javax.swing.JComboBox<String> capteurBox;
+    private javax.swing.JComboBox<String> capteurPoisdAssociéBox;
+    private javax.swing.JComboBox<String> capteurTemperatureAssocieCombo;
     private javax.swing.JLabel contenuCadre;
     private javax.swing.JComboBox<String> detailCombo;
     private javax.swing.JComboBox<String> detailCombo1;
@@ -1352,6 +1461,8 @@ public class AppClient extends javax.swing.JFrame {
     private javax.swing.JComboBox displayCadre;
     private javax.swing.JComboBox displayHausse;
     private javax.swing.JComboBox displayRuches;
+    private javax.swing.JButton dissocierCapteurPoidsBouton;
+    private javax.swing.JButton dissocierCapteurTemperatureBouton;
     private javax.swing.Box.Filler filler1;
     private javax.swing.JLabel interventionDeux;
     private javax.swing.JButton jButton2;
@@ -1381,6 +1492,9 @@ public class AppClient extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1416,6 +1530,7 @@ public class AppClient extends javax.swing.JFrame {
     private javax.swing.JLabel textHausseMateriau;
     private javax.swing.JLabel textHausseNumero;
     private javax.swing.JLabel textRaceAfficher;
+    private javax.swing.JLabel textTemperature;
     private javax.swing.JComboBox typeIntervention;
     private javax.swing.JComboBox<Materiau> typeMateriauCombo;
     private javax.swing.JComboBox<String> typeMaterielCombo;
