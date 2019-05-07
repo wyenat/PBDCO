@@ -4,18 +4,16 @@
  * and open the template in the editor.
  */
 package InterfaceGraphique;
-
+import Controleurs.ControleurModifCadre;
 import Ruche.Cadre;
 import Ruche.Contenu;
 import Ruche.Etat;
-import SQL.Affichage;
-import SQL.Modification;
 
 /**
  *
  */
 public class ModificateurDeCadre extends javax.swing.JFrame {
-    public Affichage affichage = new Affichage();
+    private ControleurModifCadre contC = new ControleurModifCadre();
     public String currentCadreId;
     public String currentHausseId;
     /**
@@ -267,32 +265,19 @@ public class ModificateurDeCadre extends javax.swing.JFrame {
         if (this.displayCadre.getItemCount() > 1){
             this.currentCadreId = this.displayCadre.getSelectedItem().toString();
         }
-        this.etatCourant.setText(affichage.SQLCadre("etat", "idMateriel = " + currentCadreId));
-        this.contCourant.setText(affichage.SQLCadre("contenu", "idMateriel = " + currentCadreId));
+        String[] textToSet = contC.afficheSQLCadre(currentCadreId);
+        this.etatCourant.setText(textToSet[0]);
+        this.contCourant.setText(textToSet[1]);
     }//GEN-LAST:event_displayCadreItemStateChanged
 
     private void modifBoutonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_modifBoutonMouseClicked
         Etat nouveauEtat = (Etat) this.EtatCombo.getSelectedItem();
         Contenu nouveauContenu = (Contenu) this.ContenuCombo.getSelectedItem();
         
-        //Vérification de l'intégrité :
-        boolean integre = true;
-        String num = affichage.SQLHausse("numeroHausse", "idMateriel = " + currentHausseId);
-        if (nouveauContenu != Contenu.VIDE){
-            int nume = Integer.parseInt(num.replace(" ", ""));
-            if (nume != 1 && nume != 2){
-                integre = false;
-            }
-        }
-        
-        // Modification
+        boolean integre = contC.confirmerModif(nouveauEtat, nouveauContenu, currentHausseId, currentCadreId);
         if (integre){
-              Modification modif = new Modification();
-              modif.SQLCadre("etat = '" + nouveauEtat + "', contenu = '" + nouveauContenu +"'", currentCadreId);
-              dispose();
-        } else {
-             Erreur.main("Une hausse de numéro " + num + " ne peut pas contenir " + nouveauContenu.toString());
-        }     
+            dispose();
+        }
     }//GEN-LAST:event_modifBoutonMouseClicked
 
     private void annulBoutonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_annulBoutonMouseClicked
@@ -355,4 +340,6 @@ public class ModificateurDeCadre extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JButton modifBouton;
     // End of variables declaration//GEN-END:variables
+
+
 }

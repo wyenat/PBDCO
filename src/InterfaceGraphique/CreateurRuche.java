@@ -7,14 +7,12 @@ package InterfaceGraphique;
 
 import Controleurs.ControleurHausse;
 import Ruche.Cadre;
+import Controleurs.ControleurCreationRuche;
 import Ruche.Couleur;
 import Ruche.Couvercle;
 import Ruche.Hausse;
 import Ruche.Plancher;
-import Ruche.Ruche;
 import Ruche.Toit;
-import SQL.Création;
-import java.util.List;
 import javax.swing.JList;
 
 /**
@@ -23,10 +21,12 @@ import javax.swing.JList;
 public class CreateurRuche extends javax.swing.JFrame {
     public boolean openedWindow;
     ControleurHausse contH = new ControleurHausse();
+    private ControleurCreationRuche contC;
     
     public CreateurRuche() {
         openedWindow = true;
         initComponents();
+        this.contC = new ControleurCreationRuche();
     }
 
     public boolean isOpened() {
@@ -488,9 +488,8 @@ public class CreateurRuche extends javax.swing.JFrame {
     }//GEN-LAST:event_raceReineActionPerformed
 
     private void creerBoutonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_creerBoutonMouseClicked
+        
         // Bouton "Créer" pressé : 
-        Création crea = new Création();
-        Ruche r = new Ruche();
         String race = this.raceReine.getText();
         int age = (int) this.ageReine.getValue();
         String nomRuche = this.Nom_Ruche.getText();
@@ -499,11 +498,9 @@ public class CreateurRuche extends javax.swing.JFrame {
         JList<String> listC = this.listCouverclesDisponibles;
         JList<String> listP = this.listPlanchersDisponibles;
         JList<String> listT = this.listToitsDisponibles;
-        if (r.verifier(race, age, nomRuche)){
-            if (Couvercle.verification("Couvercle", listC) && Toit.verification("Toit", listP) && Plancher.verification("Plancher", listT) && Hausse.verification("Hausse", listH)){
-                r.creer(race, age, couleur, nomRuche, listC, listP, listT, listH);
+        if (Couvercle.verification("Couvercle", listC) && Toit.verification("Toit", listP) && Plancher.verification("Plancher", listT) && Hausse.verification("Hausse", listH)){
+                contC.creerRuche(race, age, couleur, nomRuche, listC, listP, listT, listH);
                 dispose();
-            }
         }
     }//GEN-LAST:event_creerBoutonMouseClicked
 

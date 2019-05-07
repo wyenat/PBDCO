@@ -6,6 +6,7 @@ import java.util.logging.*;
 import oracle.jdbc.*;
 import oracle.jdbc.dcn.*;
 import Controleurs.ChangeListener;
+import static java.sql.Connection.TRANSACTION_READ_COMMITTED;
 import static java.sql.Connection.TRANSACTION_SERIALIZABLE;
 
 public class BDTable {
@@ -32,6 +33,8 @@ public class BDTable {
             System.out.print("Connecting to the database... ");
             conn = DriverManager.getConnection(URL, USERNAME, PASSWD);
             System.out.println("connected");
+            conn.setAutoCommit(false); 
+            conn.commit();
 
         } catch (SQLException e) {
             System.err.println("failed");
@@ -47,15 +50,21 @@ public class BDTable {
   public static String requete(String s) {
         // Creation de la requete
         try {
-            conn.setAutoCommit(false);  
-            conn.setTransactionIsolation(TRANSACTION_SERIALIZABLE);
+            if ((s.startsWith("INSERT")) || (s.startsWith("SELECT"))){
+                conn.setTransactionIsolation(TRANSACTION_READ_COMMITTED);
+            } else {
+                conn.setTransactionIsolation(TRANSACTION_SERIALIZABLE);
+            }            
             PreparedStatement stmt = conn.prepareStatement(s);
-
             // Affichage du résultat
             // Le problème est là  
             int len = s.substring(0, s.indexOf("FROM")).split(",").length;
             System.out.println("len = " + len + "avec s = " + s.substring(0,s.indexOf("FROM"))) ;
             String result = "";
+            if (!(s.startsWith("SELECT"))){
+                conn.commit();
+                System.out.println("commit simple");
+            }            
             ResultSet rset = stmt.executeQuery();
             if (s.startsWith("SELECT")){
                 while (rset.next()) {
@@ -67,8 +76,6 @@ public class BDTable {
             }
             stmt.close();
             rset.close();
-            conn.commit();
-            System.out.println("commit simple");
             return result;
         } catch (SQLException e) {
             System.err.println("failed");
@@ -79,15 +86,25 @@ public class BDTable {
    
     public static String requeteDouble(String s) {
         // Creation de la requete
+        // TODO !!!!! Faires les mêmes modifs que sur la 1ère fonction
         try {
             conn.setAutoCommit(false);  
-            conn.setTransactionIsolation(TRANSACTION_SERIALIZABLE);
-            PreparedStatement stmt = conn.prepareStatement(s);
+            if ((s.startsWith("INSERT")) || (s.startsWith("SELECT"))){
+                conn.setTransactionIsolation(TRANSACTION_READ_COMMITTED);
+            } else {
+                conn.setTransactionIsolation(TRANSACTION_SERIALIZABLE);
+            }                  PreparedStatement stmt = conn.prepareStatement(s);
 
             // Affichage du résultat
             // Le problème est là  
             int len = s.substring(s.indexOf("SELECT", 2)).split(",").length;
             String result = "";
+            
+            if (!(s.startsWith("SELECT"))){
+                conn.commit();
+                System.out.println("commit simple");
+            }    
+            
             ResultSet rset = stmt.executeQuery();
 
             if (s.startsWith("SELECT")){
@@ -132,79 +149,7 @@ public class BDTable {
         return conn;
    }
   
-   // Méthode ajoutant le listener (dans une connexion indépendante)
-   //
-//   
-//  public static void addListener() throws SQLException {
-//     // Connexion à la BD
-//     connSurveille = BDTable.connectDur();
-//     
-//     // Préparation du thread de surveillance
-//     Properties prop = new Properties();
-//     prop.setProperty(OracleConnection.DCN_NOTIFY_ROWIDS, "true");
-//     prop.setProperty(OracleConnection.DCN_QUERY_CHANGE_NOTIFICATION, "true");
-//     // Création du thread de surveillance
-//     dcr = connSurveille.registerDatabaseChangeNotification(prop);
-//     try {
-//       // Création et enregistrement du listener
-//       ChangeListener listener = new ChangeListener(this);
-//       dcr.addListener(listener);  
-//       
-//       // Requête pour préciser les tables à surveiller
-//       Statement stmt = conn.createStatement();
-//       ((OracleStatement)stmt).setDatabaseChangeRegistration(dcr);
-//       ResultSet rs = stmt.executeQuery("select * from Test_listener");
-//       // Le parcours du résultat est nécessaire
-//       while (rs.next()) {}
-//       // Fermeture des objets
-//       rs.close();
-//       stmt.close();
-//       // Affichage des tables surveillées (uniquement pour la démonstration)
-//       String[] tableNames = dcr.getTables();
-//       for (int i=0;i<tableNames.length;i++)
-//         System.out.println(tableNames[i]+" is part of the registration.");
-//     }
-//     catch (SQLException e) {
-//       // Suppression du dcr en cas d'exception (arrêt du thread de surveillance)
-//       if (conn != null) connSurveille.unregisterDatabaseChangeNotification(dcr);
-//       throw e;
-//     }
-//     finally {
-//       try  {
-//         // Toujours se déconnecter
-//         conn.close();
-//       }
-//       catch (Exception e)   {
-//         e.printStackTrace();
-//       }
-//     }
-//   }  
-//   
-//    // Méthode supprimant le listener (arrêt du thread de surveillance)
-//    //
-//    public void staticremoveListener() throws SQLException {
-//       //Dans une connexion indépendante
-//       OracleConnection conne = connectDur();
-//       try {
-//         // Arrêt du thread de surveillance
-//         
-//          conne.unregisterDatabaseChangeNotification(dcr);
-//       }
-//       catch (Exception e)   {
-//         e.printStackTrace();
-//       }
-//       // Déconnexion
-//        conn.close();
-//     }
-//
-// 
-//   
-   // Méthode affichant les notifications (appelée par le listener)
-   //
-   public void refresh(DatabaseChangeEvent e) {
-     System.out.println("Notification de changement dans la BD :");
-     // Affichage des détails de l'event
-     System.out.println(e.toString());
-   }
+
+   
  }
 

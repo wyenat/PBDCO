@@ -55,6 +55,14 @@ public class ControleurInterface {
         return textToSet; 
     }
     
+    public String[] getListeHausse(String chaine){
+        return Hausse.getListe(chaine).split(",");
+    }
+    
+    public String[] getListeCadre(String chaine){
+        return Cadre.getListe(chaine).split(",");
+    }    
+    
     public void supprimerRuche(String currentRucheId){
         // Destruction de la ruche
         Ruche.dissocier(currentRucheId);

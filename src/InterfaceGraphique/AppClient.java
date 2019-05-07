@@ -1091,7 +1091,7 @@ public class AppClient extends javax.swing.JFrame {
     public void majComboHausse(){
         this.displayHausse.removeAllItems();
         int compteur = 0;
-        for (String s : Hausse.getListe("idRuche=" + currentRucheId).split(",")){
+        for (String s : contI.getListeHausse("idRuche=" + currentRucheId)){
             if (compteur++ > 0){
                 this.currentHausseId = s.split(" ")[0];
                 majComboCadre();
@@ -1103,7 +1103,7 @@ public class AppClient extends javax.swing.JFrame {
     public void majComboCadre(){
         this.displayCadre.removeAllItems();
         int compteur = 0;
-        for (String s : Cadre.getListe("idMaterielHausse = " + currentHausseId).split(",")){
+        for (String s : contI.getListeCadre("idMaterielHausse = " + currentHausseId)){
             if (compteur++ > 0){
                 this.currentCadreId = s.split(" ")[0];
             }
@@ -1211,7 +1211,7 @@ public class AppClient extends javax.swing.JFrame {
         switch(sel){
             case  "Récolte d'une hausse":
                 this.detailsText.setText("Hausse récoltée :");
-                combo = Hausse.getListe("idRuche=" + currentRucheId).split(",");
+                combo = contI.getListeHausse("idRuche=" + currentRucheId);
                 for (String s : combo){
                     this.detailCombo.addItem(s);
                 }
@@ -1224,7 +1224,7 @@ public class AppClient extends javax.swing.JFrame {
             case "Pose d'une nouvelle hausse de récolte":
                 this.detailsText.setText("Hausse posée :");
                 this.detailCombo.setVisible(true);
-                combo = Hausse.getListe("idRuche IS NULL").split(",");
+                combo = contI.getListeHausse("idRuche IS NULL");
                 for (String s : combo){
                     this.detailCombo.addItem(s);
                 }
@@ -1238,14 +1238,14 @@ public class AppClient extends javax.swing.JFrame {
                 // Conservation de l'intégrité
                 this.deuxiemeIntervention.setText("Insertion d'un cadre dans une hausse");
                 this.detailsText1.setText("Cadre ajouté :");
-                combo = Cadre.getListe("idMaterielHausse is NULL").split(",");
+                combo = contI.getListeCadre("idMaterielHausse is NULL");
                 this.detailCombo1.removeAllItems();
                 for (String s: combo){
                     this.detailCombo1.addItem(s);
                 }
                 // ComboBox
                 this.detailsText.setText("Cadre extrait :");
-                combo = Cadre.getListe("idMaterielHausse = " + currentHausseId).split(",");
+                combo = contI.getListeCadre("idMaterielHausse = " + currentHausseId);
                 for (String s : combo){
                     this.detailCombo.addItem(s);
                 }
@@ -1255,14 +1255,14 @@ public class AppClient extends javax.swing.JFrame {
                 // Conservation de l'intégrité
                 this.deuxiemeIntervention.setText("Extraction d'un cadre d'une hausse");
                 this.detailsText1.setText("Cadre extrait :");
-                combo = Cadre.getListe("idMaterielHausse = " + currentHausseId).split(",");
+                combo = contI.getListeCadre("idMaterielHausse = " + currentHausseId);
                 this.detailCombo1.removeAllItems();
                 for (String s: combo){
                     this.detailCombo1.addItem(s);
                 }
                 // ComboBox
                 this.detailsText.setText("Cadre ajouté :");
-                combo = Cadre.getListe("idMaterielHausse is NULL").split(",");
+                combo = contI.getListeCadre("idMaterielHausse is NULL");
                 for (String s: combo){
                     this.detailCombo.addItem(s);
                 }
@@ -1292,7 +1292,7 @@ public class AppClient extends javax.swing.JFrame {
                      if (Integer.parseInt(this.detailCombo.getSelectedItem().toString().split(" ")[3]) < 3){
                          this.panelDeuxième.setVisible(true);
                          this.deuxiemeIntervention.setText("Pose d'une nouvelle hausse de récolte");
-                         for (String s :  Hausse.getListe("idRuche IS NULL").split(",")){
+                         for (String s :  contI.getListeHausse("idRuche IS NULL")){
                          this.detailCombo1.addItem(s);
                     }
                 } else {
@@ -1301,7 +1301,7 @@ public class AppClient extends javax.swing.JFrame {
                 break;
                 case "Pose d'une nouvelle hausse de récolte":
                     int id = Integer.parseInt(this.detailCombo.getSelectedItem().toString().split(" ")[3]);
-                    String[] listIDs = Hausse.getListe("idRuche =" + this.currentRucheId).split(",");
+                    String[] listIDs = contI.getListeHausse("idRuche =" + this.currentRucheId);
                     for (String s : listIDs){
                         System.out.println("id = " + id + ", test = " + s);
                        if (Integer.parseInt(s.split(" ")[3]) == id){
@@ -1362,11 +1362,9 @@ public class AppClient extends javax.swing.JFrame {
         String m = (String) this.typeMaterielCombo.getSelectedItem();
         if (m.startsWith("Capteur")){
             if (m.endsWith("Poids")){
-                CapteurPoids cp = new CapteurPoids();
-                cp.creer();
+                contC.creerCapteurPoids();
             } else {
-                CapteurTemperature ct = new CapteurTemperature();
-                ct.creer();
+                contC.creerCapteurTemperature();
             }
         } else {
             if (m.equals("Hausse")){
