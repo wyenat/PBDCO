@@ -78,15 +78,14 @@ public class ApplicationCapteurs extends javax.swing.JFrame {
 
     private void EnregistrerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EnregistrerActionPerformed
         // TODO add your handling code here:
-        this.controleurCapt.ajouterMesures();
+
     }//GEN-LAST:event_EnregistrerActionPerformed
 
     private void EnregistrerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EnregistrerMouseClicked
         // On clique sur enregistre
-        CapteurPoids capP = new CapteurPoids();
-        CapteurTemperature capT = new CapteurTemperature();
-//        EnregistrerPoids(valPoids);
-//        EnregistrerTemperature(valTemp);
+        
+        this.controleurCapt.ajouterMesures();
+
     }//GEN-LAST:event_EnregistrerMouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
