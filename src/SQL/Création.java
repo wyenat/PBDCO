@@ -156,4 +156,9 @@ public class Création implements FabriqueSQL{
         return result;
     }
 
+    @Override
+    public String SQLCapteursJoin(String req, String cond) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }
