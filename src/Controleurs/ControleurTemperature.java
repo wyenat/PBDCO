@@ -42,13 +42,19 @@ public class ControleurTemperature {
                         + "WHERE compositionRuche.idMateriel= " + separated[i];
                 String id = BDTable.requete(idRuche);
                 String[] idSepare = id.split(" ");
-                ruche += idSepare[0] + " (id: " + idSepare[1] + ") ";
+                try{
+                    String hausse =  "SELECT numeroHausse FROM Hausse WHERE idMateriel= " + separated[i];
+                    String numero = BDTable.requete(hausse);
+                    numeros += numero + " ";
+                    ruche += idSepare[0] + " (id: " + idSepare[1] + ") ";
+                    
+                }
+                catch(java.lang.ArrayIndexOutOfBoundsException e){
+                    System.out.println("Il y a des problemes dans la BD");
+                }
                 
-                String hausse =  "SELECT numeroHausse FROM Hausse WHERE idMateriel= " + separated[i];
-                String numero = BDTable.requete(hausse);
-                numeros += numero + " ";
             }
-            Alerte.main("L.a.es ruche.s " + ruche + "a.ont besoin d'une intervention à cause de leur température respectivement sur leur.s hausse.s numéro " + numeros);
+            Alerte.main("La ou les ruche(s) " + ruche + "a/ont besoin d'une intervention à cause de leur poids trop faible respectivement sur la ou leur(s) hausse(s) numéro " + numeros);
        }
       }
        
