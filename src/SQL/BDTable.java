@@ -31,9 +31,7 @@ public class BDTable {
       System.out.print("Connecting to the database... ");
       conn = DriverManager.getConnection(URL, USERNAME, PASSWD);
       System.out.println("connected");
-      conn.setAutoCommit(false);
-      conn.setTransactionIsolation(conn.TRANSACTION_SERIALIZABLE);
-    
+      conn.setAutoCommit(false);    
        
     } catch (SQLException e) {
       System.err.println("failed");

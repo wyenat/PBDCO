@@ -13,6 +13,7 @@ import java.util.logging.*;
 import oracle.jdbc.*;
 import oracle.jdbc.dcn.*;
 import Controleurs.ChangeListener;
+import static java.sql.Connection.TRANSACTION_SERIALIZABLE;
 
 
 /**
@@ -24,8 +25,8 @@ public class Modification implements FabriqueSQL{
     public void commit(){
         Connection conn = BDTable.conn;
         try {
+            conn.setTransactionIsolation(TRANSACTION_SERIALIZABLE);
             conn.commit();
-            System.out.println("modif success\n");
         } catch (SQLException ex) {
             Logger.getLogger(Création.class.getName()).log(Level.SEVERE, null, ex);
         }      

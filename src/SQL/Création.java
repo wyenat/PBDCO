@@ -13,6 +13,8 @@ import oracle.jdbc.dcn.*;
 import Controleurs.ChangeListener;
 
 import Ruche.Materiel;
+import static SQL.BDTable.conn;
+import static java.sql.Connection.TRANSACTION_READ_COMMITTED;
 
 /**
  *
@@ -20,9 +22,11 @@ import Ruche.Materiel;
  */
 public class Création implements FabriqueSQL{
 
+    
     public void commit(){
         Connection conn = BDTable.conn;
         try {
+            conn.setTransactionIsolation(TRANSACTION_READ_COMMITTED); //Vérifier si c'est suffisant
             conn.commit();
         } catch (SQLException ex) {
             Logger.getLogger(Création.class.getName()).log(Level.SEVERE, null, ex);
@@ -145,6 +149,16 @@ public class Création implements FabriqueSQL{
 
     @Override
     public String SQLCompositionRuche(String req, String cond) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String SQLCapteurs(String req, String cond) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String SQLCapteurs(String req) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
