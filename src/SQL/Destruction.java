@@ -144,5 +144,10 @@ public class Destruction implements FabriqueSQL{
         BDTable.requete(req);
         return "Deleted";   
     }
-    
+
+    @Override
+    public String SQLCapteursJoin(String req, String cond) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

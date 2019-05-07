@@ -64,10 +64,11 @@ public class AppClient extends javax.swing.JFrame {
     }
 
     private void refresh(){
-        jLabel16.setText(affichage.SQLRuche("couleurReine", "idRuche=" + currentRucheId));
-        jLabel17.setText(affichage.SQLRuche("raceReine", "idRuche=" + currentRucheId));
-        jLabel18.setText(affichage.SQLRuche("AgeReine", "idRuche=" + currentRucheId));
-        textCaptPoidsAssocier.setText("Nom Ruche : " + affichage.SQLRuche("nomRuche"));
+        String[] textToSet = contI.afficheSQLRuche(currentRucheId);
+        jLabel16.setText(textToSet[0]);
+        jLabel17.setText(textToSet[1]);
+        jLabel18.setText(textToSet[2]);
+        textCaptPoidsAssocier.setText(textToSet[3]);
 
         //new javax.swing.DefaultComboBoxModel(affichage.SQLRuche("idRuche").split(" ")));
 
@@ -887,7 +888,7 @@ public class AppClient extends javax.swing.JFrame {
 
             jLabel19.setText("Type");
 
-            typeMaterielCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hausse", "Toit", "Couvercle", "Plancher", "Capteur de Poids", "Capteur de Température"}));
+            typeMaterielCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selectionnez un type", "Hausse", "Toit", "Couvercle", "Plancher", "Capteur de Poids", "Capteur de Température"}));
             typeMaterielCombo.addItemListener(new java.awt.event.ItemListener() {
                 public void itemStateChanged(java.awt.event.ItemEvent evt) {
                     typeMaterielComboItemStateChanged(evt);
@@ -910,22 +911,22 @@ public class AppClient extends javax.swing.JFrame {
             jPanel9.setLayout(jPanel9Layout);
             jPanel9Layout.setHorizontalGroup(
                 jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
-                    .addContainerGap(343, Short.MAX_VALUE)
-                    .addComponent(typeMateriauCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap())
                 .addGroup(jPanel9Layout.createSequentialGroup()
                     .addContainerGap()
                     .addComponent(ajoutMateriauBouton, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addContainerGap(396, Short.MAX_VALUE))
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(typeMateriauCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap())
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel20)
                             .addComponent(jLabel19))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(typeMaterielCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 200, Short.MAX_VALUE)
+                        .addComponent(typeMaterielCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap()))
             );
             jPanel9Layout.setVerticalGroup(
@@ -933,7 +934,7 @@ public class AppClient extends javax.swing.JFrame {
                 .addGroup(jPanel9Layout.createSequentialGroup()
                     .addGap(36, 36, 36)
                     .addComponent(typeMateriauCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(ajoutMateriauBouton)
                     .addContainerGap())
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1072,10 +1073,11 @@ public class AppClient extends javax.swing.JFrame {
     private void displayRuchesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_displayRuchesItemStateChanged
         // TODO add your handling code here:
         this.currentRucheId = this.displayRuches.getSelectedItem().toString();
-        this.nomRucheAffichage.setText(affichage.SQLRuche("nomRuche", "idRuche = " + currentRucheId));
-        this.textCouleurAfficher.setText(affichage.SQLRuche("couleurReine", "idRuche=" + currentRucheId));
-        this.textRaceAfficher.setText(affichage.SQLRuche("raceReine", "idRuche=" + currentRucheId));
-        this.textAgeAfficher.setText(affichage.SQLRuche("AgeReine", "idRuche=" + currentRucheId));
+        String[] textToSet = contI.afficheSQLRuche(currentRucheId);
+        this.nomRucheAffichage.setText(textToSet[4]);
+        this.textCouleurAfficher.setText(textToSet[0]);
+        this.textRaceAfficher.setText(textToSet[1]);
+        this.textAgeAfficher.setText(textToSet[2]);
         majComboHausse();
     }//GEN-LAST:event_displayRuchesItemStateChanged
 
@@ -1103,15 +1105,10 @@ public class AppClient extends javax.swing.JFrame {
             }
             this.displayCadre.addItem(s.split(" ")[0]);
         }
-        String coul = affichage.SQLHausses("Hausse.couleur", "CompositionRuche.idRuche="
-                + currentRucheId + " AND Hausse.idMateriel = " + currentHausseId);
-        String num = affichage.SQLHausses("Hausse.numeroHausse", "CompositionRuche.idRuche="
-                + currentRucheId + " AND Hausse.idMateriel = " + currentHausseId);
-        String mat = affichage.SQLHausses("Hausse.materiau", "CompositionRuche.idRuche="
-                + currentRucheId + " AND Hausse.idMateriel = " + currentHausseId);
-        this.textHausseCouleur.setText(coul);
-        this.textHausseMateriau.setText(mat);
-        this.textHausseNumero.setText(num);
+        String[] textToSet = contI.afficheSQLHausse(currentRucheId, currentHausseId);
+        this.textHausseCouleur.setText(textToSet[0]);
+        this.textHausseMateriau.setText(textToSet[2]);
+        this.textHausseNumero.setText(textToSet[1]);
     }
 
     private void associerRucheBoutonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_associerRucheBoutonActionPerformed
@@ -1130,8 +1127,7 @@ public class AppClient extends javax.swing.JFrame {
     private void ButtonSupprimerMaterielMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ButtonSupprimerMaterielMouseClicked
         // Supprimer matériaux
         int currentMaterielID = Integer.parseInt((String) this.stockCombo.getSelectedItem());
-        Destruction dest = new Destruction();
-        dest.SQLMateriau("idMateriel="+currentMaterielID);
+        contI.supprimerMateriel(currentMaterielID);
     }//GEN-LAST:event_ButtonSupprimerMaterielMouseClicked
 
     private void associerHausseBoutonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_associerHausseBoutonMouseClicked
@@ -1148,7 +1144,8 @@ public class AppClient extends javax.swing.JFrame {
                     this.capteurTemperatureAssocieCombo,
                     this.associerCapteurTemperatureBouton,
                     this.dissocierCapteurTemperatureBouton,
-                    this.currentHausseId);
+                    this.currentHausseId,
+                    this.textTemperature);
         }
     }//GEN-LAST:event_displayHausseItemStateChanged
 
@@ -1156,11 +1153,12 @@ public class AppClient extends javax.swing.JFrame {
         if (this.displayCadre.getItemCount() > 1){
             this.currentCadreId = this.displayCadre.getSelectedItem().toString();
         }
-        this.EtatCadre.setText(affichage.SQLCadre("etat", "idMateriel = " + currentCadreId));
-        this.matiereCadre.setText(affichage.SQLCadre("materiau", "idMateriel = " + currentCadreId));
-        this.contenuCadre.setText(affichage.SQLCadre("contenu", "idMateriel = " + currentCadreId));
-        this.contI.majCapteurAssocie(this.capteurPoisdAssociéBox, 
-                currentCadreId, 
+        String[] textToSet = contI.afficheSQLCadre(currentCadreId);
+        this.EtatCadre.setText(textToSet[0]);
+        this.matiereCadre.setText(textToSet[1]);
+        this.contenuCadre.setText(textToSet[2]);
+        this.contI.majCapteurAssocie(this.capteurPoisdAssociéBox,
+                currentCadreId,
                 textCaptPoidsAssocier,
                 capteurPoisdAssociéBox,
                 associerCapteurPoidsBouton,
@@ -1168,7 +1166,7 @@ public class AppClient extends javax.swing.JFrame {
 
     }//GEN-LAST:event_displayCadreItemStateChanged
 
-    
+
     private void ajouterCadresBoutonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ajouterCadresBoutonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ajouterCadresBoutonActionPerformed
@@ -1329,7 +1327,7 @@ public class AppClient extends javax.swing.JFrame {
 
     /**
      * Associe le capteur selectionné à la hausse sélectionnée
-     * @param evt 
+     * @param evt
      */
     private void associerCapteurTemperatureBoutonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_associerCapteurTemperatureBoutonMouseClicked
          int idCapt = Integer.parseInt(this.capteurTemperatureAssocieCombo.getSelectedItem().toString());
@@ -1338,7 +1336,7 @@ public class AppClient extends javax.swing.JFrame {
 
     /**
      * Dissocie le capteur selectionné de sa hausse
-     * @param evt 
+     * @param evt
      */
     private void dissocierCapteurTemperatureBoutonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dissocierCapteurTemperatureBoutonMouseClicked
         this.contC.dissocierCapteurTemperature(currentHausseId);
@@ -1365,12 +1363,12 @@ public class AppClient extends javax.swing.JFrame {
             }
         } else {
             if (m.equals("Hausse")){
-                
+                contI.creerNouvelleHausse();
             } else {
                 Materiau materiau = (Materiau) this.typeMateriauCombo.getSelectedItem();
                 contI.creerNouveauMateriau(m, materiau);
             }
-           
+
         }
     }//GEN-LAST:event_ajoutMateriauBoutonMouseClicked
 

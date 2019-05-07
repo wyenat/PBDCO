@@ -1,5 +1,7 @@
 package Ruche;
 
+import Controleurs.ControleurCapteurs;
+import Controleurs.ControleurInterface;
 import InterfaceGraphique.Erreur;
 import SQL.Affichage;
 import SQL.Création;
@@ -11,8 +13,20 @@ public class Ruche {
 
     public static void dissocier(String currentRucheId) {
         Destruction destruction = new Destruction();
+        ControleurCapteurs contC = new ControleurCapteurs();
+        Affichage aff = new Affichage();
+        for (String hausse : aff.SQLCompositionRuche("idMateriel", "idRuche = " + currentRucheId).split(",")){
+            // On enlève les capteurs des cadres, et les cadres des hausses.
+            for (String cadre : aff.SQLCompositionHausse("idMaterielCadre", "idMaterielHausse = " + hausse.split(" ")[0]).split(",")){
+                contC.dissocierCapteurPoids(cadre.split(" ")[0]);
+            }
+            Hausse.dissocier(hausse.split(" ")[0]);
+            contC.dissocierCapteurTemperature(hausse.split(" ")[0]);
+            
+        }
         destruction.SQLCompositionRuche("idRuche = " +currentRucheId);
         destruction.SQLRuche("idRuche = " +currentRucheId);
+        
     }
     private int idRuche;
 
