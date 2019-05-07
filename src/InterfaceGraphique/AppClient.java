@@ -1040,7 +1040,7 @@ public class AppClient extends javax.swing.JFrame {
 
     private void associerRucheBoutonMouseClicked(java.awt.event.MouseEvent evt) {
         contI.creerNouvelleRuche();
-        displayRuches.getModel().setSelectedItem(affichage.SQLRuche("idRuche", "idRuche="+currentRucheId).split(" "));
+        //displayRuches.getModel().setSelectedItem(affichage.SQLRuche("idRuche", "idRuche="+currentRucheId).split(" "));
        // synchronized(cg) {
        //      while (cg.isOpened()) { try {
        //          cg.wait();
