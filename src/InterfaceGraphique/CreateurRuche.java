@@ -499,8 +499,12 @@ public class CreateurRuche extends javax.swing.JFrame {
         JList<String> listP = this.listPlanchersDisponibles;
         JList<String> listT = this.listToitsDisponibles;
         if (Couvercle.verification("Couvercle", listC) && Toit.verification("Toit", listP) && Plancher.verification("Plancher", listT) && Hausse.verification("Hausse", listH)){
-                contC.creerRuche(race, age, couleur, nomRuche, listC, listP, listT, listH);
-                dispose();
+            if (nomRuche.contains(" ") || nomRuche.length() == 0 || race.contains(" ") || race.length() == 0){
+                Erreur.main("Nom ruche ou race invalide : pas d'espace !");
+            } else {
+                    contC.creerRuche(race, age, couleur, nomRuche, listC, listP, listT, listH);
+                    dispose();    
+            }
         }
     }//GEN-LAST:event_creerBoutonMouseClicked
 

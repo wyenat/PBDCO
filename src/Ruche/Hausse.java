@@ -55,7 +55,6 @@ public class Hausse extends Materiel {
     }
     public static boolean verifierNum(int numeroHausse){
         boolean correct = true;
-        System.out.println("Numéro =" + numeroHausse);
         if (numeroHausse < 1){
             Erreur.main("Le numéro de la hausse doit être supérieur à 0, "
                     + "ici " + numeroHausse);
@@ -127,12 +126,10 @@ public class Hausse extends Materiel {
         // Création de la hausse dans la table de la hausse
         Création crea = new Création();
         String req = idMateriel + ", '" + this.materiau.toString() + "', '" + this.couleur.toString() +"', " + this.numeroHausse;
-         System.out.println(req);
         crea.SQLHausse(req);
     
          // Création de la hausse dans la table, associée à aucune ruche
         req = "" + this.idMateriel + ", null";
-        System.out.println(req);
         crea.SQLCompositionRuche(req);
     }
 

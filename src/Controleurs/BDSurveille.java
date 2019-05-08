@@ -27,9 +27,7 @@ public class BDSurveille {
    // Méthode qui crée une connexion à la BD
    //
   private OracleConnection connect() throws SQLException   {
-     System.out.print("Connecting to the database... "); 
      OracleConnection conn = (OracleConnection) DriverManager.getConnection(URL, USERNAME, PASSWD);
-     System.out.println("connected");
      return conn;
    }
    
@@ -61,8 +59,7 @@ public class BDSurveille {
         stmt.close();
         // Affichage des tables surveillées (uniquement pour la démonstration)
         String[] tableNames = dcr.getTables();
-        for (int i=0;i<tableNames.length;i++)
-          System.out.println(tableNames[i]+" is part of the registration.");
+        
      }
      catch (SQLException e) {
        // Suppression du dcr en cas d'exception (arrêt du thread de surveillance)
@@ -101,40 +98,12 @@ public class BDSurveille {
    // Méthode affichant les notifications (appelée par le listener)
    //
    public void refresh(DatabaseChangeEvent e) {
-     System.out.println("Notification de changement dans la BD :");
-     // Affichage des détails de l'event
-     System.out.println(e.toString());
+     
    }
    
    // Démo : ajout de tuples à la demande dans la table Test_listener(value int)
    //
    public void run() throws SQLException {
 
-        // Connextion à la BD
-       OracleConnection conn = connect();
-       // Contrôle manuel des transactions
-       conn.setAutoCommit(false);
-       // Boucle principale
-       String reponse = "";
-        int i = 1;
-        Scanner scan = new Scanner(System.in);
-       PreparedStatement pstmt = conn.prepareStatement("insert into Test_listener values (?)");
-       
-        while (!reponse.equals("n") && !reponse.equals("N")) {
-         System.out.println("Ajouter un tuple à Test_listener ? (o/n)");
-          reponse = scan.nextLine();
-         if (reponse.equals("o") || reponse.equals("O") )   {
-           // Ajout d'un tuple dans Test_listener
-           pstmt.setInt(1, i);
-           pstmt.executeUpdate();
-            i++;
-           // Validation de la transaction
-           conn.commit();
-          }
-       }
-        // Fermeture de la connexion à la BD à la sortie de boucle
-       pstmt.close();
-        conn.close();
-        System.out.println("Terminé !");
     }
 }

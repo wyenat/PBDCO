@@ -13,6 +13,5 @@ public enum Materiau {
     BOIS,
     PLASTIQUE,
     POLYSTYRENE,
-    METAL,
-    CRISTAL_DE_BISMUTH,
+    METAL
 }

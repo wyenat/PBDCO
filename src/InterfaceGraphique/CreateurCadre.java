@@ -135,7 +135,6 @@ public class CreateurCadre extends javax.swing.JFrame {
         assert(cont!=null);
         assert(etat!=null);
         assert(mat!=null);
-        System.out.println(cont.toString() + etat.toString() + mat.toString());
         contC.creerCadre(cont, etat, mat);
         dispose();
     }//GEN-LAST:event_CreerBoutonMouseClicked

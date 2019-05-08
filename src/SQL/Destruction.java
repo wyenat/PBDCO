@@ -23,6 +23,7 @@ public class Destruction implements FabriqueSQL{
      */
     public String SQLRuche(String cond) {
         cond = "DELETE FROM RUCHE WHERE (" + cond + ")";
+        System.out.println(cond);
         BDTable.requete(cond);
         return "Deleted";
     }
@@ -106,8 +107,9 @@ public class Destruction implements FabriqueSQL{
 
     @Override
     public String SQLCompositionRuche(String req) {
-        req = "DELETE FROM "+"RUCHE "+" WHERE (" + req + ")";
+        req = "DELETE FROM "+"COMPOSITIONRUCHE "+" WHERE (" + req + ")";
         BDTable.requete(req);
+         System.out.println(req);
         return "Deleted";   
     }
 
@@ -140,8 +142,11 @@ public class Destruction implements FabriqueSQL{
 
     @Override
     public String SQLEmplacementCapteur(String req) {
-        req = "DELETE FROM "+"EmplacementCapteur "+" WHERE (" + req + ")";
-        BDTable.requete(req);
+        if (req.equals(" ")){
+             req = "DELETE FROM "+"EmplacementCapteur "+" WHERE (" + req + ")";
+            System.out.println(req);
+            BDTable.requete(req);
+        }
         return "Deleted";   
     }
 

@@ -50,23 +50,22 @@ public class BDTable {
   public static String requete(String s) {
         // Creation de la requete
         try {
+            conn.setAutoCommit(false);
             if ((s.startsWith("INSERT")) || (s.startsWith("SELECT"))){
-                conn.setTransactionIsolation(TRANSACTION_READ_COMMITTED);
+                conn.setTransactionIsolation(2);
             } else {
-                conn.setTransactionIsolation(TRANSACTION_SERIALIZABLE);
+                conn.setTransactionIsolation(8);
             }            
             PreparedStatement stmt = conn.prepareStatement(s);
             // Affichage du résultat
             // Le problème est là  
-            int len = s.substring(0, s.indexOf("FROM")).split(",").length;
-            System.out.println("len = " + len + "avec s = " + s.substring(0,s.indexOf("FROM"))) ;
             String result = "";
             if (!(s.startsWith("SELECT"))){
                 conn.commit();
-                System.out.println("commit simple");
             }            
             ResultSet rset = stmt.executeQuery();
             if (s.startsWith("SELECT")){
+                int len = s.substring(0, s.indexOf("FROM")).split(",").length;
                 while (rset.next()) {
                         for (int i=1; i<=len; i++){
                             
@@ -74,6 +73,7 @@ public class BDTable {
                         }
                 }
             }
+            conn.setAutoCommit(true);
             stmt.close();
             rset.close();
             return result;
@@ -84,6 +84,11 @@ public class BDTable {
         return null;
     }
    
+  /**
+   * Obsolete
+   * @param s
+   * @return 
+   */
     public static String requeteDouble(String s) {
         // Creation de la requete
         // TODO !!!!! Faires les mêmes modifs que sur la 1ère fonction
@@ -102,7 +107,6 @@ public class BDTable {
             
             if (!(s.startsWith("SELECT"))){
                 conn.commit();
-                System.out.println("commit simple");
             }    
             
             ResultSet rset = stmt.executeQuery();
@@ -119,8 +123,8 @@ public class BDTable {
             }
             stmt.close();
             rset.close();
-            conn.commit();
-            System.out.println("commit double");
+            
+            conn.setAutoCommit(true);
             return result;
         } catch (SQLException e) {
             System.err.println("failed");

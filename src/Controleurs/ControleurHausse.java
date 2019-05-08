@@ -38,7 +38,18 @@ public class ControleurHausse {
             String req = "Hausse.idMateriel, materiau, couleur, numeroHausse";
             Affichage aff = new Affichage();
             String res = aff.SQLHausses(req, cond);
-            return res.split(",");
+            String resultat= "" ;
+                int i = 1;
+                for (String s : res.split(" ")){
+                    if (i%4 != 0){
+                        resultat+=s +" ";
+                    } else {
+                        resultat+=s  + ",";
+                    }
+                    i++;
+                }
+            resultat = resultat.substring(0, resultat.length() - 1);
+            return resultat.split(",");
         }
         return null;
     }

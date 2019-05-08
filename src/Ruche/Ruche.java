@@ -17,10 +17,14 @@ public class Ruche {
         Affichage aff = new Affichage();
         for (String hausse : aff.SQLCompositionRuche("idMateriel", "idRuche = " + currentRucheId).split(",")){
             // On enlève les capteurs des cadres, et les cadres des hausses.
-            for (String cadre : aff.SQLCompositionHausse("idMaterielCadre", "idMaterielHausse = " + hausse.split(" ")[0]).split(",")){
-                contC.dissocierCapteurPoids(cadre.split(" ")[0]);
+            System.out.println(hausse.split(" ")[0]);
+            if (hausse.split(" ")[0].length() != 0){
+                for (String cadre : aff.SQLCompositionHausse("idMaterielCadre", "idMaterielHausse = " + hausse.split(" ")[0]).split(",")){
+                contC.dissocierCapteurPoids(cadre);
+                 System.out.println(cadre.split(" ")[0]);
             }
             Hausse.dissocier(hausse.split(" ")[0]);
+            }    
             contC.dissocierCapteurTemperature(hausse.split(" ")[0]);
             
         }

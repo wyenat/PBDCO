@@ -55,7 +55,6 @@ public class ControleurPoids {
                     
                 }
                 catch(java.lang.ArrayIndexOutOfBoundsException e){
-                    System.out.println("Il y a des problemes dans la BD");
                 }
                 
             }

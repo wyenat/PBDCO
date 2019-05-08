@@ -80,7 +80,7 @@ public class Modification implements FabriqueSQL{
     @Override
     public String SQLCadre(String req, String cond) {
         String result = "UPDATE CADRE SET " + req + " WHERE IDMATERIEL = '" + cond +"'";
-        
+          System.out.println(result);
         BDTable.requete(result);
         return "";
     }
@@ -97,7 +97,7 @@ public class Modification implements FabriqueSQL{
     public String SQLCompositionHausse(String req, String cond) {
         String result = "UPDATE COMPOSITIONHAUSSE SET " 
                 + req + " WHERE " + cond;
-        System.out.println(result);
+         System.out.println(result);
         BDTable.requete(result);
         return "";
     }
@@ -105,6 +105,8 @@ public class Modification implements FabriqueSQL{
     public String SQLCompositionRuche(String req, String cond) {
          String result = "UPDATE COMPOSITIONRUCHE SET IDRUCHE = '" 
                 + req + "' WHERE " + "IDMATERIEL = '" + cond +"'";
+         System.out.println(result);
+
         BDTable.requete(result);
         return "";
     }

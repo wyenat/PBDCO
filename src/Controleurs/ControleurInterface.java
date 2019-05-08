@@ -91,7 +91,6 @@ public class ControleurInterface {
                 break;
             default:
                 mat = null;
-                System.out.println("Erreur");
                 break;
         }
         if (mat != null) {
@@ -127,10 +126,10 @@ public class ControleurInterface {
                 break;
             case "Pose d'une nouvelle hausse de récolte":
                 idPrems = detailCombo.getSelectedItem().toString().split(" ")[0];
-                modif.SQLCompositionRuche("", idPrems);
+                modif.SQLCompositionRuche(currentRucheId, idPrems);
                 if (seconde){
                     String idDeuz = detailCombo1.getSelectedItem().toString().split(" ")[0];
-                    modif.SQLCompositionRuche(currentRucheId, idDeuz);
+                    modif.SQLCompositionRuche("", idDeuz);
                 }
                 break;
             case "Insertion d'un cadre dans une hausse":
@@ -154,7 +153,7 @@ public class ControleurInterface {
 
 
 
-    public void majCapteurAssocie(JComboBox<String> capteurPoisdAssociéBox, String currentCadreId, JLabel textCaptPoidsAssocier, JComboBox<String> capteurPoisdAssociéBox0, JButton associerCapteurPoidsBouton, JButton dissocierCapteurPoidsBouton) {
+    public void majCapteurAssocie(JComboBox<String> capteurPoisdAssociéBox, String currentCadreId, JLabel textCaptPoidsAssocier, JComboBox<String> capteurPoisdAssociéBox0, JButton associerCapteurPoidsBouton, JButton dissocierCapteurPoidsBouton, JLabel textPoids) {
         Affichage affichage = new Affichage();
         capteurPoisdAssociéBox.removeAllItems();
         // Note : on est sûr que c'est un capteur poids car associé à un cadre
@@ -164,6 +163,12 @@ public class ControleurInterface {
             capteurPoisdAssociéBox.addItem(captAssocie);
             associerCapteurPoidsBouton.setVisible(false);
             dissocierCapteurPoidsBouton.setVisible(true);
+            String aff = affichage.SQLMesure("MAX(valeur) as max ", "idCapteur = " + captAssocie + " GROUP BY idCapteur");
+            if (aff.length() != 0){
+                textPoids.setText(aff);
+            } else {
+                textPoids.setText("Pas de mesures");
+            }
         }
 
         // On affiche les capteurs libres pour les associer
@@ -175,6 +180,7 @@ public class ControleurInterface {
             }
             associerCapteurPoidsBouton.setVisible(true);
             dissocierCapteurPoidsBouton.setVisible(false);
+            
         }
     }
 

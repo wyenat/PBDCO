@@ -222,7 +222,7 @@ public class CreateurHausse extends javax.swing.JFrame {
 
         jLabel2.setText("Matériau");
 
-        typeMateriauCombo.setModel(new javax.swing.DefaultComboBoxModel<Materiau>(new Materiau[] { Materiau.BOIS, Materiau.METAL, Materiau.PLASTIQUE, Materiau.POLYSTYRENE, Materiau.CRISTAL_DE_BISMUTH }));
+        typeMateriauCombo.setModel(new javax.swing.DefaultComboBoxModel<Materiau>(new Materiau[] { Materiau.BOIS, Materiau.METAL, Materiau.PLASTIQUE, Materiau.POLYSTYRENE}));
 
         jLabel3.setText("Couleur");
 
@@ -326,8 +326,13 @@ public class CreateurHausse extends javax.swing.JFrame {
         if (type.equals("associer")){
             String  h = this.haussesDisponibleCombo.getSelectedValue();
             if (Hausse.verifierCadre(Integer.parseInt(h.split(" ")[3]), selection)){
-                Hausse.associer(h.split(" ")[0], selection);
-                dispose();
+                if (this.haussesDisponibleCombo.getSelectedIndices().length == 1){
+                    Hausse.associer(h.split(" ")[0], selection);
+                    dispose();
+                } else {
+                    Erreur.main("Trop de hausses selectionnées !");
+                }
+                
             };
         } 
         if (type.equals("creer")){

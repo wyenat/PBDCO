@@ -40,21 +40,32 @@ public class ControleurCapteurs {
            
            Création crea = new Création();
            Random rand = new Random();
-           
-           for (int i = 0; i<capteursPoids.split(" ").length; i++){
-                int value = (int) (rand.nextGaussian()+(1.5));
-                crea.SQLMesure(capteursPoids.split(" ")[i].toString() + ", '" + horodatage + "', "+value);
-           }
-           for (int i = 0; i<capteursTemperature.split(" ").length; i++){
-                int value = (int) (rand.nextGaussian()+37);
-                crea.SQLMesure(""+capteursTemperature.split(" ")[i] + ", '" + horodatage + "', "+value);
+           if (capteursPoids !=""){
+                for (int i = 0; i<capteursPoids.split(" ").length; i++){
+                     int value = (int) (rand.nextGaussian()+(1.5));
+                     crea.SQLMesure("" + capteursPoids.split(" ")[i] + ", '" + horodatage + "', "+value);
+                }
+            }
+           if (capteursTemperature != ""){
+                for (int i = 0; i<capteursTemperature.split(" ").length; i++){
+                     int value = (int) (rand.nextGaussian()+37);
+                     crea.SQLMesure(""+capteursTemperature.split(" ")[i] + ", '" + horodatage + "', "+value);
+                }
+               
            }
            horodatage++;
     }
 
     public void associerCapteurTemperature(int idCapt, String currentHausseId) {
         Création crea = new Création();
-        crea.SQLEmplacementCapteur(idCapt + ", " + currentHausseId);
+        Affichage affichage = new Affichage();
+        int number = Integer.parseInt(affichage.SQLHausse("numeroHausse", "idMateriel = " + currentHausseId).replace(" ", ""));
+        if (number!=1){
+            Erreur.main("Un capteur de température doit être sur une hausse 1");
+        }
+        else{
+            crea.SQLEmplacementCapteur(idCapt + ", " + currentHausseId);
+        }
     }
 
     public void dissocierCapteurTemperature(String currentHausseId) {

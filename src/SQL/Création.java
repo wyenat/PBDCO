@@ -37,7 +37,9 @@ public class Création implements FabriqueSQL{
             );
                       */
         req = "INSERT INTO RUCHE VALUES ( " + req + " )";
+        System.out.println(req);
         String result = BDTable.requete(req);
+        
         return result;
     }
 
@@ -67,6 +69,7 @@ public class Création implements FabriqueSQL{
     @Override
     public String SQLMesure(String req) {
         req = "INSERT INTO MESURE VALUES ( " + req + " )";
+        System.out.println(req);
         String result = BDTable.requete(req);
         return result;
     }
@@ -103,6 +106,7 @@ public class Création implements FabriqueSQL{
     @Override
     public String SQLCadre(String req) {
         req = "INSERT INTO CADRE VALUES ( " + req + " )";
+        System.out.println(req);
         String result = BDTable.requete(req);
         return result;
     }
@@ -115,6 +119,7 @@ public class Création implements FabriqueSQL{
     @Override
     public String SQLCompositionHausse(String req) {
         req = "INSERT INTO COMPOSITIONHAUSSE VALUES ( " + req + " )";
+        System.out.println(req);
         String result = BDTable.requete(req);
         return result;
     }
@@ -126,8 +131,8 @@ public class Création implements FabriqueSQL{
 
     public String SQLCompositionRuche(String req) {
         req = "INSERT INTO COMPOSITIONRUCHE VALUES ( " + req + " )";
-        String result = BDTable.requete(req);
         System.out.println(req);
+        String result = BDTable.requete(req);
         return result;
     }
 
@@ -144,8 +149,8 @@ public class Création implements FabriqueSQL{
     @Override
     public String SQLCapteurs(String req) {
         req = "INSERT INTO CAPTEUR VALUES ( " + req + " )";
-        String result = BDTable.requete(req);
         System.out.println(req);
+        String result = BDTable.requete(req);
         return result;
     }
 
@@ -161,7 +166,10 @@ public class Création implements FabriqueSQL{
 
     @Override
     public String SQLEmplacementCapteur(String req) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        req = "INSERT INTO EMPLACEMENTCAPTEUR VALUES ( " + req + " )";
+        System.out.println(req);
+        String result = BDTable.requete(req);
+        return result;
     }
 
 

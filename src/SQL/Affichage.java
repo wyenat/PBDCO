@@ -43,7 +43,6 @@ public class Affichage implements FabriqueSQL{
     @Override
     public String SQLMesure(String req, String cond) {
         req = "SELECT " + req + " FROM Mesure" + " WHERE " + cond;
-        System.out.println(req);
         String result = BDTable.requete(req);
         return result;
     }
@@ -123,7 +122,6 @@ public class Affichage implements FabriqueSQL{
         req = "SELECT DISTINCT " + req + " FROM HAUSSE " 
                + " JOIN COMPOSITIONRUCHE ON COMPOSITIONRUCHE.IDMATERIEL = HAUSSE.IDMATERIEL "
                + " WHERE " + cond;
-        System.out.println(req);
         String result = BDTable.requete(req);
         return result;
     }
@@ -161,7 +159,6 @@ public class Affichage implements FabriqueSQL{
          req = "SELECT " + req +  " FROM CAPTEUR WHERE " + cond + " NOT IN " 
                 + "(SELECT " + req 
                 + " FROM EMPLACEMENTCAPTEUR)";
-          System.out.println(req);
             String result = BDTable.requete(req);
             return result;
     }
@@ -170,7 +167,6 @@ public class Affichage implements FabriqueSQL{
     public String SQLEmplacementCapteur(String req, String cond) {
          req = "SELECT " + req + " FROM EMPLACEMENTCAPTEUR WHERE " + cond;
         String result = BDTable.requete(req);
-        System.out.println(req);
         return result;
     }
 
@@ -184,7 +180,6 @@ public class Affichage implements FabriqueSQL{
         req = "SELECT distinct Capteur." + req + " FROM EMPLACEMENTCAPTEUR" +
         " JOIN Capteur ON EmplacementCapteur.idCapteur=Capteur.idCapteur " +
         "WHERE " + cond;
-        System.out.println(req);
         String result = BDTable.requete(req);
         return result;
     }
