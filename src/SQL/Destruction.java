@@ -37,6 +37,7 @@ public class Destruction implements FabriqueSQL{
     @Override
     public String SQLHausse(String cond) {
         cond = "DELETE FROM RUCHE WHERE (" + cond + ")";
+        System.out.println(cond);
         BDTable.requete(cond);
         return "Deleted";
     }
@@ -68,17 +69,18 @@ public class Destruction implements FabriqueSQL{
 
     @Override
     public String SQLMateriau(String cond) {
-        cond = "DELETE FROM "+"TOIT T JOIN COUVERCLE C ON T.idMATERIEL=C.idMATERIEL "+" WHERE (" + cond+ ")";
+        cond = "DELETE FROM "+"TOIT T JOIN COUVERCLE C ON T.idMATERIEL=C.idMATERIEL "+" WHERE ( idMateriel = " + cond+ ")";
         BDTable.requete(cond);
+        System.out.println(cond);
         return "Deleted";
     }
 
     @Override
     public String SQLMateriau(String cond, Class<? extends Materiel> aClass) {
-//        String table = aClass.getName().replace("Ruche.", "");
-//        cond = "DELETE FROM "+table+" WHERE (" + cond + ")";
-//        BDTable.requete(cond);
-//       
+        String table = aClass.getName().replace("Ruche.", "");
+        cond = "DELETE FROM "+table+" WHERE (" + cond + ")";
+        BDTable.requete(cond);
+        System.out.println(cond);
         return "Deleted";
     }
 
@@ -96,6 +98,7 @@ public class Destruction implements FabriqueSQL{
     public String SQLCompositionHausse(String req) {
         req = "DELETE FROM "+"COMPOSITIONHAUSSE "+" WHERE (" + req + ")";
         BDTable.requete(req);
+        System.out.println(req);
         return "Deleted";   
     }
         
@@ -117,6 +120,7 @@ public class Destruction implements FabriqueSQL{
     public String SQLCompositionRuche(String req, String cond) {
         req = "DELETE FROM "+"COMPOSITIONRUCHE "+" WHERE (" + req + ")";
         BDTable.requete(req);
+          System.out.println(req);
         return "Deleted";   
     }
 
