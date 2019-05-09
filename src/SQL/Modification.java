@@ -21,7 +21,7 @@ import static java.sql.Connection.TRANSACTION_SERIALIZABLE;
  * @author matterv
  */
 public class Modification implements FabriqueSQL{
-    
+
     @Override
     public String SQLRuche(String req) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -80,7 +80,6 @@ public class Modification implements FabriqueSQL{
     @Override
     public String SQLCadre(String req, String cond) {
         String result = "UPDATE CADRE SET " + req + " WHERE IDMATERIEL = '" + cond +"'";
-          System.out.println(result);
         BDTable.requete(result);
         return "";
     }
@@ -89,23 +88,21 @@ public class Modification implements FabriqueSQL{
     public String SQLCompositionHausse(String req) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
      @Override
      /**
       * @param req est les paramètres qu'on veut remplacer
       */
     public String SQLCompositionHausse(String req, String cond) {
-        String result = "UPDATE COMPOSITIONHAUSSE SET " 
+        String result = "UPDATE COMPOSITIONHAUSSE SET "
                 + req + " WHERE " + cond;
-         System.out.println(result);
         BDTable.requete(result);
         return "";
     }
 
     public String SQLCompositionRuche(String req, String cond) {
-         String result = "UPDATE COMPOSITIONRUCHE SET IDRUCHE = '" 
+         String result = "UPDATE COMPOSITIONRUCHE SET IDRUCHE = '"
                 + req + "' WHERE " + "IDMATERIEL = '" + cond +"'";
-         System.out.println(result);
 
         BDTable.requete(result);
         return "";

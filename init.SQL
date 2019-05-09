@@ -1,3 +1,69 @@
+CREATE TABLE Mesure(
+  idCapteur int,
+  horodatage int,
+  valeur int,
+  primary key(idCapteur, horodatage)
+);
+
+CREATE TABLE Capteur(
+  idCapteur int primary key,
+  type varchar(255)
+);
+
+CREATE TABLE Cadre(
+  idMateriel int primary key,
+  materiau varchar(255),
+  etat varchar(255),
+  contenu varchar(255)
+);
+
+CREATE TABLE CompositionHausse(
+  idMaterielHausse int primary key,
+  idMaterielCadre int
+);
+
+CREATE TABLE Ruche(
+  idRuche int primary key,
+  raceReine varchar(255),
+  ageReine int,
+  couleurReine varchar(255),
+  nomRuche varchar(255)
+);
+
+CREATE TABLE EmplacementCapteur(
+  idCapteur int primary key,
+  idMateriel int
+);
+
+CREATE TABLE CompositionRuche(
+  idMateriel int primary key,
+  idRuche int
+);
+
+CREATE TABLE Toit(
+  idMateriel int primary key,
+  materiau varchar(255)
+);
+
+CREATE TABLE Couvercle(
+  idMateriel int primary key,
+  materiau varchar(255)
+);
+
+CREATE TABLE Hausse(
+  idMateriel int primary key,
+  materiau varchar(255),
+  couleur varchar(255),
+  numeroHausse int
+);
+
+CREATE TABLE Plancher(
+  idMateriel int primary key,
+  materiau varchar(255)
+);
+
+
+
 INSERT INTO Toit VALUES ( 0,'BOIS' );
 INSERT INTO Toit VALUES ( 1,'METAL' );
 INSERT INTO Couvercle VALUES ( 2,'BOIS' );

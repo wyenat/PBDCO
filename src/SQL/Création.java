@@ -37,9 +37,8 @@ public class Création implements FabriqueSQL{
             );
                       */
         req = "INSERT INTO RUCHE VALUES ( " + req + " )";
-        System.out.println(req);
         String result = BDTable.requete(req);
-        
+
         return result;
     }
 
@@ -51,7 +50,6 @@ public class Création implements FabriqueSQL{
     @Override
     public String SQLHausse(String req) {
         req = "INSERT INTO HAUSSE VALUES ( " + req + " )";
-        System.out.println(req);
         String result = BDTable.requete(req);
         return result;
     }
@@ -69,7 +67,6 @@ public class Création implements FabriqueSQL{
     @Override
     public String SQLMesure(String req) {
         req = "INSERT INTO MESURE VALUES ( " + req + " )";
-        System.out.println(req);
         String result = BDTable.requete(req);
         return result;
     }
@@ -98,7 +95,6 @@ public class Création implements FabriqueSQL{
     public String SQLMateriau(String req, Class<? extends Materiel> aClass) {
         String table = aClass.getName().replace("Ruche.", "");
         req = "INSERT INTO "+ table +" VALUES ( " + req + " )";
-        System.out.println(req);
         String result = BDTable.requete(req);
         return result;
     }
@@ -106,7 +102,6 @@ public class Création implements FabriqueSQL{
     @Override
     public String SQLCadre(String req) {
         req = "INSERT INTO CADRE VALUES ( " + req + " )";
-        System.out.println(req);
         String result = BDTable.requete(req);
         return result;
     }
@@ -119,7 +114,6 @@ public class Création implements FabriqueSQL{
     @Override
     public String SQLCompositionHausse(String req) {
         req = "INSERT INTO COMPOSITIONHAUSSE VALUES ( " + req + " )";
-        System.out.println(req);
         String result = BDTable.requete(req);
         return result;
     }
@@ -131,7 +125,6 @@ public class Création implements FabriqueSQL{
 
     public String SQLCompositionRuche(String req) {
         req = "INSERT INTO COMPOSITIONRUCHE VALUES ( " + req + " )";
-        System.out.println(req);
         String result = BDTable.requete(req);
         return result;
     }
@@ -149,7 +142,6 @@ public class Création implements FabriqueSQL{
     @Override
     public String SQLCapteurs(String req) {
         req = "INSERT INTO CAPTEUR VALUES ( " + req + " )";
-        System.out.println(req);
         String result = BDTable.requete(req);
         return result;
     }
@@ -167,7 +159,6 @@ public class Création implements FabriqueSQL{
     @Override
     public String SQLEmplacementCapteur(String req) {
         req = "INSERT INTO EMPLACEMENTCAPTEUR VALUES ( " + req + " )";
-        System.out.println(req);
         String result = BDTable.requete(req);
         return result;
     }
