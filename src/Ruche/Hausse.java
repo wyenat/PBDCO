@@ -42,7 +42,7 @@ public class Hausse extends Materiel {
      */
     public static void dissocier(String currentHausseId) {
         Modification modif = new Modification();
-        modif.SQLCompositionHausse("idMaterielHausse = null", "idMaterielHausse = " + currentHausseId);
+        modif.SQLCompositionRuche("null", currentHausseId);
     }
     
     private int numeroHausse;

@@ -67,17 +67,16 @@ public class Destruction implements FabriqueSQL{
 
     @Override
     public String SQLMateriau(String cond) {
-        cond = "DELETE FROM "+"TOIT T JOIN COUVERCLE C ON T.idMATERIEL=C.idMATERIEL "+" WHERE (" + cond+ ")";
+        cond = "DELETE FROM "+"TOIT T JOIN COUVERCLE C ON T.idMATERIEL=C.idMATERIEL "+" WHERE ( idMateriel = " + cond+ ")";
         BDTable.requete(cond);
         return "Deleted";
     }
 
     @Override
     public String SQLMateriau(String cond, Class<? extends Materiel> aClass) {
-//        String table = aClass.getName().replace("Ruche.", "");
-//        cond = "DELETE FROM "+table+" WHERE (" + cond + ")";
-//        BDTable.requete(cond);
-//
+        String table = aClass.getName().replace("Ruche.", "");
+        cond = "DELETE FROM "+table+" WHERE (" + cond + ")";
+        BDTable.requete(cond);
         return "Deleted";
     }
 

@@ -15,20 +15,21 @@ public class Ruche {
         Destruction destruction = new Destruction();
         ControleurCapteurs contC = new ControleurCapteurs();
         Affichage aff = new Affichage();
-        for (String hausse : aff.SQLCompositionRuche("idMateriel", "idRuche = " + currentRucheId).split(",")){
+        for (String hausse : aff.SQLCompositionRuche("idMateriel", "idRuche = " + currentRucheId).split(" ")){
             // On enlève les capteurs des cadres, et les cadres des hausses.
-            System.out.println(hausse.split(" ")[0]);
+            boolean isHausse = (aff.SQLHausse("idMateriel", "idMateriel = " + hausse.split(" ")[0]).length() != 0);
+            System.out.println("hausse = " + hausse.split(" ")[0] + "est une hausse : " + isHausse);
             if (hausse.split(" ")[0].length() != 0){
-                for (String cadre : aff.SQLCompositionHausse("idMaterielCadre", "idMaterielHausse = " + hausse.split(" ")[0]).split(",")){
-                contC.dissocierCapteurPoids(cadre);
-                 System.out.println(cadre.split(" ")[0]);
+                for (String cadre : aff.SQLCompositionHausse("idMaterielCadre", "idMaterielHausse = " + hausse.split(" ")[0]).split(" ")){
+                contC.dissocierCapteurPoids(cadre.split(" ")[0]);
+                 System.out.println("cadre = " + cadre.split(" ")[0]);
             }
             Hausse.dissocier(hausse.split(" ")[0]);
+            //destruction.SQLMateriau(hausse.split(" ")[0]);
             }    
             contC.dissocierCapteurTemperature(hausse.split(" ")[0]);
             
         }
-        destruction.SQLCompositionRuche("idRuche = " +currentRucheId);
         destruction.SQLRuche("idRuche = " +currentRucheId);
         
     }
